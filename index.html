@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<title>Radiografía Electoral 29N</title>
+<meta name="description" content="Hechos, sentencias, hemeroteca, encuestas y aritmética D'Hondt de cara a las elecciones generales del 29 de noviembre de 2026.">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.js"></script>
+<style>
+  :root{color-scheme:dark}
+  html{scroll-behavior:smooth}
+  [id]{scroll-margin-top:96px}
+  body{background:#0f172a;color:#e2e8f0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .card{background:#1e293b;border:1px solid rgba(148,163,184,.18);border-radius:1rem;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+  .card-hover:hover{transform:translateY(-2px);border-color:rgba(148,163,184,.4);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .btn{transition:all .2s ease;cursor:pointer}
+  .btn:active{transform:scale(.97)}
+  .tab-btn{border-bottom:2px solid transparent;color:#94a3b8}
+  .tab-btn:hover{color:#e2e8f0}
+  .tab-btn.active{color:#fff;border-bottom-color:#38bdf8;background:rgba(56,189,248,.08)}
+  .chip{border:1px solid rgba(148,163,184,.3);color:#cbd5e1}
+  .chip:hover{background:rgba(148,163,184,.12)}
+  .chip.active{background:#38bdf8;color:#0f172a;border-color:#38bdf8;font-weight:600}
+  .seat-chip{border:1px solid rgba(148,163,184,.3);color:#cbd5e1;background:#0f172a}
+  .seat-chip.on{color:#fff;font-weight:600}
+  .likert{border:1px solid rgba(148,163,184,.3);color:#cbd5e1;background:#0f172a}
+  .likert:hover{border-color:#38bdf8;color:#fff}
+  .likert.sel{background:#0ea5e9;border-color:#0ea5e9;color:#fff;font-weight:600}
+  .fade{animation:fade .35s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  select,input[type=number]{background:#0f172a;border:1px solid rgba(148,163,184,.3);color:#e2e8f0;border-radius:.5rem;padding:.45rem .6rem;max-width:100%}
+  select:focus,input:focus{outline:2px solid #38bdf8;outline-offset:1px}
+  .bar-fill{transition:width .8s cubic-bezier(.2,.8,.2,1)}
+  .win-cell{background:rgba(56,189,248,.25);color:#fff;font-weight:700}
+  .seat{transition:opacity .25s ease}
+  .src{color:#7dd3fc;white-space:nowrap}
+  .src:hover{text-decoration:underline}
+  .bn-btn{color:#94a3b8}
+  .bn-btn.active{color:#38bdf8}
+  .bn-btn.active .bn-ic{background:rgba(56,189,248,.15)}
+  .help-btn{width:28px;height:28px;border-radius:9999px;border:1px solid rgba(56,189,248,.5);color:#7dd3fc;font-weight:700;font-size:14px;line-height:1;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(56,189,248,.08)}
+  .help-btn[aria-expanded="true"]{background:#38bdf8;color:#0f172a;border-color:#38bdf8}
+  .help-bubble{position:relative;background:#0b2537;border:1px solid rgba(56,189,248,.35);border-radius:.75rem;padding:.75rem .9rem;margin:.25rem 0 .9rem}
+  .help-bubble::before{content:"";position:absolute;top:-7px;right:22px;width:12px;height:12px;background:#0b2537;border-left:1px solid rgba(56,189,248,.35);border-top:1px solid rgba(56,189,248,.35);transform:rotate(45deg)}
+  .tl-dot{width:12px;height:12px;border-radius:9999px;border:2px solid #0f172a;position:absolute;left:-7px;top:6px}
+  ::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-thumb{background:#334155;border-radius:8px}
+</style>
+</head>
+<body class="min-h-screen pb-20 sm:pb-0">
+
+<header class="border-b border-slate-700/60 bg-slate-900/90 backdrop-blur sticky z-30" style="top:env(safe-area-inset-top,0px)">
+  <div class="max-w-7xl mx-auto px-4 pt-3 pb-2 sm:pb-0">
+    <div class="flex items-center justify-between gap-3 sm:mb-2">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="p-2 rounded-xl bg-sky-500/15 text-sky-400 shrink-0"><i data-lucide="scan-search"></i></div>
+        <div class="min-w-0">
+          <h1 class="text-lg sm:text-xl font-bold leading-tight"><span class="sm:hidden">Radiografía 29N</span><span class="hidden sm:inline">Radiografía Electoral de España</span></h1>
+          <p class="text-xs text-slate-400 truncate"><span class="sm:hidden">Hechos, sentencias y D'Hondt</span><span class="hidden sm:inline">Hechos, sentencias, hemeroteca y aritmética D'Hondt · No recomienda voto</span></p>
+        </div>
+      </div>
+      <div class="text-right shrink-0" id="countdown"></div>
+    </div>
+    <nav class="hidden sm:flex gap-1 overflow-x-auto" id="tabs">
+      <button class="tab-btn btn px-3 py-2 text-sm whitespace-nowrap rounded-t-lg flex items-center gap-2" data-tab="0"><i data-lucide="vote" class="w-4 h-4"></i>29N: el tablero</button>
+      <button class="tab-btn btn px-3 py-2 text-sm whitespace-nowrap rounded-t-lg flex items-center gap-2" data-tab="1"><i data-lucide="layout-grid" class="w-4 h-4"></i>Radiografía</button>
+      <button class="tab-btn btn px-3 py-2 text-sm whitespace-nowrap rounded-t-lg flex items-center gap-2" data-tab="2"><i data-lucide="columns-2" class="w-4 h-4"></i>Cara a cara</button>
+      <button class="tab-btn btn px-3 py-2 text-sm whitespace-nowrap rounded-t-lg flex items-center gap-2" data-tab="3"><i data-lucide="calculator" class="w-4 h-4"></i>Trampa D'Hondt</button>
+      <button class="tab-btn btn px-3 py-2 text-sm whitespace-nowrap rounded-t-lg flex items-center gap-2" data-tab="4"><i data-lucide="compass" class="w-4 h-4"></i>Test y brújula</button>
+    </nav>
+  </div>
+</header>
+
+<nav id="bottomNav" class="sm:hidden fixed bottom-0 inset-x-0 z-40 bg-slate-900/95 backdrop-blur border-t border-slate-700 grid grid-cols-5" style="padding-bottom:env(safe-area-inset-bottom)" aria-label="Secciones">
+  <button class="bn-btn btn flex flex-col items-center gap-0.5 py-1.5 text-[11px]" data-tab="0"><span class="bn-ic px-3 py-1 rounded-full"><i data-lucide="vote" class="w-5 h-5"></i></span>29N</button>
+  <button class="bn-btn btn flex flex-col items-center gap-0.5 py-1.5 text-[11px]" data-tab="1"><span class="bn-ic px-3 py-1 rounded-full"><i data-lucide="layout-grid" class="w-5 h-5"></i></span>Partidos</button>
+  <button class="bn-btn btn flex flex-col items-center gap-0.5 py-1.5 text-[11px]" data-tab="2"><span class="bn-ic px-3 py-1 rounded-full"><i data-lucide="columns-2" class="w-5 h-5"></i></span>Comparar</button>
+  <button class="bn-btn btn flex flex-col items-center gap-0.5 py-1.5 text-[11px]" data-tab="3"><span class="bn-ic px-3 py-1 rounded-full"><i data-lucide="calculator" class="w-5 h-5"></i></span>D'Hondt</button>
+  <button class="bn-btn btn flex flex-col items-center gap-0.5 py-1.5 text-[11px]" data-tab="4"><span class="bn-ic px-3 py-1 rounded-full"><i data-lucide="compass" class="w-5 h-5"></i></span>Test</button>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 py-5 sm:py-6">
+
+  <!-- MÓDULO 0: TABLERO 29N -->
+  <section id="m0" class="fade">
+    <div class="card p-5 sm:p-6 mb-5 bg-gradient-to-br from-slate-800 to-slate-900">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="max-w-3xl">
+          <p class="text-xs uppercase tracking-widest text-sky-400 font-semibold mb-1">Elecciones generales · domingo 29 de noviembre de 2026</p>
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2">El tablero del 29N</h2>
+          <p class="text-sm text-slate-300">Sánchez disolvió las Cortes el 5 de octubre de 2026 (Real Decreto 806/2026), casi un año después de que Junts rompiera su apoyo parlamentario y dejara la legislatura bloqueada. Aquí tienes las encuestas publicadas, una calculadora de mayorías y lo que ha cambiado desde 2023. <a class="src" target="_blank" rel="noopener" href="https://www.lamoncloa.gob.es/presidente/actividades/Paginas/2026/051026-sanchez-convocatoria-elecciones.aspx">↗ La Moncloa</a></p>
+        </div>
+        <div class="text-center px-5 py-3 rounded-xl bg-sky-500/10 border border-sky-500/30" id="bigCountdown"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5" id="kpis"></div>
+
+    <div class="grid lg:grid-cols-5 gap-4 mb-5">
+      <div class="card p-4 lg:col-span-3 min-w-0">
+        <h3 class="font-bold mb-1 flex items-center gap-2"><i data-lucide="bar-chart-3" class="w-5 h-5 text-sky-400"></i>Encuestas publicadas</h3>
+        <p class="text-xs text-slate-400 mb-3">Escaños estimados (rango si la encuestadora lo da) y, debajo, % de voto.</p>
+        <div class="overflow-x-auto"><table class="w-full text-sm" id="pollTable"></table></div>
+        <p class="text-xs text-slate-500 mt-3">Fuentes: <a class="src" target="_blank" rel="noopener" href="https://en.ara.cat/politics/what-do-the-polls-for-the-spanish-elections-of-november-29-say_1_5874100.html">recopilación del Ara</a> · <a class="src" target="_blank" rel="noopener" href="https://www.elliberal.cat/2026/10/09/la-derecha-lograria-201-escanos-y-vox-duplicaria-su-representacion-el-29n/">Imop y DYM (El Liberal)</a>. Una encuesta no es un resultado: cada sondeo tiene un margen de error de unos ±3 puntos.</p>
+      </div>
+      <div class="card p-4 lg:col-span-2 min-w-0">
+        <h3 class="font-bold mb-3 flex items-center gap-2"><i data-lucide="arrow-left-right" class="w-5 h-5 text-sky-400"></i>2023 real vs. media de encuestas</h3>
+        <div class="h-72"><canvas id="pollChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="card p-4 sm:p-6 mb-5">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+        <h3 class="font-bold text-lg flex items-center gap-2"><i data-lucide="landmark" class="w-5 h-5 text-sky-400"></i>Calculadora de mayorías</h3>
+        <div class="flex gap-2 text-sm" id="scenarioBtns">
+          <button class="chip btn px-3 py-1.5 rounded-full" data-sc="enc">Media encuestas 29N</button>
+          <button class="chip btn px-3 py-1.5 rounded-full" data-sc="2023">Resultado 2023</button>
+        </div>
+      </div>
+      <p class="text-sm text-slate-400 mb-4">Toca los partidos para sumar una mayoría. La investidura en primera votación exige 176 de 350 escaños; en segunda basta con más síes que noes, así que las abstenciones también cuentan.</p>
+      <div class="grid lg:grid-cols-2 gap-6 items-center">
+        <div class="min-w-0">
+          <svg id="hemi" viewBox="-1.08 -1.1 2.16 1.18" class="w-full max-w-xl mx-auto" role="img" aria-label="Hemiciclo del Congreso"></svg>
+        </div>
+        <div>
+          <div class="flex flex-wrap gap-2 mb-4" id="seatChips"></div>
+          <div class="mb-2 flex justify-between text-sm"><span>Suma de la coalición</span><span id="coalSum" class="font-bold"></span></div>
+          <div class="relative h-4 bg-slate-700 rounded-full overflow-hidden mb-1">
+            <div id="coalBar" class="h-full bg-sky-500 bar-fill" style="width:0%"></div>
+            <div class="absolute top-0 bottom-0 w-0.5 bg-amber-400" style="left:50.28%"></div>
+          </div>
+          <div class="text-xs text-amber-300 mb-3" style="padding-left:calc(50.28% - 18px)">176</div>
+          <div id="coalMsg" class="text-sm mb-4"></div>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <span class="text-slate-400 self-center">Combinaciones:</span>
+            <button class="chip btn px-3 py-1 rounded-full" data-preset-c="inv23">Bloque de investidura 2023</button>
+            <button class="chip btn px-3 py-1 rounded-full" data-preset-c="derecha">PP + Vox + UPN</button>
+            <button class="chip btn px-3 py-1 rounded-full" data-preset-c="gran">PSOE + PP</button>
+            <button class="chip btn px-3 py-1 rounded-full" data-preset-c="sinjunts">Bloque 2023 sin Junts</button>
+            <button class="chip btn px-3 py-1 rounded-full" data-preset-c="none">Vaciar</button>
+          </div>
+        </div>
+      </div>
+      <p class="text-xs text-slate-500 mt-4" id="seatNote"></p>
+    </div>
+
+    <div class="card p-4 sm:p-6">
+      <h3 class="font-bold text-lg mb-3 flex items-center gap-2"><i data-lucide="git-compare-arrows" class="w-5 h-5 text-sky-400"></i>Qué ha cambiado desde 2023</h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3" id="changes"></div>
+    </div>
+  </section>
+
+  <!-- MÓDULO 1: RADIOGRAFÍA -->
+  <section id="m1" class="hidden">
+    <div class="mb-5 flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <h2 class="text-2xl font-bold mb-1">Radiografía crítica de partidos</h2>
+        <p class="text-slate-400 text-sm max-w-3xl">Cada ficha separa lo que es <b class="text-slate-200">sentencia firme</b>, <b class="text-slate-200">sentencia recurrible</b>, <b class="text-slate-200">proceso abierto</b> (presunción de inocencia) y <b class="text-slate-200">hemeroteca</b>. Los hechos recientes llevan enlace a la fuente.</p>
+      </div>
+      <div class="flex gap-1 p-1 rounded-lg bg-slate-800 border border-slate-700 text-sm" id="viewBtns">
+        <button class="btn px-3 py-1.5 rounded-md flex items-center gap-1" data-view="cards"><i data-lucide="layout-grid" class="w-4 h-4"></i>Fichas</button>
+        <button class="btn px-3 py-1.5 rounded-md flex items-center gap-1" data-view="timeline"><i data-lucide="calendar-clock" class="w-4 h-4"></i>Cronología</button>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-2 mb-4" id="filters"></div>
+    <div class="flex flex-wrap gap-2 mb-5 text-xs" id="legend"></div>
+    <div id="partyGrid" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 items-start"></div>
+    <div id="timeline" class="hidden"></div>
+  </section>
+
+  <!-- MÓDULO 2: COMPARADOR -->
+  <section id="m2" class="hidden">
+    <div class="mb-5">
+      <h2 class="text-2xl font-bold mb-1">Comparador cara a cara</h2>
+      <p class="text-slate-400 text-sm max-w-3xl">Contrasta dos formaciones en hemeroteca, corrupción y economía, y mira en qué temas coinciden o chocan según su posición en el test.</p>
+    </div>
+    <div class="card p-4 mb-5 flex flex-wrap items-end gap-4">
+      <div><label class="block text-xs text-slate-400 mb-1">Partido A</label><select id="cmpA"></select></div>
+      <div class="pb-2 text-slate-500 font-bold">vs.</div>
+      <div><label class="block text-xs text-slate-400 mb-1">Partido B</label><select id="cmpB"></select></div>
+    </div>
+    <div id="cmpOut"></div>
+  </section>
+
+  <!-- MÓDULO 3: D'HONDT -->
+  <section id="m3" class="hidden">
+    <div class="mb-5">
+      <h2 class="text-2xl font-bold mb-1">La trampa electoral: aritmética D'Hondt</h2>
+      <p class="text-slate-400 text-sm max-w-3xl">En las generales cada provincia reparte sus escaños por separado. Cuantos menos escaños, más votos hacen falta para obtener uno: el voto a listas pequeñas se «pierde» sobre todo en provincias pequeñas.</p>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-3 mb-6">
+      <div class="card p-4"><div class="text-sky-400 mb-2"><i data-lucide="divide"></i></div><h3 class="font-semibold mb-1">1 · Se divide</h3><p class="text-sm text-slate-400">Los votos de cada lista se dividen entre 1, 2, 3… hasta el número de escaños de la provincia.</p></div>
+      <div class="card p-4"><div class="text-sky-400 mb-2"><i data-lucide="arrow-down-wide-narrow"></i></div><h3 class="font-semibold mb-1">2 · Se ordenan</h3><p class="text-sm text-slate-400">Se ordenan todos los cocientes de mayor a menor y se reparten los escaños a los N cocientes más altos.</p></div>
+      <div class="card p-4"><div class="text-sky-400 mb-2"><i data-lucide="shield-check"></i></div><h3 class="font-semibold mb-1">3 · Barrera del 3%</h3><p class="text-sm text-slate-400">Las listas con menos del 3% de los votos válidos de la circunscripción quedan fuera. Cualquier lista con más de 1/(N+1) de los votos tiene escaño garantizado.</p></div>
+    </div>
+
+    <div class="card p-4 sm:p-6 mb-6">
+      <h3 class="font-bold text-lg mb-1 flex items-center gap-2"><i data-lucide="coins" class="w-5 h-5 text-amber-400"></i>Lo que costó cada escaño en 2023 (dato real)</h3>
+      <p class="text-sm text-slate-400 mb-3">Votos obtenidos ÷ escaños conseguidos en las generales del 23J. Los partidos de ámbito estatal que quedan terceros o cuartos en muchas provincias pagan mucho más por escaño que los grandes o que los concentrados en pocas provincias. <a class="src" target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/2023_Spanish_general_election">↗ Resultados 2023</a></p>
+      <div class="h-80"><canvas id="costChart"></canvas></div>
+    </div>
+
+    <div class="rounded-2xl border border-fuchsia-500/40 bg-fuchsia-500/10 p-4 sm:p-5 mb-6">
+      <h3 class="font-bold mb-1 flex items-center gap-2"><i data-lucide="split" class="w-5 h-5 text-fuchsia-300"></i>Caso real del 29N: la izquierda del PSOE, dividida</h3>
+      <p class="text-sm text-slate-200">Según 40dB (El País/SER, 7–8 oct 2026), Frente Amplio y Podemos por separado suman un 7,6% del voto. En una lista conjunta llegarían al 9,5% y a <b>15–19 escaños</b>. Por separado, el Frente Amplio rondaría los 5 y Podemos los 2. La diferencia no se debe solo a los votos: dividir el mismo electorado en dos listas deja a ambas por debajo del cociente necesario en muchas provincias. Pruébalo abajo en «Ejemplo libre» con los escenarios «Bloque dividido» y «Bloque unido». <a class="src" target="_blank" rel="noopener" href="https://en.ara.cat/politics/what-do-the-polls-for-the-spanish-elections-of-november-29-say_1_5874100.html">↗ Fuente</a></p>
+    </div>
+
+    <div class="card p-4 sm:p-6 mb-6" id="simCard">
+      <h3 class="font-bold text-lg mb-1 flex items-center gap-2"><i data-lucide="sliders-horizontal" class="w-5 h-5 text-sky-400"></i>Simulador: tu provincia, con datos reales</h3>
+      <p class="text-sm text-slate-400 mb-3">Elige tu provincia para ver cómo se repartieron sus escaños en 2023, quién se llevó el último y a quién le faltó menos para conseguirlo. Cambia los porcentajes para probar tus propios escenarios.</p>
+      <div class="flex gap-1 p-1 rounded-lg bg-slate-900 border border-slate-700 text-sm mb-4 w-full sm:w-fit" id="simModeBtns">
+        <button class="btn flex-1 sm:flex-none px-3 py-2 rounded-md" data-mode="real">Resultados reales 2023</button>
+        <button class="btn flex-1 sm:flex-none px-3 py-2 rounded-md" data-mode="free">Ejemplo libre</button>
+      </div>
+      <div class="flex flex-wrap gap-x-4 gap-y-3 items-end mb-3">
+        <div class="w-full sm:w-auto"><label class="block text-xs text-slate-400 mb-1" for="simProv">Provincia</label><select id="simProv" class="w-full sm:w-auto"></select></div>
+        <div id="seatsWrap"><label class="block text-xs text-slate-400 mb-1" for="simSeats">Escaños</label><input type="number" inputmode="numeric" id="simSeats" min="1" max="38" value="5" class="w-20"></div>
+        <label class="flex items-center gap-2 text-sm py-2" id="simNewWrap"><input type="checkbox" id="simNew" class="w-4 h-4"> Reparto del 29N</label>
+        <label class="flex items-center gap-2 text-sm py-2"><input type="checkbox" id="simBarrier" class="w-4 h-4" checked> Barrera del 3%</label>
+      </div>
+      <p class="text-xs text-slate-500 mb-4" id="simHelp"></p>
+      <div class="flex flex-wrap gap-2 mb-4 text-xs" id="simPresets">
+        <span class="text-slate-400 self-center">Escenarios:</span>
+        <button class="chip btn px-3 py-1.5 rounded-full" data-preset="0">Dos grandes + pequeña</button>
+        <button class="chip btn px-3 py-1.5 rounded-full" data-preset="1">Bloque dividido en varias listas</button>
+        <button class="chip btn px-3 py-1.5 rounded-full" data-preset="2">Bloque unido en una lista</button>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-6">
+        <div class="min-w-0">
+          <div id="simInputs" class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4"></div>
+          <div class="overflow-x-auto"><table class="w-full text-sm" id="simTable"></table></div>
+          <div id="simNote" class="mt-4 text-sm"></div>
+        </div>
+        <div class="min-w-0"><div class="h-64 sm:h-72"><canvas id="simChart"></canvas></div></div>
+      </div>
+      <h4 class="font-semibold mt-6 mb-1 text-sm text-slate-300">Tabla de cocientes</h4>
+      <p class="text-xs text-slate-500 mb-2" id="quotHelp">Los votos de cada lista divididos entre 1, 2, 3… Los cocientes resaltados son los que se llevan escaño. Desliza la tabla en horizontal si no cabe.</p>
+      <div class="overflow-x-auto"><table class="w-full text-xs text-center" id="quotTable"></table></div>
+    </div>
+
+    <div class="card p-4 sm:p-6">
+      <h3 class="font-bold text-lg mb-1 flex items-center gap-2"><i data-lucide="trending-down" class="w-5 h-5 text-amber-400"></i>El precio de un escaño según el tamaño de la provincia</h3>
+      <p class="text-sm text-slate-400 mb-3">Porcentaje de voto que garantiza un escaño: 100/(N+1). En una provincia de 3 escaños hace falta más del 25%; en Madrid (38 el 29N) basta con algo más del 2,6%, así que allí lo que manda es la barrera del 3%.</p>
+      <div class="h-64"><canvas id="thrChart"></canvas></div>
+    </div>
+  </section>
+
+  <!-- MÓDULO 4: TEST -->
+  <section id="m4" class="hidden">
+    <div id="quizIntro" class="mb-5">
+      <h2 class="text-2xl font-bold mb-1">Test político de 50 preguntas y brújula de coherencia</h2>
+      <p class="text-slate-400 text-sm max-w-3xl">50 afirmaciones en 10 ejes. Responde del –2 al +2 y marca como «clave» las que más te importan (cuentan el doble). Si una pregunta no te queda clara, toca el botón <b class="text-sky-300">?</b> para ver qué significa y qué argumentos hay a favor y en contra. Tu progreso se guarda en este navegador y tus respuestas no salen de él salvo que compartas el enlace.</p>
+    </div>
+    <div id="quizBox">
+      <div class="card p-4 mb-4">
+        <div class="flex justify-between text-xs text-slate-400 mb-2"><span id="quizAxisName"></span><span id="quizCount"></span></div>
+        <div class="h-2 bg-slate-700 rounded-full overflow-hidden"><div id="quizBar" class="h-full bg-sky-500 bar-fill" style="width:0%"></div></div>
+        <div class="flex flex-wrap gap-1 mt-3" id="quizSteps"></div>
+      </div>
+      <div id="quizQs" class="space-y-4"></div>
+      <div class="flex justify-between items-center mt-6 gap-3">
+        <button id="btnPrev" class="btn chip px-4 py-2 rounded-lg flex items-center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>Anterior</button>
+        <span id="quizHint" class="text-xs text-slate-500 text-center"></span>
+        <button id="btnNext" class="btn bg-sky-500 hover:bg-sky-400 text-slate-900 font-semibold px-4 py-2 rounded-lg flex items-center gap-2">Siguiente<i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      </div>
+    </div>
+    <div id="quizResults" class="hidden"></div>
+  </section>
+
+</main>
+
+<footer class="border-t border-slate-700/60 mt-10">
+  <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
+    <p><b class="text-slate-400">Datos verificados a 14 de octubre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+/* ============================================================
+   FECHAS CLAVE Y FUENTES
+   ============================================================ */
+const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
+const VERIFIED = "14 oct 2026";
+const S = {
+  moncloa29n:"https://www.lamoncloa.gob.es/presidente/actividades/Paginas/2026/051026-sanchez-convocatoria-elecciones.aspx",
+  abalos:"https://www.infobae.com/espana/2026/10/13/el-ultimo-cartucho-de-abalos-y-koldo-presionar-al-supremo-para-que-suspenda-sus-condenas-a-24-y-19-anos-de-prision-y-abrir-la-via-del-amparo-ante-el-constitucional/",
+  abalosNul:"https://www.infobae.com/espana/agencias/2026/10/14/el-supremo-confirma-las-condenas-de-abalos-y-koldo-al-rechazar-sus-peticiones-de-anular-la-sentencia-de-mascarillas/",
+  fge:"https://rtvc.es/el-supremo-condena-al-fiscal-general-a-2-anos-de-inhabilitacion-por-revelacion-de-secretos-20-noviembre-2025/",
+  david:"https://www.elindependiente.com/espana/2026/07/14/david-sanchez-condenado-inhabilitacion-prevaricacion-contratacion-badajoz/",
+  begona:"https://www.infobae.com/espana/2026/09/21/el-juez-peinado-envia-a-begona-gomez-a-juicio-ante-un-jurado-popular-en-la-audiencia-provincial-de-madrid-por-malversacion-y-trafico-de-influencias/",
+  cerdan:"https://www.catalunyapress.es/articulo/sociedad/2026-10-09/6046251-juez-frena-imputacion-psoe-caso-leire-diez-espera-interrogar-santos-cerdan",
+  ere:"https://es.ara.cat/politica/tc-anula-condena-prevaricacion-manuel-chaves-caso-ere-andalucia_1_5090487.html",
+  kitchen:"https://www.moncloa.com/2026/07/28/juicio-kitchen-visto-sentencia-audiencia-nacional-3406964",
+  discos:"https://theobjective.com/espana/2019-09-04/el-juez-absuelve-al-pp-por-el-borrado-de-los-discos-duros-de-barcenas/",
+  extremadura:"https://www.eldiario.es/extremadura/politica/pp-vox-alumbran-pacto-extremadura-borde-repeticion-electoral-cuatro-meses-paralisis_1_13139666.html",
+  aragon:"https://www.elindependiente.com/espana/2026/04/22/pp-y-vox-cierran-un-acuerdo-en-aragon-con-el-mismo-modelo-pactado-en-extremadura/",
+  andaluciaGob:"https://rtvc.es/moreno-reelegido-presidente-andalucia-con-vicepresidencia-vox-3-julio-2026/",
+  andalucia:"https://en.wikipedia.org/wiki/2026_Andalusian_regional_election",
+  disenso:"https://www.eldiario.es/politica/cortes-encargan-tribunal-cuentas-fiscalizacion-especial-fundacion-disenso-vox_1_12830073.html",
+  frente:"https://www.diariodepontevedra.es/articulo/espana/carrera-29-n-directo-podemos-descarta-integrarse-frente-amplio/202610131133301471946.html",
+  podemosErc:"https://www.publico.es/politica/partidos/podemos-erc-confirman-pacto-colaboracion-montero-rufian-elecciones-29n.html",
+  alvise:"https://www.infobae.com/espana/agencias/2026/10/04/el-supremo-pone-el-foco-en-las-investigaciones-sobre-alvise-una-vez-cerrados-los-grandes-casos-contra-aforados/",
+  junts:"https://www.montevideo.com.uy/Noticias/Puigdemont-retira-el-apoyo-a-Pedro-Sanchez-y-rompe-pacto-entre-Junts-y-el-PSOE-uc941172",
+  d21:"https://www.elespanol.com/espana/20261010/democracia-presenta-elecciones-madrid-barcelona-liderados-miriam-gonzalez/1003744416434_0.html",
+  polls:"https://en.ara.cat/politics/what-do-the-polls-for-the-spanish-elections-of-november-29-say_1_5874100.html",
+  imop:"https://www.elliberal.cat/2026/10/09/la-derecha-lograria-201-escanos-y-vox-duplicaria-su-representacion-el-29n/",
+  presupuestos:"https://www.eldiariodemadrid.es/articulo/politica/legislatura-sanchez-nuevos-presupuestos-generales-estado-pge-2023-prorrogados/20261005103413143316.html",
+  smi:"https://www.cuestioneslaborales.es/cuantia-smi-2026-diario-mensual-y-anual/",
+  jornada:"https://www.periodicodeibiza.es/noticias/nacional/2025/09/11/2467647/congreso-tumba-reduccion-jornada-laboral-prosperar-veto-vox-junts.html",
+  energeticas:"https://www.infobae.com/america/agencias/2025/01/22/el-congreso-tumba-el-decreto-del-gravamen-energetico-con-el-voto-de-pp-vox-junts-pnv-y-upn/",
+  eco29n:"https://forbes.es/actualidad/1036705/elecciones-2026-batallas-economicas-29-n/",
+  salfProg:"https://www.politicaelectoral.com/es/espana/generales-2026/nacional/se-acabo-la-fiesta",
+  podemosProg:"https://www.politicaelectoral.com/es/espana/generales-2026/nacional/podemos",
+  leyVivienda:"https://www.publico.es/politica/claves-ley-vivienda.html",
+  adelViv:"https://www.elsaltodiario.com/vivienda/pp-vox-por-andalucia-adelante-psoe-vivienda-proponen-partidos-elecciones-andaluzas",
+  puigdemontTC:"https://www.infobae.com/espana/2026/10/06/puigdemont-podra-volver-a-espana-antes-de-las-elecciones-el-aval-del-constitucional-a-la-amnistia-despeja-el-camino-para-que-el-juez-levante-su-orden-de-detencion/",
+  finSing:"https://www.cope.es/emisoras/catalunya/noticias/gobierno-generalitat-pactan-financiacion-singular-generalizable-20250714_3184917.html",
+  pnvEsteban:"https://www.moncloa.com/2026/05/28/pnv-erc-fin-legislatura-sanchez-3380435",
+  euskadi24:"https://www.elindependiente.com/opinion/2024/04/21/bildu-empata-pese-a-no-condenara-a-eta/",
+  bilduListas:"https://www.infobae.com/espana/2023/05/16/renuncian-los-siete-etarras-con-delitos-de-sangre-de-las-listas-de-bildu-para-el-28-m/",
+  pamplona:"https://www.elsaltodiario.com/pamplona/socialistas-navarros-presentan-mocion-censura-conjunta-ehbildu-investir-joseba-asiron",
+  inmigracion:"https://rtvc.es/pp-vox-podemos-division-de-sumar-frenan-delegacion-inmigraciona-cataluna-23-septiembre-2025/",
+  deMiguel:"https://www.elsaltodiario.com/pnv/supremo-ratifica-principales-penas-corrupcion-tres-miembros-caso-miguel",
+  reparto29n:"https://www.eldiariodemadrid.es/articulo/politica/madrid-38-diputados-elecciones-generales-29-noviembre-reparto-escanos-boe/20261006101740143435.html",
+  r23prov:"https://en.wikipedia.org/wiki/Results_breakdown_of_the_2023_Spanish_general_election_(Congress)",
+  biedma:"https://theobjective.com/espana/2026-09-24/uco-audios-cloacas-psoe-juez-biedma/",
+  biedma2:"https://www.infobae.com/espana/2026/10/08/la-jueza-del-caso-david-sanchez-asegura-que-no-sabe-si-leire-diez-esta-detras-de-los-ataques-que-sufrio-ni-de-los-videos-que-un-exmagistrado-grabo-contra-ella/",
+  mazon:"https://www.moncloa.com/2026/09/05/mazon-jueza-dana-pp-valenciano-3426683",
+  mazonRelevo:"https://www.eldebate.com/espana/comunidad-valenciana/20251126/mensaje-carlos-mazon-ante-investidura-juanfran-perez-llorca-como-presidente-generalitat-valenciana_359136_amp.html",
+  voxCuentas:"https://www.eldiario.es/politica/esconden-cuentas-vox-sobresueldos-multas-facturacion-opaca-cercan-partido-santiago-abascal_1_13083732.html",
+  monedero:"https://orain.eus/es/actualidad/sociedad/2025/02/20/podemos-revela-que-aparto-a-monedero-en-2023-tras-recibir-dos-denuncias-por-violencia-sexual/",
+  masMadrid:"https://www.deia.eus/politica/2026/10/13/madrid-abre-consulta-vinculante-militantes-frente-amplio-11646083.html",
+  g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
+};
+
+/* ============================================================
+   TIPOS DE AFIRMACIÓN
+   ============================================================ */
+const TYPE = {
+  hemeroteca:{label:"Hemeroteca", cls:"bg-indigo-500/20 text-indigo-300 border-indigo-500/40", dot:"#818cf8"},
+  sentencia:{label:"Sentencia", cls:"bg-red-500/20 text-red-300 border-red-500/40", dot:"#f87171"},
+  nofirme:{label:"Sentencia recurrible", cls:"bg-rose-500/15 text-rose-300 border-rose-400/40", dot:"#fb7185"},
+  proceso:{label:"Proceso abierto", cls:"bg-amber-500/20 text-amber-300 border-amber-500/40", dot:"#fbbf24"},
+  archivada:{label:"Archivada", cls:"bg-slate-500/20 text-slate-300 border-slate-500/40", dot:"#94a3b8"},
+  absolucion:{label:"Absolución", cls:"bg-teal-500/15 text-teal-300 border-teal-500/40", dot:"#2dd4bf"},
+  sancion:{label:"Sanción administrativa", cls:"bg-red-500/10 text-red-200 border-red-400/30", dot:"#fca5a5"},
+  opacidad:{label:"Opacidad", cls:"bg-orange-500/20 text-orange-300 border-orange-500/40", dot:"#fb923c"},
+  institucional:{label:"Calidad institucional", cls:"bg-purple-500/20 text-purple-300 border-purple-500/40", dot:"#c084fc"},
+  controversia:{label:"Controversia", cls:"bg-pink-500/20 text-pink-300 border-pink-500/40", dot:"#f472b6"},
+  limpio:{label:"Sin condenas", cls:"bg-emerald-500/20 text-emerald-300 border-emerald-500/40", dot:"#34d399"},
+  propuesta:{label:"Propuesta", cls:"bg-blue-500/15 text-blue-300 border-blue-400/40", dot:"#60a5fa"},
+  valoracion:{label:"Valoración / dato", cls:"bg-sky-500/20 text-sky-300 border-sky-500/40", dot:"#38bdf8"},
+  electoral:{label:"Hito electoral", cls:"bg-cyan-500/15 text-cyan-300 border-cyan-500/40", dot:"#22d3ee"}
+};
+const it = (t, x, s) => ({t, x, s});
+const hm = (x, s) => it("hemeroteca", x, s);
+
+/* ============================================================
+   DATOS: PARTIDOS
+   ============================================================ */
+const PARTIES = [
+{
+  id:"psoe", short:"PSOE", name:"PSOE (Pedro Sánchez)", color:"#ef4444", tags:["izquierda"],
+  resumen:"Partido del Gobierno saliente. Gobernó desde 2018 con Unidas Podemos y luego con Sumar. Llega al 29N sin presupuestos aprobados en la legislatura, con su exministro Ábalos condenado y con varias investigaciones abiertas en su entorno.",
+  hemeroteca:[
+    hm("En 2019 Sánchez dijo que no dormiría tranquilo con Podemos en el Gobierno y descartó varias veces pactar con Bildu; después gobernó con el apoyo de ambos."),
+    hm("Antes de 2023 sus dirigentes decían que la amnistía no cabía en la Constitución; la aprobó en 2024 para lograr la investidura, como medida de reconciliación según el Gobierno."),
+    hm("Derogó la sedición y rebajó un tipo de malversación (2022), cambios que beneficiaban a condenados del procés; el Gobierno habló de homologarse con Europa."),
+    hm("Cambió en 2022 la posición de España sobre el Sáhara para apoyar el plan de Marruecos, sin debate previo en el Congreso."),
+    hm("Sin mayoría ni presupuestos tras la ruptura de Junts, disolvió las Cortes el 5 oct 2026.", S.moncloa29n)
+  ],
+  corrupcion:[
+    it("sentencia","Caso mascarillas: el Supremo condenó (jun 2026) al exministro José Luis Ábalos a 24 años y a su asesor Koldo García a 19, y el 14 oct rechazó anular la sentencia.", S.abalosNul),
+    it("sentencia","El fiscal general García Ortiz, nombrado por el Gobierno, fue condenado (nov 2025) a 2 años de inhabilitación por revelación de datos reservados y dimitió.", S.fge),
+    it("nofirme","David Sánchez, hermano del presidente: 9 años de inhabilitación por prevaricación (jul 2026). Recurrible.", S.david),
+    it("proceso","Begoña Gómez, esposa del presidente, irá a juicio con jurado por tráfico de influencias y malversación. La Fiscalía pide su absolución.", S.begona),
+    it("proceso","Caso Leire Díez: se investiga una presunta red del entorno de Santos Cerdán para interferir en causas judiciales, con audios sobre intimidar a la jueza Biedma («darle un susto»). La jueza dice no saber quién está detrás y el PSOE no está imputado.", S.biedma2),
+    it("sentencia","Caso ERE: condenas de 2019 a ex altos cargos de la Junta de Andalucía, anuladas en parte por el Constitucional en 2024.", S.ere),
+    it("institucional","La oposición cuestiona la independencia del CIS, dirigido por el exdirigente socialista José Félix Tezanos.", S.polls)
+  ],
+  economia:[
+    it("hemeroteca","Presupuestos de 2023 prorrogados tres veces: es la primera legislatura completa que termina sin nuevas cuentas del Estado.", S.presupuestos),
+    it("valoracion","SMI de 735,90 € en 2018 a 1.221 € en 14 pagas en 2026.", S.smi),
+    it("hemeroteca","Su reducción de jornada a 37,5 horas cayó en el Congreso (sep 2025) por el voto de PP, Vox, Junts y UPN, y su gravamen a las energéticas, en ene 2025, por PP, Vox, Junts, PNV y UPN.", S.jornada),
+    it("propuesta","Para el 29N: Empresa Estatal de Vivienda, Plan de Vivienda 2026-2030 de 7.000 M€, jornada de 36 horas antes de 2030 y SMI del 60% del salario medio.", S.eco29n)
+  ],
+  paradoja:"Tiene lógica para quien prioriza las subidas del SMI y las pensiones, la ley de vivienda y frenar a PP y Vox con la única fuerza de izquierdas capaz de gobernar. Choca con quien rechaza la amnistía y las cesiones a los independentistas, o con quien pone por delante la corrupción en el entorno del Gobierno."
+},
+{
+  id:"pp", short:"PP", name:"PP (Alberto Núñez Feijóo)", color:"#3b82f6", tags:["derecha"],
+  resumen:"Primera fuerza en todas las encuestas salvo el CIS. Gobierna la mayoría de comunidades, varias con Vox. Arrastra la condena por Gürtel, tiene pendiente la sentencia de Kitchen y ha sido muy criticado por la gestión de la DANA en Valencia.",
+  hemeroteca:[
+    hm("En 2011 prometió bajar impuestos; ya en el Gobierno subió IRPF, IVA e IBI, alegando la crisis y el déficit heredado."),
+    hm("Con mayoría absoluta (2011-2015) mantuvo la ley del aborto por plazos pese a haber prometido reformarla; el proyecto de Gallardón se retiró en 2014."),
+    hm("DANA de Valencia (29 oct 2024, más de 220 muertos): el presidente Carlos Mazón fue muy criticado por su paradero y la tardanza de la alerta. Dimitió un año después y le sucedió Juanfran Pérez Llorca con los votos de Vox (nov 2025).", S.mazon),
+    hm("Tras marcar distancias con Vox, pactó en 2026 gobiernos de coalición con Vox en Extremadura, Aragón y Andalucía, con cláusulas de «prioridad nacional» en ayudas y vivienda.", S.andaluciaGob),
+    hm("Andaluzas de 2026: Moreno perdió la mayoría absoluta (53 de 109) y necesitó a Vox para ser reelegido.", S.andalucia)
+  ],
+  corrupcion:[
+    it("sentencia","Gürtel: el PP fue condenado como partícipe a título lucrativo y la Audiencia Nacional dio por acreditada una contabilidad paralela («caja B»). La sentencia (2018) provocó la moción de censura que echó a Rajoy."),
+    it("proceso","Operación Kitchen: juicio celebrado en la Audiencia Nacional, visto para sentencia el 28 jul 2026. Se juzga el presunto uso de fondos de Interior para espiar a Bárcenas y quitarle pruebas.", S.kitchen),
+    it("proceso","Causa de la DANA: la jueza de Catarroja investiga a la ex consejera de Emergencias Salomé Pradas. Mazón, aforado, no está imputado; el TSJ valenciano rechazó investigarle.", S.mazon),
+    it("absolucion","Borrado de los discos duros de Bárcenas en la sede del PP: el partido y sus empleados fueron absueltos en 2019 por falta de pruebas.", S.discos),
+    it("proceso","Púnica, Lezo y Taula: tramas de corrupción en Madrid y Valencia con causas en distintas fases.")
+  ],
+  economia:[
+    it("hemeroteca","La deuda pública pasó de casi el 69% al 100% del PIB entre 2011 y 2014."),
+    it("sentencia","La amnistía fiscal de Montoro (2012) fue declarada inconstitucional en 2017."),
+    it("hemeroteca","Votó contra la reducción de jornada (sep 2025) y contra el gravamen a las energéticas (ene 2025).", S.jornada),
+    it("propuesta","Para el 29N: un millón de viviendas en 4 años, avales de hasta el 95-100% para jóvenes, IVA del 0% en alimentos básicos, IVA de la energía al 10%, deflactar el IRPF y doblar el mínimo por hijo.", S.eco29n)
+  ],
+  paradoja:"Tiene lógica para quien quiere un cambio de Gobierno, bajar impuestos y una gestión previsible dentro de la UE. Choca con quien rechaza que gobierne con Vox, con quien no olvida la corrupción de la etapa Rajoy o con quien espera recortes de gasto que el PP no hizo cuando gobernó."
+},
+{
+  id:"vox", short:"VOX", name:"VOX (Santiago Abascal)", color:"#84cc16", tags:["derecha"],
+  resumen:"Tercera fuerza en las encuestas (cerca del 19%, casi el doble que en 2023). No tiene condenas por corrupción, pero sí multas del Tribunal de Cuentas por su financiación, y ha vuelto a gobernar con el PP en varias comunidades.",
+  hemeroteca:[
+    hm("En julio de 2024 salió de los cinco gobiernos autonómicos que compartía con el PP por el reparto de menores migrantes; en 2026 volvió a entrar en Extremadura, Aragón y Andalucía, con la «prioridad nacional» como condición.", S.andaluciaGob),
+    hm("Critica los «chiringuitos» públicos, aunque Abascal trabajó en organismos y fundaciones de la Comunidad de Madrid cuando militaba en el PP."),
+    hm("Propone recortar las subvenciones a partidos y parlamentos autonómicos, que también recibe."),
+    hm("Su programa ha pasado de un perfil económico liberal (2019) a otro más proteccionista y centrado en los trabajadores.")
+  ],
+  corrupcion:[
+    it("limpio","Sin condenas por corrupción con dinero público."),
+    it("sancion","El Tribunal de Cuentas le impuso multas que suman cerca de 1 millón de euros por irregularidades en su financiación: donaciones finalistas y casi 400.000 € en donaciones anónimas.", S.voxCuentas),
+    it("opacidad","Traspasos millonarios a la Fundación Disenso, que preside Abascal. En dic 2025 las Cortes encargaron al Tribunal de Cuentas una fiscalización especial (Vox votó en contra).", S.disenso),
+    it("controversia","Ex dirigentes como Espinosa de los Monteros, Ortega Smith u Olona denuncian falta de transparencia en sus cuentas, sin aportar por ahora pruebas documentales. Vox lo atribuye a disidentes.", S.voxCuentas),
+    it("opacidad","Préstamo electoral de un banco húngaro: la Fiscalía archivó la investigación tras su devolución.", S.voxCuentas)
+  ],
+  economia:[
+    it("hemeroteca","En Andalucía pacta con el PP una rebaja del tramo autonómico del IRPF de 0,25 puntos anuales para rentas de menos de 60.000 € y deducciones por hijo.", S.andaluciaGob),
+    it("propuesta","Para el 29N: Impuesto de Sociedades al 15%, rebaja de IRPF e IVA, liberalizar el suelo, sin cuota de autónomos para ingresos inferiores al SMI y sin reducción legal de la jornada.", S.eco29n)
+  ],
+  paradoja:"Tiene lógica para quien prioriza por encima de todo el control de la inmigración, la seguridad y la unidad de España. Choca con quien defiende la regularización de inmigrantes o los derechos LGTBI, con quien quiere un liberalismo económico pleno o con quien exige transparencia total en las cuentas."
+},
+{
+  id:"fa", short:"FRENTE AMPLIO", name:"Frente Amplio (Sumar, IU, Comuns y Más Madrid · Ada Colau)", color:"#c026d3", tags:["izquierda"],
+  resumen:"Heredero de Sumar: coalición a la izquierda del PSOE con Ada Colau de candidata. Va sin Podemos y Más Madrid consulta a su militancia si se integra. Las encuestas le dan entre el 4,7% y el 8%.",
+  hemeroteca:[
+    hm("Socio del Gobierno de coalición (2023-2026). Votó con el PSOE en casi todo, incluida la amnistía, aunque con desacuerdos públicos en defensa y política exterior."),
+    hm("Íñigo Errejón, su portavoz en el Congreso, dimitió en oct 2024 tras denuncias de violencia machista."),
+    hm("Ruptura con Podemos: sus cinco diputados dejaron el grupo de Sumar en dic 2023. En 2026 la izquierda del PSOE vuelve a ir dividida, y Más Madrid somete a consulta su entrada en el Frente Amplio.", S.masMadrid)
+  ],
+  corrupcion:[
+    it("limpio","Sin condenas por corrupción."),
+    it("valoracion","Según 40dB, Frente Amplio y Podemos por separado suman el 7,6% del voto; en lista conjunta tendrían el 9,5% y 15-19 escaños. La división tiene un coste D'Hondt medible.", S.polls)
+  ],
+  economia:[
+    it("hemeroteca","Desde el Ministerio de Trabajo impulsó las subidas del SMI y la reducción de jornada a 37,5 horas, que el Congreso tumbó en sep 2025.", S.jornada),
+    it("propuesta","Para el 29N, sin programa cerrado: más progresividad sobre grandes herencias y patrimonios, más protección a los inquilinos y franquicia de IVA para autónomos que facturen menos de 85.000 €.", S.eco29n)
+  ],
+  paradoja:"Tiene lógica para quien quiere empujar al PSOE hacia la izquierda en salarios, jornada y vivienda. Choca con quien busca una izquierda unida (va separado de Podemos) o con quien no perdona el caso Errejón."
+},
+{
+  id:"podemos", short:"PODEMOS", name:"Podemos (Ione Belarra / Irene Montero)", color:"#7c3aed", tags:["izquierda"],
+  resumen:"El partido que nació del 15-M y llegó a tener 71 escaños (con sus confluencias) se mueve ahora entre el 2,3% y el 3,1% en las encuestas. Para el 29N se alía con ERC.",
+  hemeroteca:[
+    hm("Nació criticando a «la casta»; en 2018 sus líderes Pablo Iglesias e Irene Montero compraron un chalé en Galapagar, lo que sometieron a consulta de sus bases."),
+    hm("La ley del «solo sí es sí» (Ministerio de Igualdad de Montero, 2022) provocó más de 1.200 rebajas de penas a agresores sexuales. Podemos culpó a los jueces de aplicarla mal y se opuso a la reforma de 2023."),
+    hm("Feb 2025: reconoció que había apartado en 2023 a su cofundador Juan Carlos Monedero tras dos denuncias internas de violencia sexual, sin hacerlo público hasta que salió en prensa.", S.monedero),
+    hm("Descartó integrarse en el Frente Amplio y selló una alianza con ERC para el 29N (12 oct 2026).", S.podemosErc)
+  ],
+  corrupcion:[
+    it("archivada","Las causas sobre su financiación, incluido el caso Neurona, fueron archivadas en su mayoría."),
+    it("institucional","Antiguos dirigentes critican la falta de debate interno y la concentración de poder en la dirección.")
+  ],
+  economia:[
+    it("hemeroteca","Pactó con PSOE, ERC y Bildu la ley de vivienda de 2023, con topes al alquiler en zonas tensionadas.", S.leyVivienda),
+    it("propuesta","Para el 29N: SMI de 1.800 € mensuales, jornada de 35 horas y empresa pública de energía.", S.eco29n),
+    it("propuesta","Más impuestos a la banca, las eléctricas, las grandes fortunas y los beneficios extraordinarios; regular el precio del alquiler y penalizar la vivienda vacía de grandes propietarios.", S.podemosProg)
+  ],
+  paradoja:"Tiene lógica para quien quiere una izquierda sin rebajas y vota en Madrid u otra provincia grande, donde su voto puede contar. Choca con quien vota en una provincia pequeña, donde difícilmente sacará escaño, o con quien no perdona la ley del «solo sí es sí»."
+},
+{
+  id:"salf", short:"SALF", name:"Se Acabó La Fiesta (Alvise Pérez)", color:"#f97316", tags:["antisistema"],
+  resumen:"Partido de protesta contra el sistema de partidos (1,8% según 40dB). Su líder tiene seis causas abiertas en el Supremo y varias condenas firmes por intromisión en el honor.",
+  hemeroteca:[
+    hm("Cumplió su promesa de sortear su sueldo de eurodiputado."),
+    hm("Criticaba el aforamiento de los políticos; como eurodiputado, sus causas se tramitan ante el Supremo y ha necesitado que el Parlamento Europeo levante su inmunidad.")
+  ],
+  corrupcion:[
+    it("proceso","Seis causas abiertas en el Supremo (oct 2026): presunta financiación ilegal (los 100.000 € en efectivo que admitió recibir de Álvaro Romillo, procesado por estafa), acoso a una fiscal, acoso y revelación de secretos contra dos eurodiputados de su partido, amenazas a un alcalde, difusión de una PCR falsa de Salvador Illa y desórdenes públicos.", S.alvise),
+    it("sentencia","Varias condenas firmes por intromisión ilegítima en el honor por difundir bulos (contra Manuela Carmena o Ábalos, entre otros).")
+  ],
+  economia:[
+    it("opacidad","No ha publicado un programa oficial para el 29N: lo que sigue son posiciones públicas.", S.salfProg),
+    it("propuesta","Bajar impuestos y simplificar la fiscalidad, con foco en autónomos y pymes; recortar el gasto político y las subvenciones a partidos, sindicatos y patronales.", S.salfProg),
+    it("propuesta","Vivienda: más oferta con menos trabas al suelo y las licencias, y mano dura contra la okupación. Pensiones: sin propuesta detallada.", S.salfProg)
+  ],
+  paradoja:"Tiene lógica para quien quiere, sobre todo, castigar a todos los partidos. Choca con quien exige rigor y legalidad a sus representantes (seis causas abiertas y condenas por bulos) o con quien quiere que su voto se traduzca en escaño fuera de Madrid."
+},
+{
+  id:"junts", short:"JUNTS", name:"Junts per Catalunya (Carles Puigdemont)", color:"#06b6d4", tags:["nacionalista","derecha"],
+  resumen:"Independentistas de centro-derecha. Sus 7 votos hicieron presidente a Sánchez en 2023 y su ruptura en 2025 bloqueó la legislatura. Su candidato, Puigdemont, sigue en Bélgica a la espera de que se le aplique la amnistía.",
+  hemeroteca:[
+    hm("De la declaración unilateral de independencia de 2017 al pacto de investidura con el PSOE en 2023, a cambio de la amnistía y otras contrapartidas."),
+    hm("Pactó con el PSOE delegar a Cataluña competencias de inmigración; la ley cayó en el Congreso (23 sep 2025) por los votos de PP, Vox, Podemos y UPN.", S.inmigracion),
+    hm("Rompió con el PSOE el 27 oct 2025 alegando incumplimientos en la amnistía y el referéndum; desde entonces votó a menudo con PP y Vox.", S.junts)
+  ],
+  corrupcion:[
+    it("sentencia","Laura Borràs, ex presidenta del partido, fue condenada en 2023 por fraccionar contratos cuando dirigía la Institució de les Lletres Catalanes."),
+    it("proceso","Procede del espacio de Convergència, investigada durante años por el caso del 3% (presuntas comisiones por obra pública)."),
+    it("proceso","Carles Puigdemont está procesado por desobediencia y malversación por el 1-O. En oct 2026 el Constitucional avaló amnistiar esa malversación, lo que abre la puerta a que el Supremo levante su orden de detención.", S.puigdemontTC)
+  ],
+  economia:[
+    it("hemeroteca","Financiación y transferencias para Cataluña como condición de sus apoyos en el Congreso."),
+    it("hemeroteca","Votó con PP, Vox y UPN el veto que tumbó la reducción de jornada (sep 2025) y ayudó a tumbar el gravamen a las energéticas (ene 2025).", S.jornada)
+  ],
+  paradoja:"Tiene lógica para el votante catalán independentista de centro-derecha que quiere influir en Madrid. Choca con quien quiere un Gobierno estable o rechaza la amnistía."
+},
+{
+  id:"erc", short:"ERC", name:"Esquerra Republicana de Catalunya (Gabriel Rufián)", color:"#facc15", tags:["nacionalista","izquierda"],
+  resumen:"Independentistas de izquierdas. Apoyaron a Sánchez durante toda la legislatura e invistieron a Salvador Illa en Cataluña a cambio de la financiación singular. Para el 29N suman a Podemos.",
+  hemeroteca:[
+    hm("Del 1-O de 2017 a apoyar al Gobierno de Sánchez y a investir al socialista Illa en Cataluña (2024)."),
+    hm("Pactó la «financiación singular» (jul 2025): la agencia tributaria catalana irá asumiendo el IRPF. Necesitaba una ley que no reunió apoyos antes de la disolución.", S.finSing),
+    hm("Tras el registro de Ferraz por el caso Leire Díez (may 2026) exigió explicaciones a Sánchez sin romper con él.", S.pnvEsteban),
+    hm("Alianza con Podemos para el 29N (12 oct 2026).", S.podemosErc)
+  ],
+  corrupcion:[
+    it("sentencia","Oriol Junqueras, su presidente, fue condenado en 2019 a 13 años por sedición y malversación por el 1-O e indultado en 2021."),
+    it("controversia","En 2024 se supo que una «estructura B» interna había difundido carteles contra los hermanos Maragall que aludían al alzhéimer de Pasqual Maragall. El partido pidió perdón.")
+  ],
+  economia:[
+    it("hemeroteca","Pactó con PSOE, Podemos y Bildu la ley de vivienda de 2023, con topes al alquiler en zonas tensionadas.", S.leyVivienda),
+    it("hemeroteca","Votó a favor de la reducción de jornada a 37,5 horas (sep 2025).", S.jornada)
+  ],
+  paradoja:"Tiene lógica para el votante catalán independentista de izquierdas que quiere conseguir recursos para Cataluña. Choca con quien ve la financiación singular como un privilegio o rechaza la vía unilateral del 1-O."
+},
+{
+  id:"bildu", short:"EH BILDU", name:"EH Bildu (Arnaldo Otegi)", color:"#2dd4bf", tags:["nacionalista","izquierda"],
+  resumen:"Izquierda independentista vasca y navarra. Fue un socio estable de Sánchez en lo social y lo presupuestario. Para muchos votantes es un límite que no condene expresamente la historia de ETA.",
+  hemeroteca:[
+    hm("Apoyó de forma estable los presupuestos y decretos sociales del Gobierno."),
+    hm("En las municipales de 2023 incluyó a 44 condenados de ETA en sus listas, 7 de ellos por delitos de sangre. Estos 7 renunciaron tras la polémica.", S.bilduListas),
+    hm("Ganó la alcaldía de Pamplona (dic 2023) con una moción de censura pactada con los socialistas navarros, pese a que el PSOE había descartado gobernar con Bildu.", S.pamplona),
+    hm("Vascas de 2024: empató con el PNV a 27 escaños. Su candidato, Pello Otxandiano, se negó a calificar a ETA de grupo terrorista («fue un grupo armado»).", S.euskadi24)
+  ],
+  corrupcion:[
+    it("limpio","Sin condenas por corrupción con dinero público."),
+    it("valoracion","No condena expresamente los asesinatos de ETA; habla del «dolor causado» y de su compromiso con las vías pacíficas. Sus críticos le reprochan además los homenajes a presos excarcelados.")
+  ],
+  economia:[
+    it("hemeroteca","Pactó con PSOE, Podemos y ERC la ley de vivienda de 2023 y presionó para ampliar las zonas tensionadas.", S.leyVivienda),
+    it("hemeroteca","Votó a favor de la reducción de jornada a 37,5 horas (sep 2025).", S.jornada)
+  ],
+  paradoja:"Tiene lógica para el votante vasco o navarro de izquierdas y soberanista que valora su agenda social. Choca con quien considera imprescindible una condena expresa de ETA."
+},
+{
+  id:"pnv", short:"PNV", name:"Partido Nacionalista Vasco (Aitor Esteban)", color:"#22c55e", tags:["nacionalista","derecha"],
+  resumen:"Nacionalismo vasco de centro-derecha. Gobierna Euskadi con el PSE y negocia con quien gobierne en Madrid a cambio de competencias y del Concierto Económico.",
+  hemeroteca:[
+    hm("En 2018 apoyó los presupuestos de Rajoy y, una semana después, la moción de censura que lo desalojó."),
+    hm("Vascas de 2024: empató con Bildu a 27 escaños y mantuvo el Gobierno vasco con el PSE (Imanol Pradales, lehendakari).", S.euskadi24),
+    hm("En mayo de 2026 dio la legislatura por agotada y pidió elecciones, pero descartó una moción de censura con los votos de Vox.", S.pnvEsteban)
+  ],
+  corrupcion:[
+    it("sentencia","Caso De Miguel: el Supremo confirmó (ene 2023) las condenas a tres ex dirigentes del PNV de Álava, entre ellas 12 años y 4 meses para Alfredo de Miguel, por cohecho, malversación, tráfico de influencias y blanqueo.", S.deMiguel),
+    it("institucional","Condiciona sus apoyos en Madrid a nuevas competencias para Euskadi y al blindaje del Concierto Económico.")
+  ],
+  economia:[
+    it("hemeroteca","Blindaje del Concierto Económico (Cupo) como eje de toda negociación."),
+    it("hemeroteca","Votó con PP, Vox, Junts y UPN contra el gravamen a las energéticas (ene 2025), pero apoyó la reducción de jornada (sep 2025).", S.energeticas)
+  ],
+  paradoja:"Tiene lógica para el votante vasco moderado que prioriza el autogobierno y la buena gestión. Choca con quien quiere un socio fiel a un bloque ideológico o considera el Concierto un privilegio."
+},
+{
+  id:"d21", short:"D21", name:"Democracia 21 (Miriam González Durántez)", color:"#a78bfa", tags:["centro"],
+  resumen:"Partido de centro liberal y reformista presentado el 10 oct 2026. No ha gobernado ni tiene causas abiertas; su incógnita es si obtendrá algún escaño.",
+  hemeroteca:[
+    hm("Integra a ex cargos de UPyD (Rafael Calduch, Fernando Maura, Beatriz Becerra) y se presenta solo en Madrid y Barcelona.", S.d21),
+    hm("No aparece todavía en las encuestas publicadas."),
+    hm("Defiende una inmigración regulada como un activo y rechaza el discurso xenófobo.", S.d21)
+  ],
+  corrupcion:[
+    it("limpio","Sin condenas ni causas abiertas. Al ser un partido nuevo, no tiene historial de gestión con el que compararlo.")
+  ],
+  economia:[
+    it("propuesta","Sin impuestos a la propiedad para menores de 35 años y un plan nacional para construir barrios con diez años de estabilidad normativa.", S.d21),
+    it("propuesta","Recortar el 90% de los asesores y las subvenciones a partidos; profesionalizar la Administración.", S.d21),
+    it("propuesta","Fiscalía dependiente del Parlamento, juzgados anticorrupción especializados y fin de los aforamientos.", S.d21)
+  ],
+  paradoja:"Tiene lógica para quien busca un centro reformista sin historial de corrupción y vota en Madrid o Barcelona. Choca con quien quiere asegurarse de que su voto obtenga escaño: todavía no aparece en las encuestas."
+},
+{
+  id:"adel", short:"ADELANTE AND.", name:"Adelante Andalucía (José Ignacio García)", color:"#fda4af", tags:["izquierda","nacionalista"],
+  resumen:"Andalucismo de izquierdas. Fue la sorpresa de las andaluzas de 2026 (de 2 a 8 escaños), pero en generales solo se presenta en Andalucía y las encuestas le dan como mucho 1 escaño.",
+  hemeroteca:[
+    hm("Nació de una escisión de Podemos Andalucía liderada por Teresa Rodríguez y se mantiene al margen del Gobierno central."),
+    hm("Andaluzas del 17 may 2026: pasó de 2 a 8 escaños (9,6%) y superó a Por Andalucía (IU, Sumar y Podemos).", S.andalucia)
+  ],
+  corrupcion:[
+    it("limpio","Sin condenas ni causas abiertas. Al no haber gobernado, no tiene historial de gestión con el que compararlo.")
+  ],
+  economia:[
+    it("propuesta","En su programa andaluz: congelar los alquileres y reservar al menos el 50% de la nueva vivienda a protegida, con el 60% de ella en alquiler social.", S.adelViv),
+    it("propuesta","Prohibir la venta de vivienda pública, traspasar al parque público las viviendas de la Sareb en Andalucía y paralizar los desahucios de familias vulnerables sin alternativa.", S.adelViv)
+  ],
+  paradoja:"Tiene lógica para el votante andaluz de izquierdas que quiere una voz propia para Andalucía, sobre todo en Sevilla, Málaga o Cádiz. Choca con quien vota en una provincia andaluza pequeña, donde difícilmente sacará escaño."
+}
+];
+const IDX = {}; PARTIES.forEach((p,i)=>IDX[p.id]=i);
+
+/* ============================================================
+   CRONOLOGÍA (hechos fechados con fuente)
+   ============================================================ */
+const TIMELINE = [
+  {d:"2023-07-23", p:["general"], t:"electoral", x:"Elecciones generales: PP 137, PSOE 121, Vox 33, Sumar 31, ERC 7, Junts 7, Bildu 6, PNV 5, BNG 1, CC 1, UPN 1. Sánchez es investido en noviembre con 179 votos.", s:S.g2023},
+  {d:"2023-01-10", p:["pnv"], t:"sentencia", x:"El Supremo confirma las condenas del caso De Miguel a tres ex dirigentes del PNV de Álava (hasta 12 años y 4 meses).", s:S.deMiguel},
+  {d:"2023-05-16", p:["bildu"], t:"hemeroteca", x:"Los 7 condenados de ETA por delitos de sangre que iban en las listas municipales de Bildu renuncian a su candidatura.", s:S.bilduListas},
+  {d:"2023-12-28", p:["bildu","psoe"], t:"hemeroteca", x:"Bildu gana la alcaldía de Pamplona con una moción de censura junto a los socialistas navarros.", s:S.pamplona},
+  {d:"2024-04-21", p:["bildu","pnv"], t:"electoral", x:"Vascas: Bildu y PNV empatan a 27 escaños; el PNV conserva el Gobierno con el PSE.", s:S.euskadi24},
+  {d:"2024-07-16", p:["psoe"], t:"sentencia", x:"El Constitucional anula parte de las condenas del caso ERE (Chaves y Griñán, entre otros) y ordena a la Audiencia de Sevilla dictar nuevas sentencias.", s:S.ere},
+  {d:"2025-02-20", p:["podemos"], t:"hemeroteca", x:"Podemos reconoce que apartó en 2023 a su cofundador Juan Carlos Monedero tras dos denuncias internas de violencia sexual, sin hacerlo público.", s:S.monedero},
+  {d:"2025-04-11", p:["salf"], t:"proceso", x:"El Supremo abre causa contra Alvise Pérez por presunta financiación ilegal (100.000 € de Romillo).", s:S.alvise},
+  {d:"2024-10-29", p:["pp"], t:"hemeroteca", x:"DANA de Valencia: más de 220 muertos. La gestión del Gobierno valenciano de Carlos Mazón (PP) recibe fuertes críticas por la tardanza de la alerta.", s:S.mazon},
+  {d:"2025-01-22", p:["junts","pnv","pp","vox"], t:"hemeroteca", x:"El Congreso tumba el gravamen a las energéticas con los votos de PP, Vox, Junts, PNV y UPN.", s:S.energeticas},
+  {d:"2025-07-14", p:["erc","psoe"], t:"hemeroteca", x:"Gobierno y Generalitat pactan la «financiación singular»: la agencia tributaria catalana asumirá de forma progresiva la gestión del IRPF.", s:S.finSing},
+  {d:"2025-09-11", p:["psoe","fa","pp","vox","junts"], t:"hemeroteca", x:"El Congreso tumba la reducción de jornada a 37,5 horas (178 a 170) con el veto de PP, Vox, Junts y UPN.", s:S.jornada},
+  {d:"2025-09-23", p:["junts","podemos"], t:"hemeroteca", x:"Cae la delegación de competencias de inmigración a Cataluña pactada por PSOE y Junts (177 a 173), con los votos en contra de PP, Vox, Podemos y UPN.", s:S.inmigracion},
+  {d:"2025-10-27", p:["junts","psoe"], t:"hemeroteca", x:"Puigdemont anuncia la ruptura de Junts con el PSOE por «incumplimientos reiterados». El Gobierno se queda sin mayoría.", s:S.junts},
+  {d:"2025-11-27", p:["pp","vox"], t:"hemeroteca", x:"Tras la dimisión de Mazón, Juanfran Pérez Llorca (PP) es investido presidente valenciano con los votos de Vox.", s:S.mazonRelevo},
+  {d:"2025-11-20", p:["psoe"], t:"sentencia", x:"El Supremo condena al fiscal general Álvaro García Ortiz a 2 años de inhabilitación por revelación de datos reservados. Dimite.", s:S.fge},
+  {d:"2025-12-09", p:["vox"], t:"opacidad", x:"Las Cortes encargan al Tribunal de Cuentas una fiscalización especial de la Fundación Disenso (2020-2025). Vox, único voto en contra.", s:S.disenso},
+  {d:"2025-12-21", p:["vox","pp"], t:"electoral", x:"Autonómicas en Extremadura: el PP gana sin mayoría y Vox pasa de 5 a 11 escaños.", s:S.extremadura},
+  {d:"2026-04-16", p:["pp","vox"], t:"hemeroteca", x:"PP y Vox pactan un Gobierno de coalición en Extremadura tras cuatro meses de bloqueo, con una vicepresidencia para Vox.", s:S.extremadura},
+  {d:"2026-04-22", p:["pp","vox"], t:"hemeroteca", x:"PP y Vox cierran un acuerdo en Aragón con el modelo de «prioridad nacional».", s:S.aragon},
+  {d:"2026-05-17", p:["pp","psoe","vox","adel"], t:"electoral", x:"Andaluzas: PP 53 (pierde la absoluta), PSOE 28 (su peor resultado), Vox 15, Adelante Andalucía 8, Por Andalucía 5.", s:S.andalucia},
+  {d:"2026-05-28", p:["pnv","erc"], t:"hemeroteca", x:"El PNV da la legislatura por agotada y pide elecciones en 2026; ERC exige explicaciones por el caso Leire Díez sin romper con Sánchez.", s:S.pnvEsteban},
+  {d:"2026-06-22", p:["psoe"], t:"sentencia", x:"El Supremo condena a Ábalos a 24 años y 3 meses y a Koldo García a 19 años y 8 meses por el caso mascarillas.", s:S.abalos},
+  {d:"2026-07-03", p:["pp","vox"], t:"hemeroteca", x:"Moreno es reelegido en Andalucía con los votos de Vox, que obtiene una vicepresidencia y la «prioridad nacional» en ayudas y vivienda protegida.", s:S.andaluciaGob},
+  {d:"2026-07-14", p:["psoe"], t:"nofirme", x:"La Audiencia de Badajoz condena a David Sánchez a 9 años de inhabilitación por prevaricación. Recurrible.", s:S.david},
+  {d:"2026-07-28", p:["pp"], t:"proceso", x:"El juicio de la Operación Kitchen queda visto para sentencia en la Audiencia Nacional.", s:S.kitchen},
+  {d:"2026-09-24", p:["psoe"], t:"proceso", x:"Se conocen audios en poder de la UCO sobre un presunto intento de intimidar a la jueza Biedma (caso David Sánchez) a través de un clan de Badajoz. La jueza declara el 8 de octubre que no sabe quién está detrás.", s:S.biedma2},
+  {d:"2026-09-21", p:["psoe"], t:"proceso", x:"El juez Peinado envía a Begoña Gómez a juicio con jurado por tráfico de influencias y malversación. La Fiscalía pide la absolución.", s:S.begona},
+  {d:"2026-10-05", p:["general","psoe"], t:"electoral", x:"Sánchez disuelve las Cortes y convoca elecciones generales para el 29 de noviembre.", s:S.moncloa29n},
+  {d:"2026-10-06", p:["general"], t:"electoral", x:"El BOE publica el reparto de escaños del 29N: Madrid sube a 38 diputados y Cádiz baja a 8.", s:S.reparto29n},
+  {d:"2026-10-06", p:["junts"], t:"proceso", x:"El Constitucional avala amnistiar la malversación del 1-O, lo que abre la puerta al regreso de Puigdemont antes del 29N.", s:S.puigdemontTC},
+  {d:"2026-10-09", p:["psoe"], t:"proceso", x:"El juez Pedraz rechaza por ahora imputar al PSOE como persona jurídica en el caso Leire Díez, a la espera de interrogar a Santos Cerdán.", s:S.cerdan},
+  {d:"2026-10-10", p:["d21"], t:"electoral", x:"Miriam González presenta Democracia 21: concurrirá en Madrid y Barcelona.", s:S.d21},
+  {d:"2026-10-12", p:["podemos","erc"], t:"hemeroteca", x:"Podemos y ERC sellan una alianza para el 29N: Montero y Rufián harán campaña juntos. Podemos descarta integrarse en el Frente Amplio.", s:S.podemosErc},
+  {d:"2026-10-14", p:["psoe"], t:"sentencia", x:"El Supremo rechaza anular las condenas de Ábalos y Koldo; queda la vía del amparo ante el Constitucional.", s:S.abalosNul}
+];
+
+/* ============================================================
+   DATOS: 50 PREGUNTAS
+   Columnas de QROWS: PSOE, PP, VOX, SUMAR/FA, SALF, JUNTS, ERC, BILDU, PNV, D21, ADELANTE
+   Podemos parte de la columna de Sumar con las diferencias de OVERRIDES.
+   Escala: -2 (muy en contra de la afirmación) a +2 (muy a favor)
+   ============================================================ */
+const AXES = ["Fiscalidad y gasto público","Modelo territorial","Inmigración y seguridad","Derechos civiles e identidad","Regeneración y justicia","Vivienda y urbanismo","Mercado laboral y salarios","Defensa y geopolítica","Sanidad y educación","Energía y sector primario"];
+const AXES_SHORT = ["Fiscalidad","Territorio","Inmigración","Derechos","Regeneración","Vivienda","Laboral","Defensa","Sanidad/Educ.","Energía"];
+
+const QROWS = [
+ [0,"Hay que reducir de forma general la presión fiscal sobre familias y empresas, aunque implique recortar gasto.",[-1,2,2,-2,2,1,-1,-2,0,1,-2]],
+ [0,"El impuesto sobre el patrimonio y las grandes fortunas debe mantenerse o endurecerse.",[2,-2,-2,2,-2,-1,2,2,1,-1,2]],
+ [0,"El IRPF debe deflactarse automáticamente con la inflación.",[0,2,2,0,2,1,0,0,1,1,0]],
+ [0,"Las pensiones deben revalorizarse siempre con el IPC, aun a costa de más deuda o más impuestos.",[2,1,1,2,1,0,1,2,1,0,2]],
+ [0,"Hay que reducir el tamaño del Estado: menos organismos, cargos públicos y subvenciones.",[-2,1,2,-2,2,0,-1,-2,-1,2,-2]],
+ [1,"Cataluña debería tener un sistema de financiación propio (cupo fiscal singular).",[0,-2,-2,0,-2,2,2,1,1,-1,0]],
+ [1,"Conviene recentralizar competencias (educación, sanidad, justicia) en el Estado.",[-1,0,2,-1,1,-2,-2,-2,-2,0,-1]],
+ [1,"Debe prohibirse de forma efectiva cualquier referéndum de secesión.",[1,2,2,-1,2,-2,-2,-2,-1,1,-1]],
+ [1,"Todos los españoles deben recibir servicios públicos equivalentes con independencia de su territorio y de su financiación autonómica.",[1,2,2,1,2,-1,-1,-1,-1,2,1]],
+ [1,"Los conciertos económicos vasco y navarro deben mantenerse tal como están.",[1,0,-2,1,-2,1,1,2,2,-1,0]],
+ [2,"España debe endurecer el control de fronteras y reducir la inmigración irregular.",[0,2,2,-2,2,1,-1,-2,0,0,-2]],
+ [2,"Debe aprobarse una regularización extraordinaria de inmigrantes sin papeles.",[0,-2,-2,2,-2,-1,2,2,1,0,2]],
+ [2,"Los extranjeros reincidentes en delitos deben ser deportados de forma inmediata.",[-1,1,2,-2,2,1,-2,-2,-1,0,-2]],
+ [2,"Todas las comunidades deben acoger obligatoriamente a menores migrantes no acompañados según un reparto estatal.",[2,-1,-2,2,-1,-2,0,1,0,1,2]],
+ [2,"Hay que reforzar medios y competencias policiales aunque ello limite algunas libertades (por ejemplo, la ley de seguridad ciudadana).",[0,2,2,-2,2,1,-1,-2,0,0,-2]],
+ [3,"Cualquier persona debe poder cambiar su sexo registral por simple declaración, sin informe médico.",[2,-2,-2,2,-1,0,2,2,1,0,2]],
+ [3,"Debe mantenerse el aborto por plazos y permitir a las menores abortar sin consentimiento paterno.",[2,-1,-2,2,-1,1,2,2,1,1,2]],
+ [3,"El Estado debe mantener políticas activas de memoria democrática (exhumaciones, anulación de juicios franquistas).",[2,-1,-2,2,-1,1,2,2,2,0,2]],
+ [3,"La gestación subrogada debería poder regularse legalmente en España.",[-2,-1,-2,-2,0,0,-1,-2,-1,0,-2]],
+ [3,"La eutanasia debe seguir siendo un derecho garantizado por ley.",[2,-1,-2,2,0,1,2,2,2,2,2]],
+ [4,"Los jueces deben elegir directamente a la mayoría de los vocales del CGPJ.",[-1,2,2,-1,2,0,-1,-1,0,2,0]],
+ [4,"Deben eliminarse todos los aforamientos de cargos políticos.",[-1,-1,0,0,0,-1,-1,0,-1,2,1]],
+ [4,"La financiación ilegal de partidos debe castigarse con inhabilitación y hasta la disolución de la formación.",[1,0,1,1,2,0,1,1,0,2,1]],
+ [4,"Los indultos a políticos condenados por delitos cometidos en el ejercicio de su cargo deben prohibirse.",[-2,2,2,-1,2,-2,-2,-1,-1,2,-1]],
+ [4,"La Fiscalía General del Estado y el CIS deben ser plenamente independientes del Gobierno.",[0,2,2,1,2,1,1,0,1,2,1]],
+ [5,"Debe limitarse por ley el precio del alquiler en zonas tensionadas.",[2,-2,-2,2,-2,-1,2,2,1,-1,2]],
+ [5,"La okupación ilegal debe resolverse con desalojos exprés.",[-1,2,2,-2,2,1,-1,-2,1,1,-2]],
+ [5,"Hay que bonificar fiscalmente la compra de vivienda para jóvenes.",[1,2,2,-1,2,1,0,-1,1,2,-1]],
+ [5,"El suelo público debe movilizarse masivamente para construir vivienda, incluida la protegida.",[2,1,1,2,1,1,2,2,2,2,2]],
+ [5,"Los pisos turísticos deben limitarse o restringirse fuertemente.",[1,-1,-2,2,-1,1,2,2,1,0,2]],
+ [6,"El salario mínimo (SMI) debe seguir subiendo de forma continuada por decreto.",[2,-1,-1,2,-1,0,2,2,1,0,2]],
+ [6,"Debe flexibilizarse y abaratarse el despido.",[-2,1,0,-2,1,0,-2,-2,-1,1,-2]],
+ [6,"La jornada laboral debe reducirse a 37,5 horas semanales sin bajada salarial.",[2,-2,-1,2,-1,-1,1,2,0,-1,2]],
+ [6,"Las cuotas de los autónomos deben depender de sus ingresos reales.",[2,0,1,2,1,1,2,2,1,1,2]],
+ [6,"Deben ampliarse las bonificaciones a la contratación indefinida.",[1,2,1,1,1,1,0,0,1,1,0]],
+ [7,"España debe aumentar el gasto en Defensa hasta el 2% del PIB (o más), según el compromiso con la OTAN.",[1,2,2,-2,1,1,-2,-2,1,2,-2]],
+ [7,"España debe revertir su apoyo a la propuesta de autonomía marroquí para el Sáhara Occidental y volver a la neutralidad o a la autodeterminación.",[-2,0,0,2,0,0,1,2,2,1,2]],
+ [7,"España debe seguir enviando armamento a Ucrania.",[2,2,0,0,0,1,0,-2,2,2,-1]],
+ [7,"Ceuta y Melilla requieren refuerzo fronterizo y una defensa firme de su soberanía.",[1,2,2,0,2,0,-1,-1,0,1,0]],
+ [7,"España debe ceder más soberanía a la Unión Europea (integración federal) en lugar de recuperar competencias nacionales.",[2,1,-2,1,-1,0,1,0,2,2,0]],
+ [8,"Las familias deben poder elegir colegio con financiación pública (conciertos educativos o cheque escolar).",[-1,2,2,-2,2,1,-1,-2,1,1,-2]],
+ [8,"Debería introducirse algún tipo de copago sanitario en función de la renta.",[-2,0,1,-2,1,0,-2,-2,-1,0,-2]],
+ [8,"La educación debe ser exclusivamente pública.",[-1,-2,-2,1,-2,-2,0,1,-1,-2,1]],
+ [8,"Los ciudadanos deben poder elegir libremente médico y centro sanitario en toda España.",[0,2,2,0,1,0,0,0,0,1,0]],
+ [8,"El castellano debe ser lengua vehicular garantizada en las comunidades con lengua cooficial.",[0,2,2,-1,2,-2,-2,-2,-2,2,0]],
+ [9,"Las centrales nucleares deben alargar su vida útil en lugar de cerrarse.",[-1,2,2,-2,1,1,-1,-2,0,1,-2]],
+ [9,"Los objetivos de descarbonización de la Agenda 2030 deben mantenerse aunque encarezcan la economía a corto plazo.",[2,0,-2,2,-1,0,1,1,1,1,2]],
+ [9,"Deben aumentarse los impuestos sobre hidrocarburos y combustibles fósiles.",[1,-2,-2,2,-2,-1,1,1,0,0,2]],
+ [9,"Debe flexibilizarse la normativa ambiental que afecta a agricultores y ganaderos.",[0,2,2,-2,1,1,-1,-1,0,0,-2]],
+ [9,"El Estado debe mantener primas e incentivos a las energías renovables.",[2,0,-1,2,-1,1,1,1,1,1,2]]
+];
+/* Explicación de cada pregunta: [qué significa, argumento a favor, argumento en contra] */
+const HELP = [
+["Es cuánto pagamos entre todos en impuestos y cotizaciones. Bajarla deja más dinero a familias y empresas, pero obliga a gastar menos en servicios públicos o a endeudarse más.","Más dinero en el bolsillo y más incentivo para trabajar, invertir y contratar.","Menos recursos para sanidad, educación, pensiones o dependencia."],
+["Impuesto que pagan quienes tienen un patrimonio muy alto (casas, acciones, ahorros) por encima de un mínimo exento. Algunas comunidades lo bonifican casi del todo, y en 2022 se creó un impuesto estatal a las grandes fortunas para cubrir ese hueco.","Que aporten más los que más tienen y reducir la desigualdad.","Grava dinero que ya pagó impuestos al ganarse y puede empujar a grandes fortunas a irse."],
+["Si los sueldos suben con la inflación pero los tramos del IRPF no se actualizan, acabas pagando un porcentaje mayor aunque no seas más rico. Deflactar es subir esos tramos al mismo ritmo que los precios.","Evita una subida de impuestos encubierta.","Hacienda recauda menos y hay que compensarlo con otros ingresos o menos gasto."],
+["Desde la reforma de 2021 las pensiones suben cada año según la inflación (IPC). La pregunta es si eso debe garantizarse siempre, aunque haya que pagarlo con más deuda o impuestos.","Los jubilados no pierden poder adquisitivo.","Es una de las partidas de gasto que más crece y presiona las cuentas públicas."],
+["Reducir ministerios, organismos, empresas públicas, cargos de confianza, asesores y subvenciones.","Menos gasto, menos burocracia y menos sitios donde colocar a afines.","Puede recortar servicios y empleo público que la gente usa."],
+["Que Cataluña recaude y gestione sus propios impuestos y pague al Estado una cantidad pactada, parecido al «cupo» que ya tienen el País Vasco y Navarra.","Más autogobierno; Cataluña aporta al Estado más de lo que recibe.","Rompe la caja común y puede dejar a las regiones con menos ingresos con menos fondos."],
+["Hoy las comunidades autónomas gestionan sanidad, educación y parte de la justicia. Recentralizar es devolver esas competencias al Gobierno central.","Los mismos servicios en toda España y menos duplicidades.","Las comunidades conocen mejor su territorio, y choca con el modelo autonómico de la Constitución."],
+["Una votación para que un territorio decida si se separa de España, como el 1-O de 2017 en Cataluña, que el Tribunal Constitucional había suspendido.","La Constitución dice que la soberanía es de todos los españoles, no de una parte.","Votar es la forma democrática de resolver un conflicto político."],
+["Que un vecino de Soria y uno de Madrid tengan la misma calidad de sanidad, educación o dependencia, aunque su comunidad recaude menos.","Igualdad entre ciudadanos, vivan donde vivan.","Exige que las regiones más ricas transfieran más dinero a las demás."],
+["El País Vasco y Navarra recaudan casi todos sus impuestos y pagan al Estado una cantidad (el cupo o la aportación) por los servicios comunes. Está reconocido en la Constitución.","Es un derecho histórico y funciona bien.","Sus críticos dicen que lo que pagan es poco y que son las regiones con más financiación por habitante."],
+["Más medios y control para frenar las llegadas irregulares: pateras, cayucos, saltos de valla.","Orden, seguridad y lucha contra las mafias que trafican con personas.","Las llegadas dependen de crisis en otros países, y más control puede desviar a la gente a rutas más peligrosas."],
+["Dar papeles de una vez a los inmigrantes que ya viven en España sin permiso. En 2024 el Congreso admitió a trámite una iniciativa popular con más de 600.000 firmas para regularizar a unas 500.000 personas.","Saca a la luz trabajo en negro y genera cotizaciones e impuestos.","Puede animar a que llegue más gente de forma irregular («efecto llamada»)."],
+["Expulsar del país a los extranjeros que cometen delitos de forma repetida.","Protege a los vecinos y castiga a quien abusa de la acogida.","Necesita acuerdos con los países de origen y garantías judiciales, y puede afectar a personas con arraigo y familia aquí."],
+["Niños y adolescentes que llegan solos, sobre todo a Canarias, Ceuta y Melilla. La pregunta es si el Estado puede obligar a todas las comunidades a acoger una parte.","Reparte la carga para que no la soporten solo unas pocas regiones.","Invade competencias autonómicas, y algunas comunidades dicen no tener plazas ni medios."],
+["La Ley de Seguridad Ciudadana de 2015, conocida como «ley mordaza», regula multas por protestas, por desobedecer a la policía y otras conductas.","Da herramientas a la policía para mantener el orden.","Puede limitar la libertad de expresión y de manifestación."],
+["La «ley trans» de 2023 permite cambiar el sexo en el DNI con una declaración, sin informes médicos ni hormonación, desde los 16 años (y antes, con requisitos).","Respeta la identidad de las personas trans sin tratarla como una enfermedad.","Sus críticos, incluida parte del feminismo, temen fraudes y efectos en espacios y competiciones femeninas."],
+["La ley permite abortar libremente hasta la semana 14. Desde 2023, las chicas de 16 y 17 años pueden hacerlo sin permiso de sus padres.","La mujer debe poder decidir sobre su cuerpo.","Hay que proteger la vida del no nacido, y los padres de una menor deberían saberlo."],
+["La Ley de Memoria Democrática de 2022 financia exhumar fosas de la Guerra Civil y el franquismo y anula las condenas de los tribunales franquistas.","Reparar a las víctimas y a sus familias.","Sus críticos la ven como una forma de reabrir heridas o de usar la historia políticamente."],
+["Que una mujer geste un bebé para otra persona o pareja (los llamados «vientres de alquiler»). Hoy está prohibida en España, aunque se pueden registrar niños nacidos así en el extranjero.","Permite tener hijos a quien no puede de otra forma.","Riesgo de explotar a mujeres pobres y de convertir la reproducción en un negocio."],
+["Desde 2021 la ley permite pedir ayuda médica para morir a personas con una enfermedad grave e incurable o un sufrimiento insoportable, con varios controles.","Poder morir con dignidad y sin sufrimiento.","Riesgo de presión sobre personas vulnerables; mejor invertir en cuidados paliativos."],
+["El Consejo General del Poder Judicial gobierna a los jueces (nombramientos, ascensos, sanciones). Hoy sus vocales los elige el Parlamento. La pregunta es si deben elegirlos los propios jueces.","Más independencia de los jueces frente a los partidos.","Las asociaciones de jueces también tienen sesgos, y el Parlamento representa a los ciudadanos."],
+["Que ciertos cargos (diputados, ministros, presidentes autonómicos…) solo puedan ser juzgados por tribunales superiores como el Supremo. España tiene muchos más aforados que países como Francia o Alemania.","Igualdad ante la ley: que se les juzgue como a cualquiera.","Protege de denuncias usadas como arma política para desgastar al rival."],
+["Que un partido reciba dinero oculto o prohibido (donaciones anónimas, comisiones). La pregunta es si el castigo debería llegar hasta disolver el partido.","Un castigo ejemplar disuade la corrupción.","Disolver un partido es extremo y castiga también a sus votantes y militantes honrados."],
+["El Gobierno puede perdonar penas (indulto). Se ha indultado a políticos condenados, como a los líderes del procés en 2021.","Evita que los políticos se perdonen entre ellos.","El indulto puede servir para la convivencia o para corregir penas desproporcionadas."],
+["El fiscal general lo propone el Gobierno, y el CIS, que hace encuestas públicas, depende de él. La pregunta es si deberían ser independientes, por ejemplo eligiéndolos el Parlamento.","Evita que se usen a favor del Gobierno de turno.","Alguien tiene que nombrarlos, y el Gobierno al menos responde ante las urnas."],
+["La Ley de Vivienda de 2023 permite a las comunidades declarar «zonas tensionadas», donde se limitan las subidas del alquiler.","Frena subidas que expulsan a la gente de sus barrios.","Puede reducir los pisos en alquiler si los propietarios los retiran o los pasan a otros usos."],
+["Desalojar en pocos días a quien ocupa una vivienda sin permiso, sin esperar a un juicio largo.","Protege a los propietarios y da seguridad jurídica.","Puede afectar a familias vulnerables sin alternativa; sus críticos dicen que el fenómeno es pequeño comparado con su eco mediático."],
+["Rebajas de impuestos o avales públicos para que los jóvenes compren su primera vivienda.","Facilita independizarse.","Si no se construyen más pisos, las ayudas pueden acabar subiendo los precios."],
+["Usar terrenos del Estado, las comunidades y los ayuntamientos para construir vivienda, sobre todo protegida (con precio limitado).","Aumenta la oferta de vivienda asequible.","Tarda años y necesita mucha inversión pública."],
+["Limitar los pisos que se alquilan a turistas por días (tipo Airbnb), que en algunas ciudades restan viviendas para vivir.","Devuelve viviendas al alquiler para residentes.","Limita un negocio legal y un ingreso para pequeños propietarios."],
+["El salario mínimo es lo menos que se puede pagar por una jornada completa: 1.221 € en 14 pagas en 2026 (en 2018 eran 735,90 €). Lo fija el Gobierno por decreto.","Mejora los sueldos más bajos.","Puede dificultar contratar en pymes, en el campo o en zonas con salarios bajos."],
+["Cuánto le cuesta a una empresa despedir (la indemnización por año trabajado) y qué requisitos tiene que cumplir.","Las empresas se animarían a contratar más si despedir no fuera tan caro.","Menos protección y más precariedad para los trabajadores."],
+["Hoy el máximo legal son 40 horas semanales. El Gobierno propuso bajarlo a 37,5 sin rebajar sueldos, y el Congreso lo tumbó en septiembre de 2025.","Más tiempo libre y más conciliación familiar.","Sube los costes de las empresas, sobre todo de las pequeñas."],
+["Desde 2023 los autónomos pagan su cuota según tramos de lo que ganan, aunque calculados con estimaciones. La pregunta es si debe ajustarse aún más a sus ingresos reales.","Más justo para quien gana poco.","Sube la cuota a quien gana más y es más difícil de controlar."],
+["Rebajas en las cotizaciones para las empresas que hacen contratos fijos.","Fomenta el empleo estable.","Cuestan dinero público y a veces se pagan por contratos que se habrían hecho igualmente."],
+["Los países de la OTAN se comprometieron a gastar al menos el 2% de su PIB en Defensa, y España ha estado históricamente entre los que menos gastan.","Seguridad frente a amenazas como Rusia y cumplir con los aliados.","Es dinero que se resta a otras prioridades como la sanidad o la vivienda."],
+["En 2022 el Gobierno apoyó el plan de Marruecos de autonomía para el Sáhara Occidental, antigua colonia española, y abandonó la neutralidad. El Frente Polisario pide un referéndum de autodeterminación.","Respetar el derecho internacional y al pueblo saharaui.","La relación con Marruecos es clave en inmigración, comercio y seguridad."],
+["España envía armas y ayuda militar a Ucrania desde la invasión rusa de 2022.","Ayudar a un país a defenderse de una agresión.","Prolonga la guerra o arrastra a Europa al conflicto; mejor apostar por la diplomacia."],
+["Ceuta y Melilla son ciudades españolas en el norte de África que Marruecos reclama. Tienen vallas fronterizas y sufren entradas masivas puntuales.","Defender el territorio y la frontera.","Hay quien prefiere más cooperación con Marruecos a más militarización."],
+["Si la Unión Europea debe tener más poder (presupuesto, defensa o impuestos comunes) frente a los Estados.","Más fuerza en un mundo dominado por Estados Unidos y China.","Menos control de los ciudadanos sobre decisiones que se toman lejos."],
+["Los colegios concertados son privados pero financiados con dinero público. El cheque escolar daría a cada familia una cantidad para el colegio que elija.","Libertad de las familias para elegir.","Resta fondos a la pública y puede separar a los alumnos según su origen social."],
+["Pagar una pequeña parte de algunos servicios sanitarios (como consultas o urgencias) según los ingresos. En los medicamentos ya existe copago.","Evita abusos y aporta dinero al sistema.","Puede hacer que gente con pocos recursos deje de ir al médico."],
+["Que ningún colegio privado o concertado reciba dinero público y toda la enseñanza financiada por el Estado sea pública.","Igualdad de oportunidades y todos los recursos para la pública.","Recorta la libertad de elegir; la concertada escolariza a cerca de una cuarta parte del alumnado."],
+["Hoy cada comunidad tiene su propio servicio de salud y no siempre puedes atenderte en otra. La pregunta es poder elegir médico y hospital en cualquier parte de España.","Más libertad y competencia entre centros.","Complica la planificación y puede saturar los mejores hospitales."],
+["En las comunidades con lengua propia (Cataluña, Galicia, País Vasco…), la lengua en la que se dan las clases. En Cataluña es el catalán, y los tribunales han exigido al menos un 25% en castellano.","Derecho a estudiar en la lengua común de todos.","Protege lenguas minoritarias y garantiza que los alumnos acaben siendo bilingües."],
+["España tiene un calendario para cerrar sus centrales nucleares entre 2027 y 2035.","Electricidad estable y sin emisiones de CO₂.","Generan residuos peligrosos durante siglos y las renovables pueden sustituirlas."],
+["Compromisos para reducir las emisiones que causan el cambio climático: renovables, coche eléctrico, eficiencia energética.","Evitar daños mayores y más caros del cambio climático.","Encarece la energía y perjudica a sectores como el campo o la industria."],
+["Subir los impuestos a la gasolina, el gasóleo y el gas para que se usen menos.","Reduce la contaminación.","Encarece la vida de quien depende del coche, sobre todo en zonas rurales."],
+["Reglas europeas y españolas sobre agua, fertilizantes, pesticidas o barbechos que llevaron a los agricultores a protestar en 2024.","Alivia costes y papeleo del campo.","Protege el suelo, el agua y la biodiversidad."],
+["Ayudas públicas para producir energía solar, eólica y otras renovables.","Acelera la transición energética y baja precios a largo plazo.","Cuestan dinero, y algunas renovables ya son rentables sin ayudas."]
+];
+const QW = [2,1,1,2,1, 2,1,2,1,1, 2,2,1,2,1, 2,2,1,1,2, 1,2,2,2,2, 2,2,1,1,1, 2,1,2,1,1, 2,2,2,1,1, 2,1,1,1,2, 2,2,1,1,1];
+const QUESTIONS = QROWS.map((r,i)=>({n:i+1, e:r[0], t:r[1], v:r[2], w:QW[i]}));
+const COL = {psoe:0,pp:1,vox:2,fa:3,podemos:3,salf:4,junts:5,erc:6,bildu:7,pnv:8,d21:9,adel:10};
+/* índice de pregunta (0-49) -> valor que sustituye al de la columna base */
+const OVERRIDES = {
+  podemos:{37:-2, 39:-1, 32:2},   // Ucrania: en contra; UE: más soberanista; jornada 37,5 h
+  fa:{}
+};
+PARTIES.forEach(p=>{
+  const o = OVERRIDES[p.id] || {};
+  p.vec = QUESTIONS.map((q,i)=> o[i]!==undefined ? o[i] : q.v[COL[p.id]]);
+});
+
+const LIKERT = [
+  {v:-2, l:"Totalmente en desacuerdo", s:"-2"},
+  {v:-1, l:"En desacuerdo", s:"-1"},
+  {v: 0, l:"Neutral / No sabe", s:"0"},
+  {v: 1, l:"De acuerdo", s:"+1"},
+  {v: 2, l:"Totalmente de acuerdo", s:"+2"}
+];
+const STANCE = {
+  "2":["Muy a favor","bg-emerald-500/25 text-emerald-300"], "1":["A favor","bg-emerald-500/10 text-emerald-300"],
+  "0":["Ambiguo","bg-slate-500/20 text-slate-300"], "-1":["En contra","bg-red-500/10 text-red-300"], "-2":["Muy en contra","bg-red-500/25 text-red-300"]
+};
+
+/* ============================================================
+   DATOS: ENCUESTAS 29N Y ESCAÑOS
+   ============================================================ */
+const POLLS = [
+  {firm:"Sigma Dos", media:"El Mundo", campo:"pub. 11 oct", pp:135, psoe:103, vox:68, vpp:31.9, vpsoe:25.3, vvox:19.1, s:S.polls},
+  {firm:"Imop", media:"El Confidencial", campo:"5–7 oct", pp:130, psoe:110, vox:70, vpp:32.7, vpsoe:26.6, vvox:19.0, s:S.imop},
+  {firm:"DYM", media:"—", campo:"pub. 8 oct", pp:[139,143], psoe:[107,111], vox:[61,65], vpp:34.0, vpsoe:28.2, vvox:18.2, s:S.imop},
+  {firm:"40dB", media:"El País / SER", campo:"7–8 oct", pp:132, psoe:112, vox:66, vpp:31.9, vpsoe:28.1, vvox:18.9, s:S.polls},
+  {firm:"GESOP", media:"El Periódico", campo:"6–8 oct", pp:[121,125], psoe:[108,112], vox:[68,72], vpp:null, vpsoe:26.1, vvox:18.9, s:S.polls},
+  {firm:"SocioMétrica", media:"El Español", campo:"1–3 oct", pp:143, psoe:106, vox:62, vpp:33.4, vpsoe:26.5, vvox:18.1, s:S.polls},
+  {firm:"GAD3", media:"ABC", campo:"1–3 sep", pp:133, psoe:105, vox:69, vpp:null, vpsoe:null, vvox:19.2, s:S.polls},
+  {firm:"CIS", media:"Barómetro", campo:"1–4 sep", pp:null, psoe:null, vox:null, vpp:25.5, vpsoe:31.0, vvox:16.6, s:S.polls, note:"No publica escaños. Es el único gran sondeo que sitúa al PSOE primero."}
+];
+const mid = v => v===null ? null : (Array.isArray(v) ? (v[0]+v[1])/2 : v);
+const avgOf = key => { const xs = POLLS.map(p=>mid(p[key])).filter(v=>v!==null); return xs.reduce((a,b)=>a+b,0)/xs.length; };
+const AVG = {pp:avgOf("pp"), psoe:avgOf("psoe"), vox:avgOf("vox")};
+const AVGV = {pp:avgOf("vpp"), psoe:avgOf("vpsoe"), vox:avgOf("vvox")};
+// promedio sin el CIS para el voto, por coherencia con los escaños
+const avgVNoCis = key => { const xs = POLLS.filter(p=>p.firm!=="CIS").map(p=>p[key]).filter(v=>v!==null); return xs.reduce((a,b)=>a+b,0)/xs.length; };
+const AVGV2 = {pp:avgVNoCis("vpp"), psoe:avgVNoCis("vpsoe"), vox:avgVNoCis("vvox")};
+
+const SEATS = {
+  "2023":[
+    {id:"fa",label:"Sumar (incl. Podemos)",s:31,c:"#c026d3"},
+    {id:"bildu",label:"EH Bildu",s:6,c:"#2dd4bf"},
+    {id:"erc",label:"ERC",s:7,c:"#facc15"},
+    {id:"bng",label:"BNG",s:1,c:"#7dd3fc"},
+    {id:"psoe",label:"PSOE",s:121,c:"#ef4444"},
+    {id:"pnv",label:"PNV",s:5,c:"#22c55e"},
+    {id:"junts",label:"Junts",s:7,c:"#06b6d4"},
+    {id:"cc",label:"CC",s:1,c:"#fb923c"},
+    {id:"upn",label:"UPN",s:1,c:"#94a3b8"},
+    {id:"pp",label:"PP",s:137,c:"#3b82f6"},
+    {id:"vox",label:"Vox",s:33,c:"#84cc16"}
+  ]
+};
+(function buildPollSeats(){
+  const pp=Math.round(AVG.pp), psoe=Math.round(AVG.psoe), vox=Math.round(AVG.vox);
+  const rest=[
+    {id:"adel",label:"Adelante And.",s:1,c:"#fda4af"},
+    {id:"podemos",label:"Podemos",s:1,c:"#7c3aed"},
+    {id:"fa",label:"Frente Amplio",s:12,c:"#c026d3"},
+    {id:"bildu",label:"EH Bildu",s:6,c:"#2dd4bf"},
+    {id:"erc",label:"ERC",s:8,c:"#facc15"},
+    {id:"bng",label:"BNG",s:3,c:"#7dd3fc"},
+    {id:"psoe",label:"PSOE",s:psoe,c:"#ef4444"},
+    {id:"pnv",label:"PNV",s:4,c:"#22c55e"},
+    {id:"junts",label:"Junts",s:4,c:"#06b6d4"},
+    {id:"cc",label:"CC",s:1,c:"#fb923c"},
+    {id:"upn",label:"UPN",s:1,c:"#94a3b8"},
+    {id:"pp",label:"PP",s:pp,c:"#3b82f6"},
+    {id:"vox",label:"Vox",s:vox,c:"#84cc16"}
+  ];
+  // ajusta el Frente Amplio para que el total sea exactamente 350
+  const tot = rest.reduce((a,b)=>a+b.s,0);
+  rest[2].s += 350 - tot;
+  SEATS.enc = rest;
+})();
+const COAL_PRESETS = {
+  inv23:["psoe","fa","podemos","erc","junts","bildu","pnv","bng","cc"],
+  derecha:["pp","vox","upn"],
+  gran:["psoe","pp"],
+  sinjunts:["psoe","fa","podemos","erc","bildu","pnv","bng","cc","adel"],
+  none:[]
+};
+
+/* Resultados 2023 por circunscripción (% de voto válido y escaños oficiales). Fuente: Wikipedia, «Results breakdown of the 2023 Spanish general election (Congress)». Verificado: el reparto D'Hondt con estos datos reproduce los 350 escaños oficiales. */
+// [provincia, escaños, {partido:[%voto, escaños oficiales]}]
+const R23 = [
+["A Coruña",8,{pp:[43.1,4],psoe:[28.2,2],vox:[5.1,0],sumar:[12.2,1],bng:[10.0,1]}],
+["Álava",4,{pp:[17.9,1],psoe:[27.7,1],vox:[3.9,0],sumar:[12.7,0],bildu:[19.5,1],pnv:[16.6,1]}],
+["Albacete",4,{pp:[39.9,2],psoe:[34.5,2],vox:[16.6,0],sumar:[7.2,0]}],
+["Alicante",12,{pp:[36.7,5],psoe:[32.0,4],vox:[16.3,2],sumar:[12.9,1]}],
+["Almería",6,{pp:[41.0,3],psoe:[29.0,2],vox:[21.4,1],sumar:[6.6,0]}],
+["Asturias",7,{pp:[35.6,3],psoe:[34.3,2],vox:[12.5,1],sumar:[14.8,1]}],
+["Ávila",3,{pp:[43.3,2],psoe:[27.4,1],vox:[15.4,0],sumar:[5.1,0]}],
+["Badajoz",5,{pp:[37.8,2],psoe:[39.2,2],vox:[13.7,1],sumar:[6.8,0]}],
+["Baleares",8,{pp:[35.6,3],psoe:[30.2,3],vox:[15.2,1],sumar:[16.6,1]}],
+["Barcelona",32,{pp:[13.8,5],psoe:[35.7,13],vox:[7.6,2],sumar:[15.2,5],erc:[12.3,4],junts:[9.7,3]}],
+["Bizkaia",8,{pp:[11.5,1],psoe:[25.8,2],vox:[2.6,0],sumar:[10.9,1],bildu:[20.7,2],pnv:[27.0,2]}],
+["Burgos",4,{pp:[40.6,2],psoe:[34.4,2],vox:[12.8,0],sumar:[8.6,0]}],
+["Cáceres",4,{pp:[38.1,2],psoe:[38.9,2],vox:[13.6,0],sumar:[6.9,0]}],
+["Cádiz",9,{pp:[34.8,4],psoe:[33.2,3],vox:[15.2,1],sumar:[12.9,1]}],
+["Cantabria",5,{pp:[42.1,2],psoe:[33.3,2],vox:[14.1,1],sumar:[8.5,0]}],
+["Castellón",5,{pp:[35.2,2],psoe:[32.6,2],vox:[15.9,1],sumar:[14.3,0]}],
+["Ceuta",1,{pp:[38.8,1],psoe:[34.0,0],vox:[23.3,0],sumar:[2.5,0]}],
+["Ciudad Real",5,{pp:[40.5,2],psoe:[35.4,2],vox:[16.3,1],sumar:[6.2,0]}],
+["Córdoba",6,{pp:[37.9,2],psoe:[32.1,2],vox:[13.9,1],sumar:[13.7,1]}],
+["Cuenca",3,{pp:[39.8,2],psoe:[37.4,1],vox:[15.6,0],sumar:[5.6,0]}],
+["Gipuzkoa",6,{pp:[8.7,0],psoe:[23.3,2],vox:[2.1,0],sumar:[10.6,0],bildu:[31.2,2],pnv:[22.6,2]}],
+["Girona",6,{pp:[9.7,0],psoe:[28.9,2],vox:[7.0,0],sumar:[10.9,1],erc:[14.7,1],junts:[19.6,2]}],
+["Granada",7,{pp:[37.0,3],psoe:[33.0,2],vox:[16.1,1],sumar:[11.6,1]}],
+["Guadalajara",3,{pp:[36.3,1],psoe:[33.0,1],vox:[19.3,1],sumar:[9.2,0]}],
+["Huelva",5,{pp:[36.4,2],psoe:[36.0,2],vox:[14.6,1],sumar:[10.4,0]}],
+["Huesca",3,{pp:[38.2,2],psoe:[33.6,1],vox:[12.6,0],sumar:[11.5,0]}],
+["Jaén",5,{pp:[37.3,2],psoe:[36.3,2],vox:[14.8,1],sumar:[8.0,0]}],
+["La Rioja",4,{pp:[45.6,2],psoe:[35.7,2],vox:[9.8,0],sumar:[6.6,0]}],
+["Las Palmas",8,{pp:[25.9,3],psoe:[33.2,3],vox:[14.6,1],sumar:[10.3,1],cc:[6.3,0]}],
+["León",4,{pp:[36.9,2],psoe:[33.6,2],vox:[12.9,0],sumar:[6.7,0]}],
+["Lleida",4,{pp:[12.8,0],psoe:[29.5,2],vox:[6.8,0],sumar:[7.9,0],erc:[18.6,1],junts:[18.0,1]}],
+["Lugo",4,{pp:[50.2,3],psoe:[30.3,1],vox:[4.4,0],sumar:[5.2,0],bng:[8.7,0]}],
+["Madrid",37,{pp:[40.5,16],psoe:[27.8,10],vox:[14.0,5],sumar:[15.5,6]}],
+["Málaga",11,{pp:[38.3,5],psoe:[30.3,3],vox:[16.5,2],sumar:[12.3,1]}],
+["Melilla",1,{pp:[49.2,1],psoe:[25.4,0],vox:[15.9,0],sumar:[3.0,0]}],
+["Murcia",10,{pp:[41.2,4],psoe:[25.3,3],vox:[21.8,2],sumar:[9.6,1]}],
+["Navarra",5,{pp:[16.7,1],psoe:[27.4,2],vox:[5.7,0],sumar:[12.8,0],bildu:[17.2,1],upn:[15.3,1]}],
+["Ourense",4,{pp:[50.0,3],psoe:[30.1,1],vox:[4.9,0],sumar:[5.5,0],bng:[8.2,0]}],
+["Palencia",3,{pp:[42.0,2],psoe:[34.7,1],vox:[12.9,0],sumar:[6.1,0]}],
+["Pontevedra",7,{pp:[39.6,3],psoe:[31.4,3],vox:[4.7,0],sumar:[13.2,1],bng:[9.4,0]}],
+["Salamanca",4,{pp:[47.0,3],psoe:[30.4,1],vox:[14.7,0],sumar:[5.5,0]}],
+["Santa Cruz de Tenerife",7,{pp:[35.4,3],psoe:[33.5,3],sumar:[10.8,0],cc:[16.7,1]}],
+["Segovia",3,{pp:[45.0,2],psoe:[30.6,1],vox:[14.1,0],sumar:[8.1,0]}],
+["Sevilla",12,{pp:[33.4,4],psoe:[36.6,5],vox:[13.3,1],sumar:[14.0,2]}],
+["Soria",2,{pp:[37.2,1],psoe:[29.5,1],vox:[9.8,0],sumar:[3.4,0]}],
+["Tarragona",6,{pp:[13.9,1],psoe:[32.9,2],vox:[10.3,0],sumar:[11.3,1],erc:[15.1,1],junts:[11.1,1]}],
+["Teruel",3,{pp:[35.0,2],psoe:[29.3,1],vox:[13.1,0],sumar:[5.4,0]}],
+["Toledo",6,{pp:[37.8,3],psoe:[32.6,2],vox:[19.6,1],sumar:[8.2,0]}],
+["Valencia",16,{pp:[33.6,6],psoe:[32.1,5],vox:[15.2,2],sumar:[16.9,3]}],
+["Valladolid",5,{pp:[40.8,2],psoe:[32.8,2],vox:[15.2,1],sumar:[8.9,0]}],
+["Zamora",3,{pp:[44.8,2],psoe:[32.5,1],vox:[13.2,0],sumar:[5.6,0]}],
+["Zaragoza",7,{pp:[36.0,3],psoe:[30.8,2],vox:[15.3,1],sumar:[13.5,1]}]
+];
+const R23BY = {}; R23.forEach(r=>R23BY[r[0]]={seats:r[1], p:r[2]});
+const PNAME = {pp:["PP","#3b82f6"],psoe:["PSOE","#ef4444"],vox:["Vox","#84cc16"],sumar:["Sumar","#c026d3"],erc:["ERC","#facc15"],junts:["Junts","#06b6d4"],bildu:["EH Bildu","#2dd4bf"],pnv:["PNV","#22c55e"],bng:["BNG","#7dd3fc"],cc:["CC","#fb923c"],upn:["UPN","#94a3b8"]};
+
+/* Resultados 2023 (votos y escaños) para el coste por escaño */
+const RES2023 = [
+  {n:"PP",v:8160837,s:137,c:"#3b82f6"},{n:"PSOE",v:7821718,s:121,c:"#ef4444"},{n:"Vox",v:3057000,s:33,c:"#84cc16"},
+  {n:"Sumar",v:3044996,s:31,c:"#c026d3"},{n:"ERC",v:466020,s:7,c:"#facc15"},{n:"Junts",v:395429,s:7,c:"#06b6d4"},
+  {n:"EH Bildu",v:335129,s:6,c:"#2dd4bf"},{n:"PNV",v:277289,s:5,c:"#22c55e"},{n:"BNG",v:153995,s:1,c:"#7dd3fc"},
+  {n:"CC",v:116363,s:1,c:"#fb923c"},{n:"UPN",v:52188,s:1,c:"#94a3b8"}
+];
+
+/* ============================================================
+   DATOS: PROVINCIAS (escaños Congreso, reparto vigente) Y REGIONES
+   ============================================================ */
+const PROVINCES = [
+ ["Madrid",38,"MAD"],["Barcelona",32,"CAT"],["Valencia",16,"OTR"],["Alicante",12,"OTR"],["Sevilla",12,"AND"],["Málaga",11,"AND"],
+ ["Murcia",10,"OTR"],["Cádiz",8,"AND"],["Baleares",8,"OTR"],["A Coruña",8,"OTR"],["Las Palmas",8,"OTR"],["Bizkaia",8,"PV"],
+ ["Asturias",7,"OTR"],["Granada",7,"AND"],["Pontevedra",7,"OTR"],["Santa Cruz de Tenerife",7,"OTR"],["Zaragoza",7,"OTR"],
+ ["Almería",6,"AND"],["Córdoba",6,"AND"],["Girona",6,"CAT"],["Gipuzkoa",6,"PV"],["Tarragona",6,"CAT"],["Toledo",6,"OTR"],
+ ["Badajoz",5,"OTR"],["Cantabria",5,"OTR"],["Castellón",5,"OTR"],["Ciudad Real",5,"OTR"],["Huelva",5,"AND"],["Jaén",5,"AND"],["Navarra",5,"NAV"],["Valladolid",5,"OTR"],
+ ["Albacete",4,"OTR"],["Álava",4,"PV"],["Burgos",4,"OTR"],["Cáceres",4,"OTR"],["León",4,"OTR"],["Lleida",4,"CAT"],["Lugo",4,"OTR"],["Ourense",4,"OTR"],["Salamanca",4,"OTR"],["La Rioja",4,"OTR"],
+ ["Ávila",3,"OTR"],["Cuenca",3,"OTR"],["Guadalajara",3,"OTR"],["Huesca",3,"OTR"],["Palencia",3,"OTR"],["Segovia",3,"OTR"],["Teruel",3,"OTR"],["Zamora",3,"OTR"],
+ ["Soria",2,"OTR"],["Ceuta",1,"OTR"],["Melilla",1,"OTR"]
+].map(a=>({name:a[0],seats:a[1],region:a[2]}));
+const PROV = {}; PROVINCES.forEach(p=>PROV[p.name]=p);
+/* Escaños en 2023 donde difieren del reparto del 29N (Real Decreto 806/2026) */
+const SEATS2023_DIFF = {"Madrid":37, "Cádiz":9};
+
+function isAvail(pid, prov){
+  switch(pid){
+    case "junts": case "erc": return prov.region==="CAT";
+    case "bildu": return prov.region==="PV" || prov.region==="NAV";
+    case "pnv": return prov.region==="PV";
+    case "d21": return prov.name==="Madrid" || prov.name==="Barcelona";
+    case "adel": return prov.region==="AND";
+    default: return true;
+  }
+}
+/* Viabilidad estructural heurística (tamaño de la provincia + nivel en encuestas): 2 alta, 1 incierta, 0 muy baja */
+function viab(pid, prov){
+  const M = prov.seats;
+  switch(pid){
+    case "psoe": case "pp": return 2;
+    case "vox": return M>=4?2:1;
+    case "fa": return M>=10?2:(M>=6?1:0);
+    case "podemos": return M>=30?1:0;
+    case "salf": return M>=30?1:0;
+    case "junts": case "erc": return M>=6?2:1;
+    case "bildu": return prov.region==="PV"?2:1;
+    case "pnv": return prov.region==="PV"?2:0;
+    case "d21": return M>=30?1:0;
+    case "adel": return M>=9?1:0;
+  }
+  return 0;
+}
+const VIAB_LABEL = {2:["Alta","text-emerald-300"],1:["Incierta","text-amber-300"],0:["Muy baja","text-red-300"]};
+
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const icons = () => { try{ if(window.lucide) lucide.createIcons(); }catch(e){} };
+const fmt = n => n.toLocaleString("es-ES");
+const fdate = d => new Date(d+"T12:00:00").toLocaleDateString("es-ES",{day:"numeric",month:"short",year:"numeric"});
+const badge = t => `<span class="text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full border whitespace-nowrap ${TYPE[t].cls}">${TYPE[t].label}</span>`;
+const srcLink = s => s ? ` <a class="src text-xs" href="${s}" target="_blank" rel="noopener">↗ fuente</a>` : "";
+const itemRow = o => `<li class="flex flex-col sm:flex-row gap-1 sm:gap-2 items-start text-sm"><div class="pt-0.5 shrink-0">${badge(o.t)}</div><span class="text-slate-300">${o.x}${srcLink(o.s)}</span></li>`;
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+const charts = {};
+function mkChart(id, cfg){
+  if(charts[id]) charts[id].destroy();
+  const el = document.getElementById(id); if(!el || typeof Chart==="undefined") return;
+  charts[id] = new Chart(el, cfg);
+}
+if(typeof Chart!=="undefined"){ Chart.defaults.color="#94a3b8"; Chart.defaults.borderColor="rgba(148,163,184,.15)"; Chart.defaults.font.family="Inter,system-ui,sans-serif"; }
+
+/* ============================================================
+   CUENTA ATRÁS
+   ============================================================ */
+function renderCountdown(){
+  const days = Math.ceil((ELECTION_DATE - new Date())/86400000);
+  let small, big;
+  if(days > 1){ small = `<div class="text-xl font-extrabold text-sky-400 leading-none">${days}</div><div class="text-[10px] text-slate-400 uppercase tracking-wide">días al 29N</div>`;
+    big = `<div class="text-4xl font-extrabold text-sky-300">${days}</div><div class="text-xs text-slate-300 uppercase tracking-wide">días para votar</div>`; }
+  else if(days >= 0){ small = `<div class="text-sm font-bold text-sky-400">29N</div><div class="text-[10px] text-slate-400">${days===1?"mañana":"hoy"}</div>`;
+    big = `<div class="text-2xl font-extrabold text-sky-300">${days===1?"Mañana":"Hoy"} se vota</div>`; }
+  else { small = `<div class="text-xs text-slate-400">29N celebrado</div>`;
+    big = `<div class="text-sm text-slate-300 max-w-[12rem]">Elecciones celebradas: los datos de esta página son previos al 29N.</div>`; }
+  $("#countdown").innerHTML = small; $("#bigCountdown").innerHTML = big;
+}
+
+/* ============================================================
+   NAVEGACIÓN
+   ============================================================ */
+let current = 0;
+function showTab(n, noScroll){
+  current = n;
+  $$("main > section").forEach((s,i)=>s.classList.toggle("hidden", i!==n));
+  $$(".tab-btn").forEach((b,i)=>b.classList.toggle("active", i===n));
+  $$(".bn-btn").forEach(b=>b.classList.toggle("active", +b.dataset.tab===n));
+  const s = $("#m"+n); s.classList.remove("fade"); void s.offsetWidth; s.classList.add("fade");
+  if(n===0) renderBoard();
+  if(n===2) renderCompare();
+  if(n===3){ renderSim(); renderThreshold(); renderCost(); }
+  store.set("rx-tab", n);
+  if(!noScroll) window.scrollTo({top:0,behavior:"smooth"});
+  icons();
+}
+$$(".tab-btn, .bn-btn").forEach(b=>b.addEventListener("click",()=>showTab(+b.dataset.tab)));
+
+/* ============================================================
+   MÓDULO 0: TABLERO 29N
+   ============================================================ */
+let scenario = "enc";
+let coalition = new Set(["pp","vox","upn"]);
+function rng(v){ return v===null ? `<span class="text-slate-600">—</span>` : (Array.isArray(v) ? `${v[0]}–${v[1]}` : v); }
+function pct(v){ return v===null ? "" : ` <span class="text-slate-500 text-xs">(${v.toFixed(1).replace(".",",")}%)</span>`; }
+function renderBoard(){
+  const ppvox = Math.round(AVG.pp)+Math.round(AVG.vox);
+  const kpi = (label, val, sub, color) => `<div class="card p-4"><div class="text-xs text-slate-400 mb-1">${label}</div><div class="text-2xl sm:text-3xl font-extrabold" style="color:${color}">${val}</div><div class="text-xs text-slate-500 mt-1">${sub}</div></div>`;
+  $("#kpis").innerHTML =
+    kpi("PP · media de escaños", Math.round(AVG.pp), `${AVGV2.pp.toFixed(1).replace(".",",")}% de voto · 137 en 2023`, "#60a5fa") +
+    kpi("PSOE · media de escaños", Math.round(AVG.psoe), `${AVGV2.psoe.toFixed(1).replace(".",",")}% de voto · 121 en 2023`, "#f87171") +
+    kpi("Vox · media de escaños", Math.round(AVG.vox), `${AVGV2.vox.toFixed(1).replace(".",",")}% de voto · 33 en 2023`, "#a3e635") +
+    kpi("PP + Vox", ppvox, ppvox>=176 ? `Por encima de la mayoría absoluta (176)` : `Por debajo de la mayoría absoluta (176)`, ppvox>=176 ? "#fbbf24" : "#e2e8f0");
+
+  const cell = (v,pv) => `<td class="text-right pl-2 align-top whitespace-nowrap"><div class="font-semibold">${rng(v)}</div>${pv===null?"":`<div class="text-[11px] text-slate-500">${pv.toFixed(1).replace(".",",")}%</div>`}</td>`;
+  let t = `<thead><tr class="text-left text-xs text-slate-400"><th class="py-1.5 pr-2">Encuestadora</th><th class="text-right pl-2" style="color:#60a5fa">PP</th><th class="text-right pl-2" style="color:#f87171">PSOE</th><th class="text-right pl-2" style="color:#a3e635">Vox</th></tr></thead><tbody>`;
+  t += POLLS.map(p=>`<tr class="border-t border-slate-700/70"><td class="py-2 pr-2 align-top"><a class="hover:text-sky-300" href="${p.s}" target="_blank" rel="noopener"><b>${p.firm}</b></a><div class="text-xs text-slate-500">${p.media} · ${p.campo}</div>${p.note?`<div class="text-[11px] text-amber-300/80 mt-0.5">${p.note}</div>`:""}</td>${cell(p.pp,p.vpp)}${cell(p.psoe,p.vpsoe)}${cell(p.vox,p.vvox)}</tr>`).join("");
+  t += `<tr class="border-t-2 border-slate-500 font-bold"><td class="py-2">Media <span class="text-xs text-slate-400 font-normal">(${POLLS.filter(p=>p.pp!==null).length} sondeos)</span></td><td class="text-right">${Math.round(AVG.pp)}</td><td class="text-right">${Math.round(AVG.psoe)}</td><td class="text-right">${Math.round(AVG.vox)}</td></tr></tbody>`;
+  $("#pollTable").innerHTML = t;
+
+  const enc = id => (SEATS.enc.find(x=>x.id===id)||{s:0}).s;
+  const izq = enc("fa")+enc("podemos");
+  mkChart("pollChart",{type:"bar",data:{labels:["PP","PSOE","Vox",["FA +","Podemos"]],datasets:[
+    {label:"Escaños 2023",data:[137,121,33,31],backgroundColor:"rgba(148,163,184,.45)"},
+    {label:"Media encuestas 29N",data:[enc("pp"),enc("psoe"),enc("vox"),izq],backgroundColor:["#3b82f6","#ef4444","#84cc16","#c026d3"]}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom"}},scales:{y:{beginAtZero:true,title:{display:true,text:"Escaños"}}}}});
+
+  renderCoalition();
+
+  const ch = [
+    ["unplug","Junts rompe con el PSOE","27 oct 2025: el Gobierno pierde su mayoría y la legislatura queda bloqueada hasta la disolución.",S.junts],
+    ["scale","Ábalos, condenado","22 jun 2026: el Supremo condena al exministro a 24 años de prisión por el caso mascarillas.",S.abalos],
+    ["split","La izquierda se divide","Frente Amplio (Colau) por un lado y Podemos aliado con ERC por otro.",S.frente],
+    ["handshake","Vox vuelve a gobernar con el PP","Extremadura, Aragón y Andalucía (2026), con «prioridad nacional» en ayudas y vivienda.",S.andaluciaGob],
+    ["trending-up","Vox casi duplica","Del 12,4% de 2023 a ~19% en las encuestas: de 33 a unos 67 escaños.",S.polls],
+    ["sparkles","Nuevas siglas","Democracia 21 (Madrid y Barcelona), SALF y Adelante Andalucía tras su salto en las andaluzas.",S.d21]
+  ];
+  $("#changes").innerHTML = ch.map(c=>`<div class="rounded-xl bg-slate-900/60 border border-slate-700 p-3"><div class="flex items-center gap-2 font-semibold mb-1"><i data-lucide="${c[0]}" class="w-4 h-4 text-sky-400"></i>${c[1]}</div><p class="text-sm text-slate-400">${c[2]}${srcLink(c[3])}</p></div>`).join("");
+  icons();
+}
+
+/* Hemiciclo: 350 escaños en filas concéntricas, ordenados de izquierda a derecha */
+let HEMI = null;
+function hemiPoints(N){
+  const R = 9, r0 = 0.38;
+  const radii = Array.from({length:R},(_,i)=>r0+(1-r0)*i/(R-1));
+  const sum = radii.reduce((a,b)=>a+b,0);
+  const counts = radii.map(r=>Math.round(N*r/sum));
+  counts[R-1] += N - counts.reduce((a,b)=>a+b,0);
+  const pts = [];
+  radii.forEach((r,i)=>{ const n=counts[i]; for(let j=0;j<n;j++){ const th=Math.PI*(1-j/(n-1)); pts.push({x:r*Math.cos(th), y:-r*Math.sin(th), th, r}); } });
+  pts.sort((a,b)=> (b.th-a.th) || (a.r-b.r));
+  return pts;
+}
+function renderCoalition(){
+  $$("#scenarioBtns [data-sc]").forEach(b=>b.classList.toggle("active", b.dataset.sc===scenario));
+  const list = SEATS[scenario];
+  if(!HEMI) HEMI = hemiPoints(350);
+  let k = 0, circles = "";
+  list.forEach(p=>{ for(let i=0;i<p.s;i++){ const pt=HEMI[k++]; circles += `<circle class="seat" cx="${pt.x.toFixed(4)}" cy="${pt.y.toFixed(4)}" r="0.024" fill="${p.c}" opacity="${coalition.has(p.id)?1:0.18}"><title>${p.label}</title></circle>`; } });
+  const sum = list.filter(p=>coalition.has(p.id)).reduce((a,b)=>a+b.s,0);
+  circles += `<text x="0" y="-0.12" text-anchor="middle" font-size="0.2" font-weight="800" fill="${sum>=176?"#fbbf24":"#e2e8f0"}">${sum}</text><text x="0" y="-0.02" text-anchor="middle" font-size="0.065" fill="#94a3b8">de 350 · mayoría 176</text>`;
+  $("#hemi").innerHTML = circles;
+  $("#seatChips").innerHTML = list.map(p=>`<button class="seat-chip btn px-2.5 py-1 rounded-full text-xs ${coalition.has(p.id)?"on":""}" data-sid="${p.id}" style="${coalition.has(p.id)?`background:${p.c}33;border-color:${p.c}`:""}"><span class="inline-block w-2 h-2 rounded-full mr-1" style="background:${p.c}"></span>${p.label} <b>${p.s}</b></button>`).join("");
+  $$("#seatChips [data-sid]").forEach(b=>b.addEventListener("click",()=>{ const id=b.dataset.sid; coalition.has(id)?coalition.delete(id):coalition.add(id); renderCoalition(); }));
+  $("#coalSum").textContent = `${sum} escaños`;
+  $("#coalBar").style.width = (sum/350*100)+"%";
+  $("#coalBar").style.background = sum>=176 ? "#f59e0b" : "#0ea5e9";
+  const others = 350 - sum;
+  $("#coalMsg").innerHTML = sum>=176
+    ? `<span class="text-amber-300 font-semibold">Mayoría absoluta</span>: investidura posible en primera votación (${sum} síes frente a un máximo de ${others} noes).`
+    : sum>0 ? `<span class="text-slate-300">Faltan <b>${176-sum}</b> escaños para la absoluta.</span> En segunda votación bastaría con que los otros ${others} no sumen más de ${sum-1} noes, es decir, con al menos <b>${Math.max(0,others-(sum-1))}</b> abstenciones.`
+    : `<span class="text-slate-500">Selecciona partidos para formar una mayoría.</span>`;
+  $("#seatNote").innerHTML = scenario==="enc"
+    ? `Escenario de encuestas: PP, PSOE y Vox según la media de ${POLLS.filter(p=>p.pp!==null).length} sondeos (puntos medios de los rangos). Resto de partidos según el reparto de Imop (5–7 oct), ajustando el Frente Amplio para cuadrar 350; CC mantiene su escaño de 2023 porque no aparece en los sondeos consultados. Es una aproximación, no una proyección propia. <a class="src" href="${S.imop}" target="_blank" rel="noopener">↗ Imop</a>`
+    : `Resultado oficial del 23J. En 2023 Podemos formaba parte de Sumar. <a class="src" href="${S.g2023}" target="_blank" rel="noopener">↗ Resultados</a>`;
+}
+$$("#scenarioBtns [data-sc]").forEach(b=>b.addEventListener("click",()=>{ scenario=b.dataset.sc; renderCoalition(); }));
+$$("[data-preset-c]").forEach(b=>b.addEventListener("click",()=>{ coalition=new Set(COAL_PRESETS[b.dataset.presetC]); renderCoalition(); }));
+
+/* ============================================================
+   MÓDULO 1: RADIOGRAFÍA
+   ============================================================ */
+const FILTERS = [["todos","Todos"],["izquierda","Izquierda"],["centro","Centro"],["derecha","Derecha"],["nacionalista","Nacionalistas / regionalistas"],["antisistema","Antisistema"]];
+let curFilter = "todos", curView = "cards", tlParty = "todos";
+function renderFilters(){
+  if(curView==="cards"){
+    $("#filters").innerHTML = FILTERS.map(f=>`<button class="chip btn px-3 py-1.5 rounded-full text-sm ${curFilter===f[0]?"active":""}" data-f="${f[0]}">${f[1]}</button>`).join("");
+    $$("#filters button").forEach(b=>b.addEventListener("click",()=>{curFilter=b.dataset.f;renderFilters();renderParties();}));
+  } else {
+    const opts = [["todos","Todos"],["general","General"]].concat(PARTIES.filter(p=>TIMELINE.some(e=>e.p.includes(p.id))).map(p=>[p.id,p.short]));
+    $("#filters").innerHTML = opts.map(f=>`<button class="chip btn px-3 py-1.5 rounded-full text-sm ${tlParty===f[0]?"active":""}" data-tp="${f[0]}">${f[1]}</button>`).join("");
+    $$("#filters button").forEach(b=>b.addEventListener("click",()=>{tlParty=b.dataset.tp;renderFilters();renderTimeline();}));
+  }
+  $("#legend").innerHTML = Object.keys(TYPE).map(k=>badge(k)).join("");
+  $$("#viewBtns [data-view]").forEach(b=>{ const on=b.dataset.view===curView; b.classList.toggle("bg-sky-500",on); b.classList.toggle("text-slate-900",on); b.classList.toggle("font-semibold",on); b.classList.toggle("text-slate-300",!on); });
+}
+$$("#viewBtns [data-view]").forEach(b=>b.addEventListener("click",()=>{
+  curView=b.dataset.view;
+  $("#partyGrid").classList.toggle("hidden", curView!=="cards");
+  $("#timeline").classList.toggle("hidden", curView!=="timeline");
+  renderFilters(); curView==="cards"?renderParties():renderTimeline(); icons();
+}));
+function renderParties(){
+  const list = PARTIES.filter(p=>curFilter==="todos"||p.tags.includes(curFilter));
+  $("#partyGrid").innerHTML = list.map(p=>`
+    <article class="card card-hover overflow-hidden fade" id="card-${p.id}">
+      <div style="height:5px;background:${p.color}"></div>
+      <div class="p-4">
+        <div class="flex items-start justify-between gap-2 mb-2">
+          <div><h3 class="font-bold text-lg leading-tight">${p.short}</h3><p class="text-xs text-slate-400">${p.name}</p></div>
+          <div class="flex flex-wrap gap-1 justify-end">${p.tags.map(t=>`<span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-700 text-slate-300">${t}</span>`).join("")}</div>
+        </div>
+        <p class="text-sm text-slate-300 mb-3">${p.resumen}</p>
+        <button class="btn text-sm text-sky-400 hover:text-sky-300 flex items-center gap-1" data-toggle="${p.id}"><i data-lucide="chevron-down" class="w-4 h-4"></i><span>Ver ficha completa</span></button>
+        <div class="hidden mt-4 space-y-4" id="det-${p.id}">
+          <div><h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Hemeroteca · Dicho vs. Hecho</h4><ul class="space-y-2">${p.hemeroteca.map(itemRow).join("")}</ul></div>
+          <div><h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Corrupción y calidad institucional</h4><ul class="space-y-2">${p.corrupcion.map(itemRow).join("")}</ul></div>
+          ${p.economia.length?`<div><h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Economía: hechos y propuestas</h4><ul class="space-y-2">${p.economia.map(itemRow).join("")}</ul></div>`:""}
+          <div class="rounded-lg bg-slate-900/60 border border-slate-700 p-3"><h4 class="text-xs font-semibold uppercase tracking-wider text-amber-300 mb-1">¿Para quién tiene lógica votarle?</h4><p class="text-sm text-slate-300">${p.paradoja}</p></div>
+        </div>
+      </div>
+    </article>`).join("");
+  $$("[data-toggle]").forEach(b=>b.addEventListener("click",()=>{
+    const d = $("#det-"+b.dataset.toggle); d.classList.toggle("hidden");
+    const closed = d.classList.contains("hidden");
+    b.querySelector("span").textContent = closed?"Ver ficha completa":"Ocultar ficha";
+    const ic = b.querySelector("svg, i"); if(ic) ic.style.transform = closed?"":"rotate(180deg)";
+  }));
+  icons();
+}
+function partyChip(id){
+  if(id==="general") return `<span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-700 text-slate-200">General</span>`;
+  const p = PARTIES[IDX[id]]; if(!p) return "";
+  return `<span class="text-[10px] px-2 py-0.5 rounded-full font-semibold" style="background:${p.color}33;color:${p.color}">${p.short}</span>`;
+}
+function renderTimeline(){
+  const ev = TIMELINE.filter(e=>tlParty==="todos"||e.p.includes(tlParty)).slice().sort((a,b)=>b.d.localeCompare(a.d));
+  let html = "", year = null;
+  ev.forEach(e=>{
+    const y = e.d.slice(0,4);
+    if(y!==year){ if(year!==null) html += `</ol>`; html += `<h3 class="text-lg font-bold text-slate-300 mt-6 mb-3">${y}</h3><ol class="relative border-l-2 border-slate-700 ml-2 space-y-4">`; year = y; }
+    html += `<li class="relative pl-5 fade"><span class="tl-dot" style="background:${TYPE[e.t].dot}"></span>
+      <div class="card p-3"><div class="flex flex-wrap items-center gap-2 mb-1"><span class="text-xs font-semibold text-slate-400 w-24">${fdate(e.d)}</span>${badge(e.t)}${e.p.map(partyChip).join("")}</div>
+      <p class="text-sm text-slate-200">${e.x}${srcLink(e.s)}</p></div></li>`;
+  });
+  if(year!==null) html += `</ol>`;
+  $("#timeline").innerHTML = html || `<p class="text-slate-500 text-sm">Sin hechos fechados para este filtro.</p>`;
+}
+
+/* ============================================================
+   AFINIDAD
+   ============================================================ */
+function affinity(u, pv, imp){
+  let num=0, den=0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    if(u[i]===null || u[i]===undefined) continue;
+    const w = QUESTIONS[i].w * (imp && imp[i] ? 2 : 1);
+    const d = Math.abs(u[i]-pv[i]);
+    num += w*(1 - d/(2+Math.abs(u[i])));
+    den += w;
+  }
+  return den? (num/den)*100 : 0;
+}
+function axisMean(vec, e, answered){
+  let s=0,c=0;
+  QUESTIONS.forEach((q,i)=>{ if(q.e!==e) return; if(answered && answered[i]===null) return; s+=vec[i]; c++; });
+  return c? s/c : 0;
+}
+
+/* ============================================================
+   MÓDULO 2: COMPARADOR
+   ============================================================ */
+function initCompareSelects(){
+  const opts = PARTIES.map(p=>`<option value="${p.id}">${p.short}</option>`).join("");
+  $("#cmpA").innerHTML = opts; $("#cmpB").innerHTML = opts;
+  $("#cmpA").value = "psoe"; $("#cmpB").value = "pp";
+  $("#cmpA").addEventListener("change", renderCompare);
+  $("#cmpB").addEventListener("change", renderCompare);
+}
+function chipStance(v){ const s=STANCE[String(v)]; return `<span class="text-[11px] px-2 py-0.5 rounded-full whitespace-nowrap ${s[1]}">${s[0]}</span>`; }
+function renderCompare(){
+  const A = PARTIES[IDX[$("#cmpA").value]], B = PARTIES[IDX[$("#cmpB").value]];
+  const col = (P,key,fn) => P[key].length? `<ul class="space-y-2">${P[key].map(fn).join("")}</ul>` : `<p class="text-sm text-slate-500">Sin hechos económicos específicos en la base de datos; consulta las posiciones del test.</p>`;
+  const econQs = QUESTIONS.filter(q=>q.e===0||q.e===5||q.e===6);
+  const econRow = P => `<ul class="space-y-1.5">${econQs.map(q=>`<li class="flex justify-between gap-2 text-xs"><span class="text-slate-400">${q.t}</span>${chipStance(P.vec[q.n-1])}</li>`).join("")}</ul>`;
+  const agree = affinity(A.vec, B.vec, null);
+  const diffs = QUESTIONS.map((q,i)=>({q,d:Math.abs(A.vec[i]-B.vec[i])})).sort((x,y)=>y.d-x.d).slice(0,5);
+  const coin = QUESTIONS.filter((q,i)=>A.vec[i]===B.vec[i] && Math.abs(A.vec[i])===2).slice(0,5);
+  const block = (title, icon, a, b) => `
+    <div class="card p-4 mb-4"><h3 class="font-bold mb-3 flex items-center gap-2"><i data-lucide="${icon}" class="w-5 h-5 text-sky-400"></i>${title}</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div><div class="font-semibold mb-2 pb-1 border-b-2" style="border-color:${A.color}">${A.short}</div>${a}</div>
+        <div><div class="font-semibold mb-2 pb-1 border-b-2" style="border-color:${B.color}">${B.short}</div>${b}</div>
+      </div></div>`;
+  const enc = id => { const x=(SEATS.enc.find(s=>s.id===id)); return x?x.s:null; };
+  const e23 = id => { const x=(SEATS["2023"].find(s=>s.id===id)); return x?x.s:null; };
+  const seatLine = P => { const a=e23(P.id), b=enc(P.id); return `<span class="text-xs text-slate-400">${a!==null?`2023: <b class="text-slate-200">${a}</b>`:"2023: sin escaño propio"} · Encuestas 29N: <b class="text-slate-200">${b!==null?"~"+b:"0"}</b></span>`; };
+  $("#cmpOut").innerHTML = `
+    <div class="card p-4 mb-4 flex flex-wrap items-center gap-4">
+      <div class="text-3xl font-extrabold text-sky-400">${agree.toFixed(0)}%</div>
+      <div class="text-sm text-slate-300 max-w-2xl"><p>Coincidencia programática entre <b>${A.short}</b> y <b>${B.short}</b> en las 50 afirmaciones del test. Coincidir mucho en programa no implica la misma trayectoria ni los mismos frentes judiciales.</p>
+      <p class="mt-1">${A.short}: ${seatLine(A)}<br>${B.short}: ${seatLine(B)}</p></div>
+    </div>
+    ${block("Hemeroteca · Dicho vs. Hecho","newspaper", `<ul class="space-y-2">${A.hemeroteca.map(itemRow).join("")}</ul>`, `<ul class="space-y-2">${B.hemeroteca.map(itemRow).join("")}</ul>`)}
+    ${block("Corrupción y calidad institucional","scale", `<ul class="space-y-2">${A.corrupcion.map(itemRow).join("")}</ul>`, `<ul class="space-y-2">${B.corrupcion.map(itemRow).join("")}</ul>`)}
+    ${block("Economía: hechos y propuestas","landmark", col(A,"economia",itemRow), col(B,"economia",itemRow))}
+    ${block("Economía: posición en fiscalidad, vivienda y mercado laboral","briefcase", econRow(A), econRow(B))}
+    <div class="grid lg:grid-cols-2 gap-4 mb-4">
+      <div class="card p-4"><h3 class="font-bold mb-3">Perfil por ejes (–2 a +2)</h3><div class="h-80"><canvas id="cmpRadar"></canvas></div></div>
+      <div class="card p-4 space-y-4">
+        <div><h3 class="font-bold mb-2 flex items-center gap-2"><i data-lucide="swords" class="w-5 h-5 text-red-400"></i>Dónde chocan más</h3>
+          <ul class="space-y-2 text-sm">${diffs.map(x=>`<li class="text-slate-300">${x.q.t}<div class="flex flex-wrap gap-2 mt-1 items-center text-xs"><span class="text-slate-500">${A.short}</span>${chipStance(A.vec[x.q.n-1])}<span class="text-slate-500">${B.short}</span>${chipStance(B.vec[x.q.n-1])}</div></li>`).join("")}</ul></div>
+        <div><h3 class="font-bold mb-2 flex items-center gap-2"><i data-lucide="handshake" class="w-5 h-5 text-emerald-400"></i>Dónde coinciden con fuerza</h3>
+          ${coin.length?`<ul class="space-y-1.5 text-sm text-slate-300 list-disc list-inside">${coin.map(q=>`<li>${q.t}</li>`).join("")}</ul>`:`<p class="text-sm text-slate-500">No hay afirmaciones en las que ambos tengan la misma posición extrema.</p>`}</div>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="rounded-lg bg-slate-800 border border-amber-500/30 p-4"><h4 class="text-xs font-semibold uppercase tracking-wider text-amber-300 mb-1">¿Para quién tiene lógica votarle? · ${A.short}</h4><p class="text-sm text-slate-300">${A.paradoja}</p></div>
+      <div class="rounded-lg bg-slate-800 border border-amber-500/30 p-4"><h4 class="text-xs font-semibold uppercase tracking-wider text-amber-300 mb-1">¿Para quién tiene lógica votarle? · ${B.short}</h4><p class="text-sm text-slate-300">${B.paradoja}</p></div>
+    </div>`;
+  const mk = (P,c) => ({label:P.short, data:AXES.map((_,e)=>axisMean(P.vec,e)), borderColor:c, backgroundColor:c+"33", pointBackgroundColor:c, borderWidth:2});
+  mkChart("cmpRadar",{type:"radar",data:{labels:AXES_SHORT,datasets:[mk(A,A.color),mk(B,B.color)]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:-2,max:2,ticks:{stepSize:1,backdropColor:"transparent"},grid:{color:"rgba(148,163,184,.2)"},angleLines:{color:"rgba(148,163,184,.2)"},pointLabels:{color:"#cbd5e1",font:{size:11}}}}}});
+  icons();
+}
+
+/* ============================================================
+   MÓDULO 3: D'HONDT
+   ============================================================ */
+const SIM_NAMES = ["Lista A","Lista B","Lista C","Lista D","Lista E","Lista F"];
+const SIM_COLORS = ["#ef4444","#3b82f6","#84cc16","#c026d3","#f97316","#06b6d4"];
+const PRESETS = [[38,34,12,8,5,3],[30,18,16,14,12,10],[46,30,12,6,4,2]];
+const f1 = x => x.toFixed(1).replace(".",",");
+let simMode = "real", simLists = [], simOther = 0;
+
+function dhondt(votes, M){
+  const seats = votes.map(()=>0), quot = [];
+  votes.forEach((v,i)=>{ for(let d=1; d<=M; d++) quot.push({i,d,q:v/d}); });
+  quot.sort((a,b)=>b.q-a.q || a.i-b.i);
+  const win = new Set(); let last = null;
+  quot.slice(0,M).forEach(w=>{ if(w.q>0){ seats[w.i]++; win.add(w.i+"-"+w.d); last = w; } });
+  return {seats, win, last};
+}
+function provSeats(name){
+  const p = PROV[name]; if(!p) return 5;
+  return $("#simNew").checked ? p.seats : (SEATS2023_DIFF[name] || p.seats);
+}
+function loadReal(name){
+  const r = R23BY[name]; if(!r) return;
+  simLists = Object.keys(r.p).map(k=>({id:k, name:PNAME[k][0], color:PNAME[k][1], v:r.p[k][0], off:r.p[k][1]}));
+  simLists.sort((a,b)=>b.v-a.v);
+  simOther = Math.max(0, 100 - simLists.reduce((a,b)=>a+b.v,0));
+}
+function loadFree(i){
+  simLists = PRESETS[i].map((v,k)=>({id:"l"+k, name:SIM_NAMES[k], color:SIM_COLORS[k], v, off:null}));
+  simOther = 0;
+}
+function setSimMode(m){
+  simMode = m;
+  $$("#simModeBtns [data-mode]").forEach(b=>{ const on=b.dataset.mode===m; b.classList.toggle("bg-sky-500",on); b.classList.toggle("text-slate-900",on); b.classList.toggle("font-semibold",on); b.classList.toggle("text-slate-300",!on); });
+  $("#simPresets").classList.toggle("hidden", m==="real");
+  $("#seatsWrap").classList.toggle("hidden", m==="real");
+  $("#simNewWrap").classList.toggle("hidden", m!=="real");
+  if(m==="real"){ if(!R23BY[$("#simProv").value]) $("#simProv").value = store.get("rx-prov") && R23BY[store.get("rx-prov")] ? store.get("rx-prov") : "Madrid"; loadReal($("#simProv").value); }
+  else { loadFree(0); const p=PROV[$("#simProv").value]; $("#simSeats").value = p ? p.seats : 5; }
+  buildSimInputs(); renderSim();
+}
+function buildSimInputs(){
+  $("#simInputs").innerHTML = simLists.map((l,i)=>`<div><label class="block text-xs mb-1 font-semibold truncate" style="color:${l.color}" for="sv${i}">${l.name} (%)</label><input id="sv${i}" type="number" inputmode="decimal" min="0" max="100" step="0.1" data-sv="${i}" value="${l.v}" class="w-full"></div>`).join("");
+  $$("[data-sv]").forEach(inp=>inp.addEventListener("input",()=>{ simLists[+inp.dataset.sv].v = Math.max(0, parseFloat(String(inp.value).replace(",","."))||0); renderSim(); }));
+  $("#simHelp").innerHTML = simMode==="real"
+    ? `Porcentajes de voto válido en 2023 (sin contar «otros»). Activa «Reparto del 29N» para aplicar los escaños de este año: Madrid pasa de 37 a 38 y Cádiz de 9 a 8. <button class="src" id="simReset">Restaurar datos de 2023</button>`
+    : `Datos inventados para entender el mecanismo. Cambia el número de escaños o los porcentajes.`;
+  const rb = $("#simReset"); if(rb) rb.addEventListener("click",()=>{ loadReal($("#simProv").value); buildSimInputs(); renderSim(); });
+}
+function initSim(){
+  $("#simProv").innerHTML = PROVINCES.slice().sort((a,b)=>a.name.localeCompare(b.name,"es")).map(p=>`<option value="${p.name}">${p.name}</option>`).join("");
+  $("#simProv").addEventListener("change",()=>{
+    const n=$("#simProv").value; store.set("rx-prov", n);
+    if(simMode==="real"){ loadReal(n); buildSimInputs(); } else { $("#simSeats").value = PROV[n].seats; }
+    renderSim();
+  });
+  $("#simSeats").addEventListener("input",()=>renderSim());
+  $("#simBarrier").addEventListener("change",()=>renderSim());
+  $("#simNew").addEventListener("change",()=>renderSim());
+  $$("#simModeBtns [data-mode]").forEach(b=>b.addEventListener("click",()=>setSimMode(b.dataset.mode)));
+  $$("[data-preset]").forEach(b=>b.addEventListener("click",()=>{ loadFree(+b.dataset.preset); buildSimInputs(); renderSim(); }));
+  const saved = store.get("rx-prov");
+  $("#simProv").value = saved && PROV[saved] ? saved : "Madrid";
+  setSimMode("real");
+}
+function renderSim(){
+  if(!simLists.length) return;
+  const real = simMode==="real";
+  const M = real ? provSeats($("#simProv").value) : Math.min(38, Math.max(1, parseInt($("#simSeats").value)||1));
+  const raw = simLists.map(l=>l.v);
+  const total = real ? 100 : (raw.reduce((a,b)=>a+b,0) || 1);
+  const pc = raw.map(v=> real ? v : v/total*100);
+  const barrier = $("#simBarrier").checked;
+  const eff = pc.map(v=> (barrier && v<3) ? 0 : v);
+  const {seats, win, last} = dhondt(eff, M);
+  const guar = 100/(M+1);
+  const showOff = real && M === (R23BY[$("#simProv").value]||{}).seats;
+  const order = pc.map((v,i)=>i).sort((a,b)=>pc[b]-pc[a]);
+  let rows = `<thead><tr class="text-left text-xs text-slate-400"><th class="py-1.5">Lista</th><th class="text-right pr-3">% voto</th><th class="text-right pr-3">Escaños</th>${real?`<th class="text-right">${showOff?"Oficial 2023":"En 2023"}</th>`:`<th class="text-right">% escaños</th>`}</tr></thead><tbody>`;
+  rows += order.map(i=>{ const l=simLists[i], v=pc[i];
+    const extra = real ? `<td class="text-right ${l.off!==seats[i]?"text-amber-300":"text-slate-400"}">${l.off}</td>` : `<td class="text-right text-slate-400">${(seats[i]/M*100).toFixed(0)}%</td>`;
+    return `<tr class="border-t border-slate-700"><td class="py-2"><span class="inline-block w-2.5 h-2.5 rounded-full mr-2" style="background:${l.color}"></span>${l.name}</td><td class="text-right pr-3">${f1(v)}%${barrier&&v<3&&v>0?` <span class="text-red-300 text-xs block sm:inline">bajo 3%</span>`:""}</td><td class="text-right pr-3 font-bold">${seats[i]}</td>${extra}</tr>`; }).join("");
+  if(real && simOther>0) rows += `<tr class="border-t border-slate-700 text-slate-500"><td class="py-2"><span class="inline-block w-2.5 h-2.5 rounded-full mr-2 bg-slate-600"></span>Otros y en blanco</td><td class="text-right pr-3">${f1(simOther)}%</td><td class="text-right pr-3">0</td><td class="text-right">0</td></tr>`;
+  rows += "</tbody>";
+  $("#simTable").innerHTML = rows;
+  const lost = pc.reduce((a,v,i)=> a + (seats[i]===0 ? v : 0), 0) + (real ? simOther : 0);
+  // ¿A quién le faltó menos para el siguiente escaño?
+  let close = "";
+  if(last){
+    const lq = last.q;
+    const cands = simLists.map((l,i)=>{
+      if(barrier && pc[i]<3) return {i, need:3-pc[i], barrier:true};
+      return {i, need: Math.max(0, lq*(seats[i]+1) - pc[i]), barrier:false};
+    }).filter(c=>c.need>0.0001).sort((a,b)=>a.need-b.need).slice(0,3);
+    close = `<p>El último escaño fue para <b style="color:${simLists[last.i].color}">${simLists[last.i].name}</b>.</p>` +
+      (cands.length ? `<ul class="mt-1 space-y-1">${cands.map(c=>`<li>· A <b style="color:${simLists[c.i].color}">${simLists[c.i].name}</b> le faltaron ${c.need<0.1?"<b>menos de 0,1 puntos</b>":`unos <b>${f1(c.need)} puntos</b>`} ${c.barrier?"para superar la barrera del 3%":(seats[c.i]?"para un escaño más":"para su primer escaño")}.</li>`).join("")}</ul>` : "") + (cands.some(c=>c.need<0.3) ? `<p class="text-xs text-slate-500">Margen muy ajustado: aquí se usan porcentajes redondeados a un decimal, y el escaño real lo decidieron los votos exactos.</p>` : "");
+  }
+  let diffNote = "";
+  if(real && !showOff){
+    const changed = order.filter(i=>seats[i]!==simLists[i].off).map(i=>`${simLists[i].name} ${seats[i]>simLists[i].off?"+":""}${seats[i]-simLists[i].off}`);
+    diffNote = `<p class="text-amber-300">Con el reparto del 29N (${M} escaños) y los mismos votos de 2023: ${changed.length?changed.join(", "):"no cambiaría nada"}.</p>`;
+  } else if(real){
+    const mism = order.some(i=>seats[i]!==simLists[i].off);
+    diffNote = mism ? `<p class="text-amber-300">Tu escenario cambia el reparto respecto a 2023 (diferencias en ámbar).</p>` : `<p class="text-emerald-300">Con estos porcentajes el reparto coincide con el resultado oficial de 2023.</p>`;
+  }
+  $("#simNote").innerHTML = `<div class="rounded-lg bg-slate-900/60 border border-slate-700 p-3 space-y-1.5">
+    <p>Con <b>${M}</b> escaño${M>1?"s":""}, más del <b class="text-sky-300">${f1(guar)}%</b> de los votos garantiza un escaño.</p>
+    <p>Votos que se quedan sin representación: <b class="${lost>15?"text-red-300":"text-amber-300"}">${f1(lost)}%</b>.</p>
+    ${close}${diffNote}</div>`;
+  const maxD = Math.min(M, 12);
+  let q = `<thead><tr class="text-slate-400"><th class="py-1.5 text-left sticky left-0 bg-slate-800 pr-2">Lista</th>${Array.from({length:maxD},(_,d)=>`<th class="px-1.5">÷${d+1}</th>`).join("")}</tr></thead><tbody>`;
+  q += order.map(i=>`<tr class="border-t border-slate-700"><td class="py-1.5 text-left sticky left-0 bg-slate-800 pr-2 whitespace-nowrap" style="color:${simLists[i].color}">${simLists[i].name}</td>${Array.from({length:maxD},(_,d)=>{const val=eff[i]/(d+1);return `<td class="${win.has(i+"-"+(d+1))?"win-cell":"text-slate-400"} py-1.5 px-1.5">${val.toFixed(1).replace(".",",")}</td>`;}).join("")}</tr>`).join("") + "</tbody>";
+  $("#quotTable").innerHTML = q;
+  $("#quotHelp").textContent = `Los votos de cada lista divididos entre 1, 2, 3…${M>12?" (se muestran los 12 primeros divisores)":""}. Los resaltados se llevan escaño. Desliza la tabla en horizontal si no cabe.`;
+  mkChart("simChart",{type:"bar",data:{labels:order.map(i=>simLists[i].name),datasets:[
+    {label:"% de voto",data:order.map(i=>+pc[i].toFixed(1)),backgroundColor:"#64748b"},
+    {label:"% de escaños",data:order.map(i=>+(seats[i]/M*100).toFixed(1)),backgroundColor:order.map(i=>simLists[i].color)}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom"},title:{display:true,text:"Voto vs. escaños",color:"#e2e8f0"}},scales:{y:{beginAtZero:true,ticks:{callback:v=>v+"%"}}}}});
+}
+function renderThreshold(){
+  const ms = Array.from({length:37},(_,i)=>i+1);
+  mkChart("thrChart",{type:"line",data:{labels:ms,datasets:[
+    {label:"% que garantiza escaño (100/(N+1))",data:ms.map(m=>+(100/(m+1)).toFixed(2)),borderColor:"#f59e0b",backgroundColor:"#f59e0b33",fill:true,tension:.3,pointRadius:0},
+    {label:"Barrera legal (3%)",data:ms.map(()=>3),borderColor:"#ef4444",borderDash:[6,4],pointRadius:0}]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{x:{title:{display:true,text:"Escaños de la circunscripción"}},y:{title:{display:true,text:"% de voto"},beginAtZero:true}}}});
+}
+function renderCost(){
+  const data = RES2023.map(r=>({...r, cost:Math.round(r.v/r.s)})).sort((a,b)=>b.cost-a.cost);
+  mkChart("costChart",{type:"bar",data:{labels:data.map(d=>d.n),datasets:[{label:"Votos por escaño",data:data.map(d=>d.cost),backgroundColor:data.map(d=>d.c),borderRadius:4}]},
+    options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{const d=data[c.dataIndex];return ` ${fmt(d.cost)} votos/escaño (${fmt(d.v)} votos, ${d.s} escaño${d.s>1?"s":""})`;}}}},
+    scales:{x:{beginAtZero:true,ticks:{callback:v=>fmt(v)}}}}});
+}
+
+/* ============================================================
+   MÓDULO 4: TEST
+   ============================================================ */
+const PAGE_SIZE = 5, NPAGES = 10, STORE_KEY = "rx-test-v2";
+let answers = Array(50).fill(null), imp = Array(50).fill(false), page = 0;
+const openHelp = new Set();
+
+function encodeAnswers(){
+  return answers.map((a,i)=> a===null ? "x" : (imp[i] ? "ABCDE" : "abcde")[a+2]).join("");
+}
+function decodeAnswers(str){
+  if(!/^[a-eA-Ex]{50}$/.test(str)) return false;
+  str.split("").forEach((c,i)=>{
+    if(c==="x"){ answers[i]=null; imp[i]=false; return; }
+    const low = c.toLowerCase(); answers[i] = "abcde".indexOf(low)-2; imp[i] = c!==low;
+  });
+  return true;
+}
+function saveProgress(){ store.set(STORE_KEY, {a:encodeAnswers(), p:page}); }
+
+function renderQuiz(){
+  const start = page*PAGE_SIZE;
+  $("#quizAxisName").textContent = `Eje ${page+1}/10 · ${AXES[page]}`;
+  const done = answers.filter(a=>a!==null).length;
+  $("#quizCount").textContent = `${done}/50 respondidas`;
+  $("#quizBar").style.width = (done/50*100)+"%";
+  $("#quizSteps").innerHTML = AXES_SHORT.map((n,i)=>{
+    const c = answers.slice(i*5,i*5+5).filter(a=>a!==null).length;
+    return `<button class="chip btn px-2.5 py-1 rounded-full text-xs ${i===page?"active":""}" data-p="${i}">${n}${c===5?" ✓":""}</button>`;
+  }).join("");
+  $$("#quizSteps [data-p]").forEach(b=>b.addEventListener("click",()=>{page=+b.dataset.p;saveProgress();renderQuiz();window.scrollTo({top:0,behavior:"smooth"});}));
+  $("#quizQs").innerHTML = QUESTIONS.slice(start,start+PAGE_SIZE).map(q=>{
+    const i = q.n-1;
+    return `<div class="card p-4 fade">
+      <div class="flex gap-3 mb-3 items-start"><span class="text-xs font-bold text-sky-400 pt-1">P${q.n}</span><p class="font-medium flex-1 min-w-0">${q.t}</p><button class="help-btn btn" data-help="${i}" aria-expanded="${openHelp.has(i)}" aria-controls="help-${i}" aria-label="¿Qué significa esta pregunta?" title="¿Qué significa?">?</button></div>
+      <div class="help-bubble text-sm ${openHelp.has(i)?"":"hidden"}" id="help-${i}">
+        <p class="text-slate-200 mb-2">${HELP[i][0]}</p>
+        <div class="grid sm:grid-cols-2 gap-2 text-xs">
+          <p class="text-slate-300"><b class="text-emerald-300">A favor se argumenta:</b> ${HELP[i][1]}</p>
+          <p class="text-slate-300"><b class="text-red-300">En contra se argumenta:</b> ${HELP[i][2]}</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-5 gap-1.5 sm:gap-2">${LIKERT.map(l=>`<button class="likert btn rounded-lg px-1 sm:px-2 py-2.5 sm:py-2 text-xs ${answers[i]===l.v?"sel":""}" data-q="${i}" data-v="${l.v}" aria-label="${l.l}" title="${l.l}"><span class="block font-bold text-base sm:text-sm">${l.s}</span><span class="hidden sm:block">${l.l}</span></button>`).join("")}</div>
+      <div class="flex justify-between text-[11px] text-slate-500 mt-1.5 sm:hidden"><span>← En desacuerdo</span><span>Neutral</span><span>De acuerdo →</span></div>
+      <label class="flex items-center gap-2 mt-3 text-xs text-slate-400 cursor-pointer"><input type="checkbox" data-imp="${i}" ${imp[i]?"checked":""}> Tema clave para mí (cuenta el doble)</label>
+    </div>`;
+  }).join("");
+  $$("#quizQs [data-q]").forEach(b=>b.addEventListener("click",()=>{answers[+b.dataset.q]=+b.dataset.v;saveProgress();renderQuiz();}));
+  $$("#quizQs [data-help]").forEach(b=>b.addEventListener("click",()=>{
+    const i=+b.dataset.help, box=$("#help-"+i), open=box.classList.contains("hidden");
+    box.classList.toggle("hidden",!open); b.setAttribute("aria-expanded",String(open));
+    open?openHelp.add(i):openHelp.delete(i);
+  }));
+  $$("#quizQs [data-imp]").forEach(c=>c.addEventListener("change",()=>{imp[+c.dataset.imp]=c.checked;saveProgress();}));
+  $("#btnPrev").style.visibility = page===0?"hidden":"visible";
+  const last = page===NPAGES-1;
+  $("#btnNext").innerHTML = last ? `Ver resultados<i data-lucide="flag" class="w-4 h-4"></i>` : `Siguiente<i data-lucide="arrow-right" class="w-4 h-4"></i>`;
+  $("#quizHint").textContent = last && done<25 ? "Responde al menos 25 preguntas para calcular resultados." : "Las preguntas sin responder no cuentan.";
+  icons();
+}
+$("#btnPrev").addEventListener("click",()=>{ if(page>0){page--;saveProgress();renderQuiz();window.scrollTo({top:0,behavior:"smooth"});} });
+$("#btnNext").addEventListener("click",()=>{
+  if(page<NPAGES-1){page++;saveProgress();renderQuiz();window.scrollTo({top:0,behavior:"smooth"});return;}
+  if(answers.filter(a=>a!==null).length<25){ $("#quizHint").classList.add("text-amber-300"); return; }
+  showResults();
+});
+
+function copyText(text, okEl){
+  const done = () => { okEl.textContent = "Resultado copiado: pégalo en WhatsApp"; setTimeout(()=>okEl.textContent="",2500); };
+  const fallback = () => {
+    const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); done(); }catch(e){ okEl.textContent = "No se pudo copiar automáticamente."; }
+    document.body.removeChild(ta);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done, fallback); } else fallback();
+}
+
+function showResults(){
+  $("#quizBox").classList.add("hidden"); $("#quizIntro").classList.add("hidden");
+  const R = $("#quizResults"); R.classList.remove("hidden");
+  const code = encodeAnswers();
+  try{ history.replaceState(null, "", "#t="+code); }catch(e){}
+  const ranking = PARTIES.map(p=>({p, aff:affinity(answers,p.vec,imp)})).sort((a,b)=>b.aff-a.aff);
+  const top = ranking[0], second = ranking[1];
+  R.innerHTML = `
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+    <h2 class="text-2xl font-bold">Tus resultados</h2>
+    <div class="flex flex-wrap items-center gap-2">
+      <span id="shareOk" class="text-xs text-emerald-300"></span>
+      <button id="btnShare" class="btn bg-sky-500 hover:bg-sky-400 text-slate-900 font-semibold px-3 sm:px-4 py-2 rounded-lg flex items-center gap-2 text-sm"><i data-lucide="share-2" class="w-4 h-4"></i>Compartir</button>
+      <button id="btnEdit" class="chip btn px-3 sm:px-4 py-2 rounded-lg flex items-center gap-2 text-sm"><i data-lucide="pencil" class="w-4 h-4"></i>Revisar</button>
+      <button id="btnRedo" class="chip btn px-3 sm:px-4 py-2 rounded-lg flex items-center gap-2 text-sm"><i data-lucide="rotate-ccw" class="w-4 h-4"></i>Reiniciar</button>
+    </div>
+  </div>
+  <div class="grid lg:grid-cols-2 gap-4 mb-6">
+    <div class="card p-4 sm:p-5">
+      <h3 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="trophy" class="w-5 h-5 text-amber-400"></i>Podio de afinidad</h3>
+      <div class="space-y-3">${ranking.map((r,i)=>`
+        <div><div class="flex justify-between text-sm mb-1"><span class="font-medium">${i+1}. ${r.p.short}</span><span class="font-bold">${r.aff.toFixed(1)}%</span></div>
+        <div class="h-3 bg-slate-700 rounded-full overflow-hidden"><div class="h-full bar-fill rounded-full" style="width:0%;background:${r.p.color}" data-w="${r.aff.toFixed(1)}"></div></div></div>`).join("")}</div>
+      <p class="text-xs text-slate-500 mt-4">Afinidad basada en la distancia ponderada entre tus respuestas y la posición estimada de cada partido. Es una aproximación, no una recomendación de voto.</p>
+    </div>
+    <div class="card p-4 sm:p-5">
+      <h3 class="font-bold mb-2 flex items-center gap-2"><i data-lucide="radar" class="w-5 h-5 text-sky-400"></i>Tu perfil frente a tus dos partidos más afines</h3>
+      <div class="h-80"><canvas id="resRadar"></canvas></div>
+    </div>
+  </div>
+
+  <div class="rounded-2xl border-2 border-amber-500/70 bg-gradient-to-r from-amber-500/15 to-red-500/15 p-5 mb-4">
+    <div class="flex gap-3 items-start"><i data-lucide="triangle-alert" class="w-7 h-7 text-amber-400 shrink-0"></i>
+    <div><h3 class="text-lg sm:text-xl font-extrabold text-amber-300 mb-1">ADVERTENCIA CRÍTICA: Ningún partido es un cheque en blanco. No existe la afinidad 100% coherente.</h3>
+    <p class="text-sm text-slate-200">Un votante con criterio propio y coherente en los 10 ejes no encontrará una formación que coincida con él en todo. Cada opción exige asumir contradicciones éticas, de gestión o de promesas. El mejor voto es el que sabe qué está aceptando.</p></div></div>
+  </div>
+
+  <div class="card p-4 sm:p-5 mb-6">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+      <h3 class="font-bold flex items-center gap-2"><i data-lucide="flip-horizontal" class="w-5 h-5 text-amber-400"></i>El espejo de la coherencia</h3>
+      <div class="flex items-center gap-2 text-sm"><label class="text-slate-400">Ver espejo de:</label><select id="mirrorSel">${ranking.map(r=>`<option value="${r.p.id}">${r.p.short} (${r.aff.toFixed(0)}%)</option>`).join("")}</select></div>
+    </div>
+    <div id="mirrorBox"></div>
+  </div>
+
+  <div class="card p-4 sm:p-5">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+      <h3 class="font-bold flex items-center gap-2"><i data-lucide="map-pin" class="w-5 h-5 text-sky-400"></i>Voto útil vs. voto ideológico el 29N</h3>
+      <div class="flex items-center gap-2 text-sm"><label class="text-slate-400">Tu provincia:</label><select id="provSel">${PROVINCES.map(p=>`<option value="${p.name}">${p.name} (${p.seats})</option>`).join("")}</select></div>
+    </div>
+    <div id="utilBox"></div>
+  </div>`;
+
+  requestAnimationFrame(()=>setTimeout(()=>$$("#quizResults [data-w]").forEach(b=>b.style.width=b.dataset.w+"%"),50));
+  const user = AXES.map((_,e)=>axisMean(answers.map(a=>a===null?0:a), e, answers));
+  const ds = (label,data,c,dash)=>({label,data,borderColor:c,backgroundColor:c+"33",pointBackgroundColor:c,borderWidth:2,borderDash:dash||[]});
+  mkChart("resRadar",{type:"radar",data:{labels:AXES_SHORT,datasets:[
+    ds("Tú",user,"#38bdf8"),
+    ds(top.p.short,AXES.map((_,e)=>axisMean(top.p.vec,e)),top.p.color,[5,4]),
+    ds(second.p.short,AXES.map((_,e)=>axisMean(second.p.vec,e)),second.p.color,[2,3])]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:-2,max:2,ticks:{stepSize:1,backdropColor:"transparent"},grid:{color:"rgba(148,163,184,.2)"},angleLines:{color:"rgba(148,163,184,.2)"},pointLabels:{color:"#cbd5e1",font:{size:11}}}}}});
+
+  const renderMirror = pid => {
+    const r = ranking.find(x=>x.p.id===pid), P = r.p;
+    const gaps = QUESTIONS.map((q,i)=>({q,i,g:answers[i]===null?-1:(Math.abs(answers[i]-P.vec[i])/(2+Math.abs(answers[i])))*q.w*(imp[i]?2:1)})).filter(x=>x.g>0).sort((a,b)=>b.g-a.g).slice(0,5);
+    $("#mirrorBox").innerHTML = `
+      <p class="font-semibold mb-3">Aunque coincides en un <span class="text-amber-300">${r.aff.toFixed(0)}%</span> con <span style="color:${P.color}">${P.short}</span>, estos son los hechos que se le reprochan, con su estado judicial:</p>
+      <p class="text-xs text-slate-500 mb-3">Las etiquetas distinguen sentencias, sentencias recurribles, procesos abiertos (presunción de inocencia) y hemeroteca. Un «proceso abierto» no implica culpabilidad.</p>
+      <ul class="space-y-2 mb-5">${P.hemeroteca.concat(P.corrupcion).map(itemRow).join("")}</ul>
+      <div class="rounded-lg bg-slate-900/60 border border-slate-700 p-3 mb-5"><h4 class="text-xs font-semibold uppercase tracking-wider text-amber-300 mb-1">¿Para quién tiene lógica votarle?</h4><p class="text-sm text-slate-300">${P.paradoja}</p></div>
+      <h4 class="text-sm font-semibold mb-2">Dónde discrepas más con ${P.short}</h4>
+      <ul class="space-y-2 text-sm">${gaps.map(x=>`<li class="text-slate-300">${x.q.t}<div class="flex flex-wrap gap-2 mt-1 items-center text-xs"><span class="text-slate-500">Tú</span>${chipStance(answers[x.i])}<span class="text-slate-500">${P.short}</span>${chipStance(P.vec[x.i])}</div></li>`).join("")||`<li class="text-slate-500">Sin discrepancias relevantes.</li>`}</ul>`;
+  };
+  renderMirror(top.p.id);
+  $("#mirrorSel").addEventListener("change",e=>renderMirror(e.target.value));
+
+  const renderUtil = () => {
+    const prov = PROV[$("#provSel").value], M = prov.seats, guar = 100/(M+1);
+    store.set("rx-prov", prov.name);
+    const avail = ranking.filter(r=>isAvail(r.p.id,prov));
+    const ideo = avail[0];
+    const useful = avail.find(r=>viab(r.p.id,prov)===2);
+    let msg = "";
+    if(top.p.id!==ideo.p.id) msg += `<p class="text-sm text-amber-300 mb-3">Tu partido más afín (${top.p.short}) no se presenta en ${prov.name}. Tu mejor opción disponible allí es ${ideo.p.short} (${ideo.aff.toFixed(0)}%).</p>`;
+    const v = viab(ideo.p.id,prov);
+    if(v===2){
+      msg += `<div class="rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-3 text-sm text-slate-200">En ${prov.name} tu opción ideológica (<b>${ideo.p.short}</b>) tiene viabilidad estructural alta: voto ideológico y voto útil coinciden.</div>`;
+    } else {
+      msg += `<div class="rounded-lg bg-amber-500/10 border border-amber-500/30 p-3 text-sm text-slate-200 space-y-2">
+        <p>En ${prov.name} se reparten <b>${M}</b> escaño${M>1?"s":""}: una lista necesita más del <b>${guar.toFixed(1)}%</b> para tener escaño garantizado y, en todo caso, superar el 3%. La viabilidad estructural de <b>${ideo.p.short}</b> aquí es <b class="${VIAB_LABEL[v][1]}">${VIAB_LABEL[v][0].toLowerCase()}</b>: su voto puede quedarse sin representación (efecto D'Hondt).</p>
+        ${useful?`<p>Voto útil (opción viable más afín): <b style="color:${useful.p.color}">${useful.p.short}</b> con ${useful.aff.toFixed(0)}% de afinidad (${(ideo.aff-useful.aff).toFixed(0)} puntos menos que tu opción ideológica). La decisión es tuya: priorizar la coherencia o que el voto cuente en el reparto.</p>`:""}
+      </div>`;
+    }
+    const r23 = R23BY[prov.name];
+    if(r23){
+      const lst = Object.keys(r23.p).filter(k=>r23.p[k][1]>0).sort((a,b)=>r23.p[b][1]-r23.p[a][1]).map(k=>`${PNAME[k][0]} ${r23.p[k][1]}`).join(" · ");
+      msg += `<p class="text-xs text-slate-400 mt-3">En 2023 en ${prov.name} (${r23.seats} escaños): ${lst}.${SEATS2023_DIFF[prov.name]?` El 29N se reparten ${prov.seats}.`:""} <button class="src" data-goto-sim="${prov.name}">Ver el reparto en el simulador</button></p>`;
+    }
+    msg += `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2 mt-4">${avail.slice(0,6).map(r=>`<div class="rounded-lg bg-slate-900/60 border border-slate-700 p-2 text-xs flex justify-between gap-2"><span>${r.p.short} · ${r.aff.toFixed(0)}%</span><span class="${VIAB_LABEL[viab(r.p.id,prov)][1]}">Viabilidad: ${VIAB_LABEL[viab(r.p.id,prov)][0]}</span></div>`).join("")}</div>
+    <p class="text-xs text-slate-500 mt-3">La viabilidad es una heurística que combina el tamaño de la provincia, el ámbito territorial de cada formación y su nivel en las encuestas de octubre de 2026. No es una proyección provincial: consulta sondeos locales antes de decidir.</p>`;
+    $("#utilBox").innerHTML = msg;
+    $$("[data-goto-sim]").forEach(b=>b.addEventListener("click",()=>{ $("#simProv").value=b.dataset.gotoSim; store.set("rx-prov", b.dataset.gotoSim); showTab(3); setSimMode("real"); setTimeout(()=>{ const c=$("#simCard"); if(c) c.scrollIntoView({behavior:"smooth"}); },350); }));
+  };
+  const savedProv = store.get("rx-prov");
+  $("#provSel").value = (savedProv && PROV[savedProv]) ? savedProv : "Madrid";
+  renderUtil();
+  $("#provSel").addEventListener("change", renderUtil);
+
+  $("#btnShare").addEventListener("click",()=>{
+    const base = location.href.split("#")[0];
+    const podium = ranking.slice(0,3).map((r,i)=>`${i+1}. ${r.p.short} (${r.aff.toFixed(0)}%)`).join(" · ");
+    const text = `Mi brújula para el 29N: ${podium}. Ningún partido me encaja al 100%. Haz el test de 50 preguntas: ${base}`;
+    copyText(text, $("#shareOk"));
+  });
+  $("#btnEdit").addEventListener("click",()=>{
+    R.classList.add("hidden"); $("#quizBox").classList.remove("hidden"); $("#quizIntro").classList.remove("hidden");
+    page=0; renderQuiz(); window.scrollTo({top:0,behavior:"smooth"});
+  });
+  $("#btnRedo").addEventListener("click",()=>{
+    answers=Array(50).fill(null); imp=Array(50).fill(false); page=0; saveProgress();
+    try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
+    R.classList.add("hidden"); $("#quizBox").classList.remove("hidden"); $("#quizIntro").classList.remove("hidden");
+    renderQuiz(); window.scrollTo({top:0,behavior:"smooth"});
+  });
+  saveProgress();
+  icons(); window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ============================================================
+   ARRANQUE
+   ============================================================ */
+renderCountdown();
+renderFilters();
+renderParties();
+initCompareSelects();
+initSim();
+(function boot(){
+  const m = location.hash.match(/^#t=([a-eA-Ex]{50})$/);
+  if(m && decodeAnswers(m[1])){
+    renderQuiz(); showTab(4, true);
+    if(answers.filter(a=>a!==null).length>=25) showResults();
+    return;
+  }
+  const saved = store.get(STORE_KEY);
+  if(saved && typeof saved.a==="string" && decodeAnswers(saved.a)) page = Math.min(NPAGES-1, Math.max(0, saved.p|0));
+  renderQuiz();
+  const t = store.get("rx-tab");
+  showTab(Number.isInteger(t) && t>=0 && t<=4 ? t : 0, true);
+})();
+</script>
+</body>
+</html>
