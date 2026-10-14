@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://radiografia-29n.vercel.app/">
+<meta property="og:title" content="Radiografía Electoral 29N">
+<meta property="og:description" content="Encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt con datos reales y test de 50 preguntas para las generales del 29N.">
+<meta name="twitter:card" content="summary">
 <title>Radiografía Electoral 29N</title>
 <meta name="description" content="Hechos, sentencias, hemeroteca, encuestas y aritmética D'Hondt de cara a las elecciones generales del 29 de noviembre de 2026.">
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -61,7 +66,10 @@
           <p class="text-xs text-slate-400 truncate"><span class="sm:hidden">Hechos, sentencias y D'Hondt</span><span class="hidden sm:inline">Hechos, sentencias, hemeroteca y aritmética D'Hondt · No recomienda voto</span></p>
         </div>
       </div>
-      <div class="text-right shrink-0" id="countdown"></div>
+      <div class="flex items-center gap-3 shrink-0">
+        <button class="share-site btn flex items-center gap-1.5 rounded-full border border-sky-500/50 text-sky-300 hover:bg-sky-500/10 px-2.5 sm:px-3 py-1.5 text-sm" aria-label="Compartir esta web"><i data-lucide="share-2" class="w-4 h-4"></i><span class="hidden sm:inline">Compartir</span></button>
+        <div class="text-right" id="countdown"></div>
+      </div>
     </div>
     <nav class="hidden sm:flex gap-1 overflow-x-auto" id="tabs">
       <button class="tab-btn btn px-3 py-2 text-sm whitespace-nowrap rounded-t-lg flex items-center gap-2" data-tab="0"><i data-lucide="vote" class="w-4 h-4"></i>29N: el tablero</button>
@@ -149,6 +157,18 @@
     <div class="card p-4 sm:p-6">
       <h3 class="font-bold text-lg mb-3 flex items-center gap-2"><i data-lucide="git-compare-arrows" class="w-5 h-5 text-sky-400"></i>Qué ha cambiado desde 2023</h3>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3" id="changes"></div>
+    </div>
+
+    <div class="card p-4 sm:p-5 mt-5 flex flex-wrap items-center justify-between gap-3">
+      <div class="min-w-0">
+        <h3 class="font-bold">¿Te ha sido útil?</h3>
+        <p class="text-sm text-slate-400">Pásasela a quien vaya a votar el 29N.</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="share-ok text-xs text-emerald-300"></span>
+        <a class="btn flex items-center gap-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-4 py-2 text-sm" id="waShare" target="_blank" rel="noopener"><i data-lucide="message-circle" class="w-4 h-4"></i>WhatsApp</a>
+        <button class="share-site btn flex items-center gap-2 rounded-lg chip px-4 py-2 text-sm"><i data-lucide="link" class="w-4 h-4"></i>Copiar enlace</button>
+      </div>
     </div>
   </section>
 
@@ -287,6 +307,8 @@
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
 const VERIFIED = "14 oct 2026";
+const SITE_URL = "https://radiografia-29n.vercel.app/";
+const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test de 50 preguntas para ver con quién coincides.";
 const S = {
   moncloa29n:"https://www.lamoncloa.gob.es/presidente/actividades/Paginas/2026/051026-sanchez-convocatoria-elecciones.aspx",
   abalos:"https://www.infobae.com/espana/2026/10/13/el-ultimo-cartucho-de-abalos-y-koldo-presionar-al-supremo-para-que-suspenda-sus-condenas-a-24-y-19-anos-de-prision-y-abrir-la-via-del-amparo-ante-el-constitucional/",
@@ -336,6 +358,8 @@ const S = {
   voxCuentas:"https://www.eldiario.es/politica/esconden-cuentas-vox-sobresueldos-multas-facturacion-opaca-cercan-partido-santiago-abascal_1_13083732.html",
   monedero:"https://orain.eus/es/actualidad/sociedad/2025/02/20/podemos-revela-que-aparto-a-monedero-en-2023-tras-recibir-dos-denuncias-por-violencia-sexual/",
   masMadrid:"https://www.deia.eus/politica/2026/10/13/madrid-abre-consulta-vinculante-militantes-frente-amplio-11646083.html",
+  zapatero:"https://www.infobae.com/espana/2026/05/20/ultima-hora-de-la-imputacion-de-zapatero-indicios-reacciones-y-novedades-del-caso-plus-ultra-en-directo/",
+  zapateroCampana:"https://theobjective.com/espana/politica/2026-10-08/zapatero-participara-actos-campana-psoe-apoyar-sanchez/",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -380,6 +404,7 @@ const PARTIES = [
     it("sentencia","El fiscal general García Ortiz, nombrado por el Gobierno, fue condenado (nov 2025) a 2 años de inhabilitación por revelación de datos reservados y dimitió.", S.fge),
     it("nofirme","David Sánchez, hermano del presidente: 9 años de inhabilitación por prevaricación (jul 2026). Recurrible.", S.david),
     it("proceso","Begoña Gómez, esposa del presidente, irá a juicio con jurado por tráfico de influencias y malversación. La Fiscalía pide su absolución.", S.begona),
+    it("proceso","El expresidente José Luis Rodríguez Zapatero está investigado desde mayo de 2026 en la Audiencia Nacional (caso Plus Ultra) por presunto tráfico de influencias: el juez le sitúa al frente de una estructura vinculada al rescate público de 53 M€ a la aerolínea. Lo niega, y el PSOE cuenta con él para la campaña.", S.zapateroCampana),
     it("proceso","Caso Leire Díez: se investiga una presunta red del entorno de Santos Cerdán para interferir en causas judiciales, con audios sobre intimidar a la jueza Biedma («darle un susto»). La jueza dice no saber quién está detrás y el PSOE no está imputado.", S.biedma2),
     it("sentencia","Caso ERE: condenas de 2019 a ex altos cargos de la Junta de Andalucía, anuladas en parte por el Constitucional en 2024.", S.ere),
     it("institucional","La oposición cuestiona la independencia del CIS, dirigido por el exdirigente socialista José Félix Tezanos.", S.polls)
@@ -632,6 +657,7 @@ const TIMELINE = [
   {d:"2026-04-16", p:["pp","vox"], t:"hemeroteca", x:"PP y Vox pactan un Gobierno de coalición en Extremadura tras cuatro meses de bloqueo, con una vicepresidencia para Vox.", s:S.extremadura},
   {d:"2026-04-22", p:["pp","vox"], t:"hemeroteca", x:"PP y Vox cierran un acuerdo en Aragón con el modelo de «prioridad nacional».", s:S.aragon},
   {d:"2026-05-17", p:["pp","psoe","vox","adel"], t:"electoral", x:"Andaluzas: PP 53 (pierde la absoluta), PSOE 28 (su peor resultado), Vox 15, Adelante Andalucía 8, Por Andalucía 5.", s:S.andalucia},
+  {d:"2026-05-19", p:["psoe"], t:"proceso", x:"La Audiencia Nacional imputa al expresidente Zapatero por presunto tráfico de influencias en el caso Plus Ultra (rescate público de 53 M€ a la aerolínea). Él niega cualquier irregularidad.", s:S.zapatero},
   {d:"2026-05-28", p:["pnv","erc"], t:"hemeroteca", x:"El PNV da la legislatura por agotada y pide elecciones en 2026; ERC exige explicaciones por el caso Leire Díez sin romper con Sánchez.", s:S.pnvEsteban},
   {d:"2026-06-22", p:["psoe"], t:"sentencia", x:"El Supremo condena a Ábalos a 24 años y 3 meses y a Koldo García a 19 años y 8 meses por el caso mascarillas.", s:S.abalos},
   {d:"2026-07-03", p:["pp","vox"], t:"hemeroteca", x:"Moreno es reelegido en Andalucía con los votos de Vox, que obtiene una vicepresidencia y la «prioridad nacional» en ayudas y vivienda protegida.", s:S.andaluciaGob},
@@ -1571,7 +1597,7 @@ function showResults(){
   $("#provSel").addEventListener("change", renderUtil);
 
   $("#btnShare").addEventListener("click",()=>{
-    const base = location.href.split("#")[0];
+    const base = SITE_URL;
     const podium = ranking.slice(0,3).map((r,i)=>`${i+1}. ${r.p.short} (${r.aff.toFixed(0)}%)`).join(" · ");
     const text = `Mi brújula para el 29N: ${podium}. Ningún partido me encaja al 100%. Haz el test de 50 preguntas: ${base}`;
     copyText(text, $("#shareOk"));
@@ -1589,6 +1615,26 @@ function showResults(){
   saveProgress();
   icons(); window.scrollTo({top:0,behavior:"smooth"});
 }
+
+/* ============================================================
+   COMPARTIR LA WEB
+   ============================================================ */
+function shareSite(){
+  const okEls = $$(".share-ok");
+  const say = t => { okEls.forEach(e=>e.textContent=t); setTimeout(()=>okEls.forEach(e=>e.textContent=""),2500); };
+  if(navigator.share){
+    navigator.share({title:"Radiografía Electoral 29N", text:SHARE_TEXT, url:SITE_URL}).catch(()=>{});
+    return;
+  }
+  const fallback = () => {
+    const ta=document.createElement("textarea"); ta.value=SITE_URL; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); say("Enlace copiado"); }catch(e){ say(SITE_URL); }
+    document.body.removeChild(ta);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(SITE_URL).then(()=>say("Enlace copiado"), fallback); else fallback();
+}
+$$(".share-site").forEach(b=>b.addEventListener("click", shareSite));
+{ const wa=$("#waShare"); if(wa) wa.href = "https://wa.me/?text=" + encodeURIComponent(SHARE_TEXT + " " + SITE_URL); }
 
 /* ============================================================
    ARRANQUE
