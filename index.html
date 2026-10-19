@@ -294,7 +294,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 14 de octubre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 19 de octubre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -306,7 +306,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "14 oct 2026";
+const VERIFIED = "19 oct 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test de 50 preguntas para ver con quién coincides.";
 const S = {
@@ -360,6 +360,12 @@ const S = {
   masMadrid:"https://www.deia.eus/politica/2026/10/13/madrid-abre-consulta-vinculante-militantes-frente-amplio-11646083.html",
   zapatero:"https://www.infobae.com/espana/2026/05/20/ultima-hora-de-la-imputacion-de-zapatero-indicios-reacciones-y-novedades-del-caso-plus-ultra-en-directo/",
   zapateroCampana:"https://theobjective.com/espana/politica/2026-10-08/zapatero-participara-actos-campana-psoe-apoyar-sanchez/",
+  maricarmen:"https://www.ultimahora.es/noticias/nacional/2026/10/07/2724763/caso-maricarmen-dias-despues-del-desahucio-decreto-vivienda-adelanto-electoral.html",
+  puigdemontOrden:"https://www.eldiario.es/catalunya/juez-llarena-levanta-orden-detencion-puigdemont-sentencia-constitucional_1_13565825.html",
+  puigdemontAmnistia:"https://www.que.es/2026/10/19/amnistia-puigdemont-supremo-detencion/",
+  listasIzq:"https://www.infobae.com/espana/2026/10/17/asi-quedan-los-acuerdos-de-la-izquierda-para-las-elecciones-generales-del-29-n-estas-son-las-listas-a-la-izquierda-del-psoe-en-cada-comunidad-autonoma/",
+  masMadridSi:"https://www.democrata.es/actualidad/la-militancia-de-mas-madrid-respalda-con-un-88-6-que-emilio-delgado-lidere-la-lista-de-frente-amplio-por-madrid/",
+  cisOct:"https://www.diariodeleon.es/nacional/261014/2100210/cis-psoe-sube-3-5-puntos-desahucio-maricarmen-mantiene-5-3-puntos-sobre-pp-tambien-crece.html",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -412,6 +418,7 @@ const PARTIES = [
   economia:[
     it("hemeroteca","Presupuestos de 2023 prorrogados tres veces: es la primera legislatura completa que termina sin nuevas cuentas del Estado.", S.presupuestos),
     it("valoracion","SMI de 735,90 € en 2018 a 1.221 € en 14 pagas en 2026.", S.smi),
+    it("hemeroteca","Tras el desahucio de Maricarmen Abascal aprobó dos decretos de vivienda (escudo antidesahucios para personas vulnerables y prórroga de alquileres). El Congreso los rechazó el 2 oct con los votos de PP, Vox y Junts; el Gobierno los volvió a aprobar el 6 oct y siguen pendientes de convalidación.", S.maricarmen),
     it("hemeroteca","Su reducción de jornada a 37,5 horas cayó en el Congreso (sep 2025) por el voto de PP, Vox, Junts y UPN, y su gravamen a las energéticas, en ene 2025, por PP, Vox, Junts, PNV y UPN.", S.jornada),
     it("propuesta","Para el 29N: Empresa Estatal de Vivienda, Plan de Vivienda 2026-2030 de 7.000 M€, jornada de 36 horas antes de 2030 y SMI del 60% del salario medio.", S.eco29n)
   ],
@@ -466,11 +473,12 @@ const PARTIES = [
 },
 {
   id:"fa", short:"FRENTE AMPLIO", name:"Frente Amplio (Sumar, IU, Comuns y Más Madrid · Ada Colau)", color:"#c026d3", tags:["izquierda"],
-  resumen:"Heredero de Sumar: coalición a la izquierda del PSOE con Ada Colau de candidata. Va sin Podemos y Más Madrid consulta a su militancia si se integra. Las encuestas le dan entre el 4,7% y el 8%.",
+  resumen:"Heredero de Sumar: coalición a la izquierda del PSOE con Ada Colau (Barcelona) y Emilio Delgado (Madrid) como cabezas de lista. Va sin Podemos salvo en Canarias y la Comunitat Valenciana. Las encuestas le dan entre el 4,7% y el 8%.",
   hemeroteca:[
     hm("Socio del Gobierno de coalición (2023-2026). Votó con el PSOE en casi todo, incluida la amnistía, aunque con desacuerdos públicos en defensa y política exterior."),
     hm("Íñigo Errejón, su portavoz en el Congreso, dimitió en oct 2024 tras denuncias de violencia machista."),
-    hm("Ruptura con Podemos: sus cinco diputados dejaron el grupo de Sumar en dic 2023. En 2026 la izquierda del PSOE vuelve a ir dividida, y Más Madrid somete a consulta su entrada en el Frente Amplio.", S.masMadrid)
+    hm("Ruptura con Podemos: sus cinco diputados dejaron el grupo de Sumar en dic 2023. En oct 2026 fracasó la negociación para una candidatura única; solo hay listas conjuntas en Canarias y en la Comunitat Valenciana (con Compromís).", S.listasIzq),
+    hm("La militancia de Más Madrid aprobó con un 88,6% entrar en el Frente Amplio con Emilio Delgado como número uno por Madrid.", S.masMadridSi)
   ],
   corrupcion:[
     it("limpio","Sin condenas por corrupción."),
@@ -484,12 +492,12 @@ const PARTIES = [
 },
 {
   id:"podemos", short:"PODEMOS", name:"Podemos (Ione Belarra / Irene Montero)", color:"#7c3aed", tags:["izquierda"],
-  resumen:"El partido que nació del 15-M y llegó a tener 71 escaños (con sus confluencias) se mueve ahora entre el 2,3% y el 3,1% en las encuestas. Para el 29N se alía con ERC.",
+  resumen:"El partido que nació del 15-M y llegó a tener 71 escaños (con sus confluencias) se mueve ahora entre el 2,3% y el 3,1% en las encuestas. Para el 29N va en solitario en casi toda España, con Irene Montero en Madrid, y apoya a ERC en Cataluña.",
   hemeroteca:[
     hm("Nació criticando a «la casta»; en 2018 sus líderes Pablo Iglesias e Irene Montero compraron un chalé en Galapagar, lo que sometieron a consulta de sus bases."),
     hm("La ley del «solo sí es sí» (Ministerio de Igualdad de Montero, 2022) provocó más de 1.200 rebajas de penas a agresores sexuales. Podemos culpó a los jueces de aplicarla mal y se opuso a la reforma de 2023."),
     hm("Feb 2025: reconoció que había apartado en 2023 a su cofundador Juan Carlos Monedero tras dos denuncias internas de violencia sexual, sin hacerlo público hasta que salió en prensa.", S.monedero),
-    hm("Descartó integrarse en el Frente Amplio y selló una alianza con ERC para el 29N (12 oct 2026).", S.podemosErc)
+    hm("Descartó integrarse en el Frente Amplio y selló una alianza con ERC para el 29N (12 oct 2026). Solo comparte lista con el resto de la izquierda en Canarias y en la Comunitat Valenciana.", S.listasIzq)
   ],
   corrupcion:[
     it("archivada","Las causas sobre su financiación, incluido el caso Neurona, fueron archivadas en su mayoría."),
@@ -522,7 +530,7 @@ const PARTIES = [
 },
 {
   id:"junts", short:"JUNTS", name:"Junts per Catalunya (Carles Puigdemont)", color:"#06b6d4", tags:["nacionalista","derecha"],
-  resumen:"Independentistas de centro-derecha. Sus 7 votos hicieron presidente a Sánchez en 2023 y su ruptura en 2025 bloqueó la legislatura. Su candidato, Puigdemont, sigue en Bélgica a la espera de que se le aplique la amnistía.",
+  resumen:"Independentistas de centro-derecha. Sus 7 votos hicieron presidente a Sánchez en 2023 y su ruptura en 2025 bloqueó la legislatura. Su candidato, Puigdemont, ya puede volver a España: el Supremo le ha aplicado la amnistía.",
   hemeroteca:[
     hm("De la declaración unilateral de independencia de 2017 al pacto de investidura con el PSOE en 2023, a cambio de la amnistía y otras contrapartidas."),
     hm("Pactó con el PSOE delegar a Cataluña competencias de inmigración; la ley cayó en el Congreso (23 sep 2025) por los votos de PP, Vox, Podemos y UPN.", S.inmigracion),
@@ -531,7 +539,7 @@ const PARTIES = [
   corrupcion:[
     it("sentencia","Laura Borràs, ex presidenta del partido, fue condenada en 2023 por fraccionar contratos cuando dirigía la Institució de les Lletres Catalanes."),
     it("proceso","Procede del espacio de Convergència, investigada durante años por el caso del 3% (presuntas comisiones por obra pública)."),
-    it("proceso","Carles Puigdemont está procesado por desobediencia y malversación por el 1-O. En oct 2026 el Constitucional avaló amnistiar esa malversación, lo que abre la puerta a que el Supremo levante su orden de detención.", S.puigdemontTC)
+    it("archivada","Carles Puigdemont estaba procesado por desobediencia y malversación por el 1-O. Tras el aval del Constitucional (oct 2026), el juez Llarena retiró su orden de detención el 6 oct y le aplicó la amnistía el 19 oct, aunque criticó la doctrina del Constitucional.", S.puigdemontAmnistia)
   ],
   economia:[
     it("hemeroteca","Financiación y transferencias para Cataluña como condición de sus apoyos en el Congreso."),
@@ -663,15 +671,20 @@ const TIMELINE = [
   {d:"2026-07-03", p:["pp","vox"], t:"hemeroteca", x:"Moreno es reelegido en Andalucía con los votos de Vox, que obtiene una vicepresidencia y la «prioridad nacional» en ayudas y vivienda protegida.", s:S.andaluciaGob},
   {d:"2026-07-14", p:["psoe"], t:"nofirme", x:"La Audiencia de Badajoz condena a David Sánchez a 9 años de inhabilitación por prevaricación. Recurrible.", s:S.david},
   {d:"2026-07-28", p:["pp"], t:"proceso", x:"El juicio de la Operación Kitchen queda visto para sentencia en la Audiencia Nacional.", s:S.kitchen},
+  {d:"2026-09-23", p:["general"], t:"hemeroteca", x:"Desahucio de Maricarmen Abascal, de 87 años, en el barrio de Retiro (Madrid), tras perder el pleito con la propietaria del piso. Cientos de personas intentan impedirlo y hay cargas policiales. Su caso se convierte en símbolo de la crisis de la vivienda.", s:S.maricarmen},
   {d:"2026-09-24", p:["psoe"], t:"proceso", x:"Se conocen audios en poder de la UCO sobre un presunto intento de intimidar a la jueza Biedma (caso David Sánchez) a través de un clan de Badajoz. La jueza declara el 8 de octubre que no sabe quién está detrás.", s:S.biedma2},
   {d:"2026-09-21", p:["psoe"], t:"proceso", x:"El juez Peinado envía a Begoña Gómez a juicio con jurado por tráfico de influencias y malversación. La Fiscalía pide la absolución.", s:S.begona},
+  {d:"2026-10-02", p:["psoe","pp","vox","junts"], t:"hemeroteca", x:"El Congreso rechaza los dos decretos de vivienda del Gobierno (escudo antidesahucios y prórroga de alquileres) con los votos de PP, Vox y Junts. Es uno de los motivos que Sánchez cita al adelantar las elecciones.", s:S.maricarmen},
   {d:"2026-10-05", p:["general","psoe"], t:"electoral", x:"Sánchez disuelve las Cortes y convoca elecciones generales para el 29 de noviembre.", s:S.moncloa29n},
   {d:"2026-10-06", p:["general"], t:"electoral", x:"El BOE publica el reparto de escaños del 29N: Madrid sube a 38 diputados y Cádiz baja a 8.", s:S.reparto29n},
   {d:"2026-10-06", p:["junts"], t:"proceso", x:"El Constitucional avala amnistiar la malversación del 1-O, lo que abre la puerta al regreso de Puigdemont antes del 29N.", s:S.puigdemontTC},
+  {d:"2026-10-07", p:["general","psoe"], t:"hemeroteca", x:"Muere Maricarmen Abascal en el hospital. Ese mismo día el BOE publica de nuevo el paquete de vivienda del Gobierno, pendiente de convalidar.", s:S.maricarmen},
   {d:"2026-10-09", p:["psoe"], t:"proceso", x:"El juez Pedraz rechaza por ahora imputar al PSOE como persona jurídica en el caso Leire Díez, a la espera de interrogar a Santos Cerdán.", s:S.cerdan},
   {d:"2026-10-10", p:["d21"], t:"electoral", x:"Miriam González presenta Democracia 21: concurrirá en Madrid y Barcelona.", s:S.d21},
   {d:"2026-10-12", p:["podemos","erc"], t:"hemeroteca", x:"Podemos y ERC sellan una alianza para el 29N: Montero y Rufián harán campaña juntos. Podemos descarta integrarse en el Frente Amplio.", s:S.podemosErc},
-  {d:"2026-10-14", p:["psoe"], t:"sentencia", x:"El Supremo rechaza anular las condenas de Ábalos y Koldo; queda la vía del amparo ante el Constitucional.", s:S.abalosNul}
+  {d:"2026-10-14", p:["psoe"], t:"sentencia", x:"El Supremo rechaza anular las condenas de Ábalos y Koldo; queda la vía del amparo ante el Constitucional.", s:S.abalosNul},
+  {d:"2026-10-17", p:["fa","podemos"], t:"electoral", x:"Fracasa la candidatura única de la izquierda del PSOE: Frente Amplio y Podemos solo comparten lista en Canarias y la Comunitat Valenciana. Más Madrid se integra en el Frente Amplio con el 88,6% de apoyo de su militancia.", s:S.listasIzq},
+  {d:"2026-10-19", p:["junts"], t:"archivada", x:"El juez Llarena aplica la amnistía a Puigdemont, que ya puede volver a España sin ser detenido.", s:S.puigdemontAmnistia}
 ];
 
 /* ============================================================
@@ -824,7 +837,7 @@ const POLLS = [
   {firm:"GESOP", media:"El Periódico", campo:"6–8 oct", pp:[121,125], psoe:[108,112], vox:[68,72], vpp:null, vpsoe:26.1, vvox:18.9, s:S.polls},
   {firm:"SocioMétrica", media:"El Español", campo:"1–3 oct", pp:143, psoe:106, vox:62, vpp:33.4, vpsoe:26.5, vvox:18.1, s:S.polls},
   {firm:"GAD3", media:"ABC", campo:"1–3 sep", pp:133, psoe:105, vox:69, vpp:null, vpsoe:null, vvox:19.2, s:S.polls},
-  {firm:"CIS", media:"Barómetro", campo:"1–4 sep", pp:null, psoe:null, vox:null, vpp:25.5, vpsoe:31.0, vvox:16.6, s:S.polls, note:"No publica escaños. Es el único gran sondeo que sitúa al PSOE primero."}
+  {firm:"CIS", media:"Barómetro de octubre", campo:"1–6 oct", pp:null, psoe:null, vox:null, vpp:22.2, vpsoe:34.0, vvox:17.1, s:S.cisOct, note:"No publica escaños. Es el único gran sondeo que sitúa al PSOE primero, ahora con casi 12 puntos de ventaja."}
 ];
 const mid = v => v===null ? null : (Array.isArray(v) ? (v[0]+v[1])/2 : v);
 const avgOf = key => { const xs = POLLS.map(p=>mid(p[key])).filter(v=>v!==null); return xs.reduce((a,b)=>a+b,0)/xs.length; };
