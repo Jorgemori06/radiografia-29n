@@ -374,6 +374,7 @@ const S = {
   cisOct:"https://www.diariodeleon.es/nacional/261014/2100210/cis-psoe-sube-3-5-puntos-desahucio-maricarmen-mantiene-5-3-puntos-sobre-pp-tambien-crece.html",
   wild:"https://www.infobae.com/espana/agencias/2026/10/23/pedro-sanchez-acepta-la-entrevista-del-youtuber-jordi-wild-tras-el-si-de-feijoo-abascal-y-colau/",
   wildFormato:"https://www.que.es/2026/10/15/jordi-wild-entrevista-feijoo-abascal/",
+  wild13n:"https://www.101tv.es/espana/como-van-las-entrevistas-de-jordi-wild-a-los-candidatos-a-la-presidencia-del-gobierno/",
   huelga:"https://rtvc.es/sindicatos-registran-huelga-general-11-de-noviembre-19-octubre-2026/",
   decretos12n:"https://www.moncloa.com/2026/10/17/decretos-vivienda-congreso-12n-3450016",
   debates:"https://www.infobae.com/espana/2026/10/09/los-tres-debates-de-las-elecciones-generales-del-29n-ya-tienen-fecha-y-el-ultimo-se-celebrara-tres-dias-antes-de-los-comicios/",
@@ -697,7 +698,7 @@ const TIMELINE = [
   {d:"2026-10-17", p:["fa","podemos"], t:"electoral", x:"Fracasa la candidatura única de la izquierda del PSOE: Frente Amplio y Podemos solo comparten lista en Canarias y la Comunitat Valenciana. Más Madrid se integra en el Frente Amplio con el 88,6% de apoyo de su militancia.", s:S.listasIzq},
   {d:"2026-10-19", p:["junts"], t:"archivada", x:"El juez Llarena aplica la amnistía a Puigdemont, que ya puede volver a España sin ser detenido.", s:S.puigdemontAmnistia},
   {d:"2026-10-19", p:["general"], t:"electoral", x:"CCOO, UGT y los sindicatos de inquilinos registran una huelga general por la vivienda y los salarios para el 11 de noviembre, el día antes de que se voten los decretos de vivienda.", s:S.huelga},
-  {d:"2026-10-23", p:["general"], t:"electoral", x:"Jordi Wild entrevistará a los cuatro principales candidatos: tras el sí de Feijóo, Abascal y Colau, Sánchez acepta el último día del plazo. Sin preguntas pactadas ni cortes; se publicarán a partir del 9 de noviembre.", s:S.wild}
+  {d:"2026-10-23", p:["general"], t:"electoral", x:"Jordi Wild entrevistará a los cuatro principales candidatos: tras el sí de Feijóo, Abascal y Colau, Sánchez acepta el último día del plazo. Sin preguntas pactadas ni cortes; se publicarán el 13 de noviembre, primer día de campaña.", s:S.wild}
 ];
 
 /* ============================================================
@@ -1121,10 +1122,10 @@ function renderBoard(){
 
 /* Fechas clave hasta el 29N */
 const KEY_DATES = [
-  {d:"2026-11-09", t:"Entrevistas de Jordi Wild", x:"Empiezan a publicarse las de Sánchez, Feijóo, Abascal y Colau.", s:S.wild},
   {d:"2026-11-11", t:"Huelga general por la vivienda", x:"Convocada por CCOO, UGT y los sindicatos de inquilinos.", s:S.huelga},
   {d:"2026-11-12", t:"Votación de los decretos de vivienda", x:"En la Diputación Permanente del Congreso.", s:S.decretos12n},
   {d:"2026-11-13", t:"Empieza la campaña", x:"Campaña electoral oficial, hasta el 27 de noviembre.", s:S.zapateroCampana},
+  {d:"2026-11-13", t:"Entrevistas de Jordi Wild", x:"Se publican las de Sánchez, Feijóo, Abascal y Colau, con una hora entre cada una.", s:S.wild13n},
   {d:"2026-11-16", t:"Cara a cara Sánchez–Feijóo", x:"En Mediaset. Confirmado por el PP; el PSOE no lo ha confirmado.", s:S.debates},
   {d:"2026-11-23", t:"Debate de portavoces", x:"En RTVE. Confirmado por el PP; el PSOE no lo ha confirmado.", s:S.debates},
   {d:"2026-11-26", t:"Debate de candidatos", x:"En Atresmedia, con los principales partidos. Confirmado por el PP.", s:S.debates},
