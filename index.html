@@ -378,6 +378,8 @@ const S = {
   huelga:"https://rtvc.es/sindicatos-registran-huelga-general-11-de-noviembre-19-octubre-2026/",
   decretos12n:"https://www.moncloa.com/2026/10/17/decretos-vivienda-congreso-12n-3450016",
   debates:"https://www.infobae.com/espana/2026/10/09/los-tres-debates-de-las-elecciones-generales-del-29n-ya-tienen-fecha-y-el-ultimo-se-celebrara-tres-dias-antes-de-los-comicios/",
+  imopOct:"https://www.elliberal.cat/2026/10/23/el-psoe-recorta-12-escanos-a-pp-y-vox-segun-imop/",
+  plazoListas:"https://www.diariodeleon.es/nacional/261005/2099343/29n-partidos-16-octubre-formar-coaliciones-deberan-presentar-listas-dia-26.html",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -845,7 +847,7 @@ const STANCE = {
    ============================================================ */
 const POLLS = [
   {firm:"Sigma Dos", media:"El Mundo", campo:"pub. 11 oct", pp:135, psoe:103, vox:68, vpp:31.9, vpsoe:25.3, vvox:19.1, s:S.polls},
-  {firm:"Imop", media:"El Confidencial", campo:"5–7 oct", pp:130, psoe:110, vox:70, vpp:32.7, vpsoe:26.6, vvox:19.0, s:S.imop},
+  {firm:"Imop", media:"El Confidencial", campo:"13–16 oct", pp:123, psoe:113, vox:72, vpp:28.5, vpsoe:27.1, vvox:20.0, s:S.imopOct},
   {firm:"DYM", media:"—", campo:"pub. 8 oct", pp:[139,143], psoe:[107,111], vox:[61,65], vpp:34.0, vpsoe:28.2, vvox:18.2, s:S.imop},
   {firm:"40dB", media:"El País / SER", campo:"7–8 oct", pp:132, psoe:112, vox:66, vpp:31.9, vpsoe:28.1, vvox:18.9, s:S.polls},
   {firm:"GESOP", media:"El Periódico", campo:"6–8 oct", pp:[121,125], psoe:[108,112], vox:[68,72], vpp:null, vpsoe:26.1, vvox:18.9, s:S.polls},
@@ -1122,6 +1124,8 @@ function renderBoard(){
 
 /* Fechas clave hasta el 29N */
 const KEY_DATES = [
+  {d:"2026-10-26", t:"Fin del plazo de candidaturas", x:"Último día para presentar las listas al Congreso y al Senado ante las juntas electorales provinciales.", s:S.plazoListas},
+  {d:"2026-11-03", t:"Candidaturas proclamadas en el BOE", x:"Publicación oficial de las listas definitivas.", s:S.plazoListas},
   {d:"2026-11-11", t:"Huelga general por la vivienda", x:"Convocada por CCOO, UGT y los sindicatos de inquilinos.", s:S.huelga},
   {d:"2026-11-12", t:"Votación de los decretos de vivienda", x:"En la Diputación Permanente del Congreso.", s:S.decretos12n},
   {d:"2026-11-13", t:"Empieza la campaña", x:"Campaña electoral oficial, hasta el 27 de noviembre.", s:S.zapateroCampana},
