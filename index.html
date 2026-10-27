@@ -300,7 +300,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 26 de octubre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 27 de octubre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -312,7 +312,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "26 oct 2026";
+const VERIFIED = "27 oct 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test de 50 preguntas para ver con quién coincides.";
 const S = {
@@ -387,6 +387,8 @@ const S = {
   senadoPsoeFa:"https://www.eldiario.es/politica/psoe-frente-amplio-llegan-acuerdo-presentar-listas-conjuntas-senado_1_13583230.html",
   senadoPpVox:"https://www.infobae.com/espana/agencias/2026/10/26/vox-y-pp-anuncian-un-acuerdo-para-sus-listas-al-senado-en-las-elecciones-del-29n/",
   calendario29n:"https://www.moncloa.com/2026/10/26/calendario-electoral-29n-candidaturas-3455568",
+  leyNietos:"https://www.elespanol.com/espana/tribunales/20261024/laberinto-legal-ley-nietos-podran-votar-supremo-requerido-albares-bolanos/1003744432842_0.html",
+  sorteoMesas:"https://www.elespanol.com/espana/20261006/fecha-clave-saber-toca-mesa-electoral-cobra-librarte/1003744409834_0.html",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -709,6 +711,7 @@ const TIMELINE = [
   {d:"2026-10-19", p:["junts"], t:"archivada", x:"El juez Llarena aplica la amnistía a Puigdemont, que ya puede volver a España sin ser detenido.", s:S.puigdemontAmnistia},
   {d:"2026-10-19", p:["general"], t:"electoral", x:"CCOO, UGT y los sindicatos de inquilinos registran una huelga general por la vivienda y los salarios para el 11 de noviembre, el día antes de que se voten los decretos de vivienda.", s:S.huelga},
   {d:"2026-10-23", p:["general"], t:"electoral", x:"Jordi Wild entrevistará a los cuatro principales candidatos: tras el sí de Feijóo, Abascal y Colau, Sánchez acepta el último día del plazo. Sin preguntas pactadas ni cortes; se publicarán el 13 de noviembre, primer día de campaña.", s:S.wild},
+  {d:"2026-10-23", p:["general"], t:"electoral", x:"El Supremo da cinco días a los ministros Albares y Bolaños para entregar la lista nominal de los 163.020 nacionalizados por la «ley de nietos», cuyo voto desde el extranjero suspendió de forma cautelar en septiembre. Avisa de multas de 1.000 euros si no lo hacen. El Gobierno dice que la Administración no tendrá la lista completa hasta revisar todos los consulados; una magistrada firma un voto particular en contra.", s:S.leyNietos},
   {d:"2026-10-26", p:["pp","vox"], t:"electoral", x:"El PP y Vox anuncian un acuerdo para el Senado: Vox no presenta lista en seis provincias (Las Palmas, Santa Cruz de Tenerife, Cádiz, Valencia, Castellón y Baleares), donde el PP incluirá a un independiente propuesto por Vox, y el PP no se presenta en Gipuzkoa, Girona y Tarragona.", s:S.senadoPpVox}
 ];
 
@@ -1136,6 +1139,7 @@ function renderBoard(){
 const KEY_DATES = [
   {d:"2026-10-26", t:"Fin del plazo de candidaturas", x:"Último día para presentar las listas al Congreso y al Senado ante las juntas electorales provinciales.", s:S.plazoListas},
   {d:"2026-10-28", t:"Candidaturas presentadas en el BOE", x:"Publicación de las listas presentadas, antes de su proclamación.", s:S.calendario29n},
+  {d:"2026-10-31", t:"Sorteo de las mesas electorales", x:"Los ayuntamientos lo hacen entre el 31 de octubre y el 4 de noviembre. La notificación llega en los tres días siguientes.", s:S.sorteoMesas},
   {d:"2026-11-03", t:"Candidaturas proclamadas en el BOE", x:"Publicación oficial de las listas definitivas.", s:S.plazoListas},
   {d:"2026-11-11", t:"Huelga general por la vivienda", x:"Convocada por CCOO, UGT y los sindicatos de inquilinos.", s:S.huelga},
   {d:"2026-11-12", t:"Votación de los decretos de vivienda", x:"En la Diputación Permanente del Congreso.", s:S.decretos12n},
