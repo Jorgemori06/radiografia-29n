@@ -33,6 +33,9 @@ Cómo se redacta:
 - Mismo listón para todos los partidos. No se rellena un partido por «equilibrar», pero
   tampoco se omite algo de uno que se pondría de otro.
 - Ante la duda, no se incluye.
+- El tipo también informa: `institucional`, `opacidad` o `controversia` solo cuando hay una
+  resolución o un informe formal que lo respalde. Un suceso cuya causa no está establecida
+  (un accidente, por ejemplo) va como `hemeroteca`.
 
 ## Estructura de `index.html` (todo está en el `<script>` principal)
 
