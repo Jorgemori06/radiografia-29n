@@ -308,7 +308,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 29 de octubre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 30 de octubre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -320,7 +320,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "29 oct 2026";
+const VERIFIED = "30 oct 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test de 50 preguntas para ver con quién coincides.";
 const S = {
@@ -401,6 +401,8 @@ const S = {
   lutoUrda:"https://www.eldiariodemadrid.es/articulo/politica/sanchez-luto-oficial-accidente-tren-urda-toledo/20261028162819145558.html",
   nietosLista:"https://www.infobae.com/espana/agencias/2026/10/28/el-gobierno-entrega-al-ts-el-listado-de-los-mas-de-160000-afectados-por-la-suspension-de-voto-a-la-ley-de-nietos/",
   d21Cs:"https://es.ara.cat/politica/elecciones-generales/democracia-21-ciudadanos-implicado_1_5881597.html",
+  jecGuernica:"https://www.elespanol.com/espana/tribunales/20261029/junta-electoral-abre-expediente-sancionador-pedro-sanchez-video-guernica-segundo-semanas/1003744440367_0.html",
+  nietosResidentes:"https://www.eldebate.com/espana/20261030/supremo-mantiene-voto-nacionalizados-ley-nietos-residentes-espana-estudia-retirarselo-hijos_475760.html",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -728,7 +730,9 @@ const TIMELINE = [
   {d:"2026-10-26", p:["pp","vox"], t:"electoral", x:"El PP y Vox anuncian un acuerdo para el Senado: Vox no presenta lista en seis provincias (Las Palmas, Santa Cruz de Tenerife, Cádiz, Valencia, Castellón y Baleares), donde el PP incluirá a un independiente propuesto por Vox, y el PP no se presenta en Gipuzkoa, Girona y Tarragona.", s:S.senadoPpVox},
   {d:"2026-10-28", p:["general"], t:"hemeroteca", x:"Un AVE de Renfe (Madrid–Sevilla) choca contra un tren de Iryo detenido en Urda (Toledo): 68 muertos, según el Gobierno de Castilla-La Mancha. El Gobierno decreta tres días de luto oficial, del 29 al 31 de octubre. Investigan un juzgado de Orgaz y la Comisión de Investigación de Accidentes Ferroviarios; la causa no está establecida.", s:S.lutoUrda},
   {d:"2026-10-28", p:["general"], t:"electoral", x:"Tras el accidente de Urda, el Gobierno, el PSOE, el PP, Frente Amplio y Podemos suspenden sus actos de precampaña. Vox mantiene su acto en Valladolid.", s:S.urda},
-  {d:"2026-10-28", p:["general"], t:"electoral", x:"Dentro del plazo, el Gobierno entrega al Supremo la lista de 163.355 nacionalizados por la «ley de nietos» con el voto suspendido y pide que se declare reservada. Calcula que, como mucho, afecta a menos de 14.000 votos.", s:S.nietosLista}
+  {d:"2026-10-28", p:["general"], t:"electoral", x:"Dentro del plazo, el Gobierno entrega al Supremo la lista de 163.355 nacionalizados por la «ley de nietos» con el voto suspendido y pide que se declare reservada. Calcula que, como mucho, afecta a menos de 14.000 votos.", s:S.nietosLista},
+  {d:"2026-10-29", p:["psoe"], t:"proceso", x:"La Junta Electoral Central abre un expediente sancionador a Sánchez, tras una denuncia del PP, por un vídeo electoral grabado en el Museo Reina Sofía ante el «Guernica», y le pide retirarlo de sus redes. Ve una posible infracción del artículo 50.2 de la LOREG; todavía no hay sanción. Es el segundo desde la convocatoria: el primero, el 15 de octubre, fue por una rueda de prensa en la Moncloa. El museo dice que se grabó un martes, día de cierre, a petición de Presidencia del Gobierno.", s:S.jecGuernica},
+  {d:"2026-10-30", p:["general"], t:"electoral", x:"El Supremo rechaza, a petición de Iustitia Europa, extender la suspensión del voto a los nacionalizados por la «ley de nietos» que residen en España, por quedar fuera del objeto del recurso. Sobre sus hijos mayores de edad, no la acuerda de urgencia y da tres días a las partes para alegar. Según Exteriores, de los 163.355 nacionalizados con el voto suspendido solo 901 han acreditado ser descendientes de exiliados y podrán votar.", s:S.nietosResidentes}
 ];
 
 /* ============================================================
