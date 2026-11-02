@@ -308,7 +308,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 1 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 2 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -320,7 +320,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "1 nov 2026";
+const VERIFIED = "2 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test de 50 preguntas para ver con quién coincides.";
 const S = {
@@ -405,6 +405,9 @@ const S = {
   nietosResidentes:"https://www.eldebate.com/espana/20261030/supremo-mantiene-voto-nacionalizados-ley-nietos-residentes-espana-estudia-retirarselo-hijos_475760.html",
   urda69:"https://www.eldiariodemadrid.es/articulo/sociedad/accidente-urda-69-muertos-cajas-negras-velocidad-informe-preliminar/20261030085911145677.html",
   sondaxeOct:"https://www.electografica.com/2026/11/encuesta-sondaxe-261101.html",
+  sigmaNov:"https://www.electografica.com/2026/11/encuesta-sigmados-261101.html",
+  sociometricaNov:"https://www.elespanol.com/espana/politica/20261101/primer-sondeo-tragedia-pp-vox-amplian-ventaja-sanchez-sigue-cayendo-pese-vaciar-frente-amplio/1003744442810_0.html",
+  ncNov:"https://www.democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-pp-pierde-tres-escanos-vox-gana-dos-psoe-resiste-en-cien-segun-nc-report/",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -881,14 +884,14 @@ const STANCE = {
    DATOS: ENCUESTAS 29N Y ESCAÑOS
    ============================================================ */
 const POLLS = [
-  {firm:"Sigma Dos", media:"El Mundo", campo:"8–22 oct", pp:128, psoe:107, vox:68, vpp:30.6, vpsoe:26.1, vvox:19.9, s:S.sigmaOct},
+  {firm:"Sigma Dos", media:"El Mundo", campo:"29–30 oct", pp:[133,139], psoe:[97,103], vox:[63,69], vpp:31.1, vpsoe:24.6, vvox:19.3, s:S.sigmaNov},
   {firm:"Imop", media:"El Confidencial", campo:"13–16 oct", pp:123, psoe:113, vox:72, vpp:28.5, vpsoe:27.1, vvox:20.0, s:S.imopOct},
   {firm:"DYM", media:"—", campo:"pub. 8 oct", pp:[139,143], psoe:[107,111], vox:[61,65], vpp:34.0, vpsoe:28.2, vvox:18.2, s:S.imop},
   {firm:"40dB", media:"El País / SER", campo:"7–8 oct", pp:132, psoe:112, vox:66, vpp:31.9, vpsoe:28.1, vvox:18.9, s:S.polls},
   {firm:"Sondaxe", media:"La Voz de Galicia", campo:"26–28 oct", pp:null, psoe:null, vox:null, vpp:29.2, vpsoe:26.9, vvox:19.2, s:S.sondaxeOct, note:"No publica escaños."},
   {firm:"GESOP", media:"El Periódico", campo:"6–8 oct", pp:[121,125], psoe:[108,112], vox:[68,72], vpp:null, vpsoe:26.1, vvox:18.9, s:S.polls},
-  {firm:"SocioMétrica", media:"El Español", campo:"pub. 25 oct", pp:137, psoe:108, vox:63, vpp:32.4, vpsoe:27.0, vvox:18.6, s:S.pollsLD},
-  {firm:"NC Report", media:"La Razón", campo:"pub. 26 oct", pp:[141,143], psoe:[100,102], vox:[64,66], vpp:32.9, vpsoe:25.8, vvox:19.0, s:S.pollsLD},
+  {firm:"SocioMétrica", media:"El Español", campo:"pub. 1 nov", pp:137, psoe:106, vox:64, vpp:32.2, vpsoe:26.6, vvox:19.1, s:S.sociometricaNov, note:"Con los dos escaños de UPN, el PP llega a 139."},
+  {firm:"NC Report", media:"La Razón", campo:"26–29 oct", pp:[138,140], psoe:[100,102], vox:[66,68], vpp:32.6, vpsoe:25.6, vvox:19.3, s:S.ncNov},
   {firm:"GAD3", media:"ABC", campo:"6–8 oct", pp:133, psoe:107, vox:65, vpp:31.4, vpsoe:26.4, vvox:18.2, s:S.gad3Oct},
   {firm:"CIS", media:"Barómetro de octubre", campo:"1–6 oct", pp:null, psoe:null, vox:null, vpp:22.2, vpsoe:34.0, vvox:17.1, s:S.cisOct, note:"No publica escaños. Es el único gran sondeo que sitúa al PSOE primero, ahora con casi 12 puntos de ventaja."}
 ];
