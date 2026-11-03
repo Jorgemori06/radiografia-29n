@@ -308,7 +308,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 2 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 3 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -320,7 +320,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "2 nov 2026";
+const VERIFIED = "3 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test de 50 preguntas para ver con quién coincides.";
 const S = {
@@ -408,6 +408,7 @@ const S = {
   sigmaNov:"https://www.electografica.com/2026/11/encuesta-sigmados-261101.html",
   sociometricaNov:"https://www.elespanol.com/espana/politica/20261101/primer-sondeo-tragedia-pp-vox-amplian-ventaja-sanchez-sigue-cayendo-pese-vaciar-frente-amplio/1003744442810_0.html",
   ncNov:"https://www.democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-pp-pierde-tres-escanos-vox-gana-dos-psoe-resiste-en-cien-segun-nc-report/",
+  lasexta9n:"https://www.infobae.com/america/agencias/2026/10/29/lasexta-aplaza-al-9-de-noviembre-su-primer-debate-previsto-para-el-proximo-lunes-por-la-tragedia-de-urda-toledo/",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -1169,6 +1170,7 @@ const KEY_DATES = [
   {d:"2026-10-28", t:"Candidaturas presentadas en el BOE", x:"Publicación de las listas presentadas, antes de su proclamación.", s:S.calendario29n},
   {d:"2026-10-31", t:"Sorteo de las mesas electorales", x:"Los ayuntamientos lo hacen entre el 31 de octubre y el 4 de noviembre. La notificación llega en los tres días siguientes.", s:S.sorteoMesas},
   {d:"2026-11-03", t:"Candidaturas proclamadas en el BOE", x:"Publicación oficial de las listas definitivas.", s:S.plazoListas},
+  {d:"2026-11-09", t:"Debate de portavoces en laSexta", x:"Con el PSOE, el PP, Vox y Frente Amplio, moderado por Ana Pastor. Aplazado desde el 2 de noviembre por el accidente de Urda. Vox (Figaredo) y Frente Amplio (Bustinduy) han dicho quién irá; el PSOE y el PP, todavía no.", s:S.lasexta9n},
   {d:"2026-11-11", t:"Huelga general por la vivienda", x:"Convocada por CCOO, UGT y los sindicatos de inquilinos.", s:S.huelga},
   {d:"2026-11-12", t:"Votación de los decretos de vivienda", x:"En la Diputación Permanente del Congreso.", s:S.decretos12n},
   {d:"2026-11-13", t:"Empieza la campaña", x:"Campaña electoral oficial, hasta el 27 de noviembre.", s:S.zapateroCampana},
