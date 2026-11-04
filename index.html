@@ -308,7 +308,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 3 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 4 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -320,7 +320,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "3 nov 2026";
+const VERIFIED = "4 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test de 50 preguntas para ver con quién coincides.";
 const S = {
@@ -410,6 +410,9 @@ const S = {
   ncNov:"https://www.democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-pp-pierde-tres-escanos-vox-gana-dos-psoe-resiste-en-cien-segun-nc-report/",
   lasexta9n:"https://www.infobae.com/america/agencias/2026/10/29/lasexta-aplaza-al-9-de-noviembre-su-primer-debate-previsto-para-el-proximo-lunes-por-la-tragedia-de-urda-toledo/",
   puenteDimite:"https://www.eldiario.es/politica/oscar-puente-anuncia-dimision-ministro-comparecencia-congreso_1_13635747.html",
+  puenteCese:"https://www.infobae.com/espana/agencias/2026/11/04/el-boe-publica-el-cese-de-puente-y-la-encomienda-a-cuerpo-del-despacho-de-transportes/",
+  puentePapeleta:"https://www.eldiario.es/castilla-y-leon/politica/oscar-puente-seguira-figurando-papeletas-electorales-cabeza-lista-valladolid-pesar-renuncia_1_13636589.html",
+  targetNov:"https://www.democrata.es/encuestas/elecciones-generales/encuesta-target-point-urda-vox-72-escanos-psoe-29n/",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -741,7 +744,9 @@ const TIMELINE = [
   {d:"2026-10-29", p:["general"], t:"hemeroteca", x:"El balance provisional de muertos en el accidente de Urda sube a 69 por el fallecimiento de un herido hospitalizado, según el Gobierno de Castilla-La Mancha. La CIAF, que había comunicado 74, rectifica y da la misma cifra. Todas las hipótesis sobre la causa siguen abiertas.", s:S.urda69},
   {d:"2026-10-29", p:["psoe"], t:"proceso", x:"La Junta Electoral Central abre un expediente sancionador a Sánchez, tras una denuncia del PP, por un vídeo electoral grabado en el Museo Reina Sofía ante el «Guernica», y le pide retirarlo de sus redes. Ve una posible infracción del artículo 50.2 de la LOREG; todavía no hay sanción. Es el segundo desde la convocatoria: el primero, el 15 de octubre, fue por una rueda de prensa en la Moncloa. El museo dice que se grabó un martes, día de cierre, a petición de Presidencia del Gobierno.", s:S.jecGuernica},
   {d:"2026-10-30", p:["general"], t:"electoral", x:"El Supremo rechaza, a petición de Iustitia Europa, extender la suspensión del voto a los nacionalizados por la «ley de nietos» que residen en España, por quedar fuera del objeto del recurso. Sobre sus hijos mayores de edad, no la acuerda de urgencia y da tres días a las partes para alegar. Según Exteriores, de los 163.355 nacionalizados con el voto suspendido solo 901 han acreditado ser descendientes de exiliados y podrán votar.", s:S.nietosResidentes},
-  {d:"2026-11-03", p:["psoe"], t:"hemeroteca", x:"Al final de su comparecencia en la Diputación Permanente por el accidente de Urda, Óscar Puente anuncia su dimisión como ministro de Transportes y su renuncia a encabezar la lista del PSOE por Valladolid, ya proclamada. Lo justifica en que un ministro de Transportes no puede seguir «con dos accidentes de gravedad en menos de un año», en referencia también al de Adamuz (Córdoba) de enero. Afirma que no tomó ninguna decisión con consecuencias directas en las causas del accidente. Hasta ese día, el Gobierno había descartado su dimisión.", s:S.puenteDimite}
+  {d:"2026-11-03", p:["psoe"], t:"hemeroteca", x:"Al final de su comparecencia en la Diputación Permanente por el accidente de Urda, Óscar Puente anuncia su dimisión como ministro de Transportes y su renuncia a encabezar la lista del PSOE por Valladolid, ya proclamada. Lo justifica en que un ministro de Transportes no puede seguir «con dos accidentes de gravedad en menos de un año», en referencia también al de Adamuz (Córdoba) de enero. Afirma que no tomó ninguna decisión con consecuencias directas en las causas del accidente. Hasta ese día, el Gobierno había descartado su dimisión.", s:S.puenteDimite},
+  {d:"2026-11-04", p:["psoe"], t:"hemeroteca", x:"El BOE publica el cese de Óscar Puente como ministro de Transportes (Real Decreto 974/2026) y encarga el despacho ordinario del ministerio al vicepresidente primero, Carlos Cuerpo, que sigue al frente de Economía (Real Decreto 975/2026). No se nombra un nuevo ministro.", s:S.puenteCese},
+  {d:"2026-11-04", p:["psoe"], t:"electoral", x:"Puente seguirá en la papeleta como número uno del PSOE por Valladolid: renunció el mismo día de la proclamación, cuando ya no se podían corregir las listas. Según el artículo 48.2 de la LOREG, la baja la cubren los candidatos siguientes; la número dos es la ministra de Igualdad, Ana Redondo. El líder del PSOE de Castilla y León dice que Ferraz estudia si hay margen ante la Junta Electoral Central para que su nombre no figure.", s:S.puentePapeleta}
 ];
 
 /* ============================================================
@@ -895,6 +900,7 @@ const POLLS = [
   {firm:"GESOP", media:"El Periódico", campo:"6–8 oct", pp:[121,125], psoe:[108,112], vox:[68,72], vpp:null, vpsoe:26.1, vvox:18.9, s:S.polls},
   {firm:"SocioMétrica", media:"El Español", campo:"pub. 1 nov", pp:137, psoe:106, vox:64, vpp:32.2, vpsoe:26.6, vvox:19.1, s:S.sociometricaNov, note:"Con los dos escaños de UPN, el PP llega a 139."},
   {firm:"NC Report", media:"La Razón", campo:"26–29 oct", pp:[138,140], psoe:[100,102], vox:[66,68], vpp:32.6, vpsoe:25.6, vvox:19.3, s:S.ncNov},
+  {firm:"Target Point", media:"El Debate", campo:"28–30 oct", pp:[131,135], psoe:[99,103], vox:[68,72], vpp:31.8, vpsoe:25.5, vvox:19.9, s:S.targetNov},
   {firm:"GAD3", media:"ABC", campo:"6–8 oct", pp:133, psoe:107, vox:65, vpp:31.4, vpsoe:26.4, vvox:18.2, s:S.gad3Oct},
   {firm:"CIS", media:"Barómetro de octubre", campo:"1–6 oct", pp:null, psoe:null, vox:null, vpp:22.2, vpsoe:34.0, vvox:17.1, s:S.cisOct, note:"No publica escaños. Es el único gran sondeo que sitúa al PSOE primero, ahora con casi 12 puntos de ventaja."}
 ];
