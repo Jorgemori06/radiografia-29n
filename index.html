@@ -308,7 +308,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 4 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 5 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -320,7 +320,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "4 nov 2026";
+const VERIFIED = "5 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test de 50 preguntas para ver con quién coincides.";
 const S = {
@@ -413,6 +413,8 @@ const S = {
   puenteCese:"https://www.infobae.com/espana/agencias/2026/11/04/el-boe-publica-el-cese-de-puente-y-la-encomienda-a-cuerpo-del-despacho-de-transportes/",
   puentePapeleta:"https://www.eldiario.es/castilla-y-leon/politica/oscar-puente-seguira-figurando-papeletas-electorales-cabeza-lista-valladolid-pesar-renuncia_1_13636589.html",
   targetNov:"https://www.democrata.es/encuestas/elecciones-generales/encuesta-target-point-urda-vox-72-escanos-psoe-29n/",
+  koldoAdif:"https://www.infobae.com/espana/agencias/2026/11/05/quedan-en-libertad-los-seis-detenidos-por-la-uco-en-la-nueva-pieza-del-caso-koldo/",
+  alviseNov:"https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Noticias-Judiciales/El-Tribunal-Supremo-pide-un-quinto-suplicatorio-contra--Alvise--Perez-por-delito-de-provocacion-a-desordenes-publicos",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -565,7 +567,8 @@ const PARTIES = [
     hm("Criticaba el aforamiento de los políticos; como eurodiputado, sus causas se tramitan ante el Supremo y ha necesitado que el Parlamento Europeo levante su inmunidad.")
   ],
   corrupcion:[
-    it("proceso","Seis causas abiertas en el Supremo (oct 2026): presunta financiación ilegal (los 100.000 € en efectivo que admitió recibir de Álvaro Romillo, procesado por estafa), acoso a una fiscal, acoso y revelación de secretos contra dos eurodiputados de su partido, amenazas a un alcalde, difusión de una PCR falsa de Salvador Illa y desórdenes públicos.", S.alvise),
+    it("proceso","Causas abiertas en el Supremo (oct 2026): presunta financiación ilegal (los 100.000 € en efectivo que admitió recibir de Álvaro Romillo, procesado por estafa), acoso a una fiscal, acoso y revelación de secretos contra dos eurodiputados de su partido, amenazas a un alcalde y desórdenes públicos.", S.alvise),
+    it("archivada","El Supremo archiva (5 nov 2026) la causa por difundir una PCR falsa de Salvador Illa: no ve indicios suficientes de falsedad ni de injurias con relevancia penal. Ese día pide al Parlamento Europeo un quinto suplicatorio, por provocación a desórdenes públicos.", S.alviseNov),
     it("sentencia","Varias condenas firmes por intromisión ilegítima en el honor por difundir bulos (contra Manuela Carmena o Ábalos, entre otros).")
   ],
   economia:[
@@ -746,7 +749,9 @@ const TIMELINE = [
   {d:"2026-10-30", p:["general"], t:"electoral", x:"El Supremo rechaza, a petición de Iustitia Europa, extender la suspensión del voto a los nacionalizados por la «ley de nietos» que residen en España, por quedar fuera del objeto del recurso. Sobre sus hijos mayores de edad, no la acuerda de urgencia y da tres días a las partes para alegar. Según Exteriores, de los 163.355 nacionalizados con el voto suspendido solo 901 han acreditado ser descendientes de exiliados y podrán votar.", s:S.nietosResidentes},
   {d:"2026-11-03", p:["psoe"], t:"hemeroteca", x:"Al final de su comparecencia en la Diputación Permanente por el accidente de Urda, Óscar Puente anuncia su dimisión como ministro de Transportes y su renuncia a encabezar la lista del PSOE por Valladolid, ya proclamada. Lo justifica en que un ministro de Transportes no puede seguir «con dos accidentes de gravedad en menos de un año», en referencia también al de Adamuz (Córdoba) de enero. Afirma que no tomó ninguna decisión con consecuencias directas en las causas del accidente. Hasta ese día, el Gobierno había descartado su dimisión.", s:S.puenteDimite},
   {d:"2026-11-04", p:["psoe"], t:"hemeroteca", x:"El BOE publica el cese de Óscar Puente como ministro de Transportes (Real Decreto 974/2026) y encarga el despacho ordinario del ministerio al vicepresidente primero, Carlos Cuerpo, que sigue al frente de Economía (Real Decreto 975/2026). No se nombra un nuevo ministro.", s:S.puenteCese},
-  {d:"2026-11-04", p:["psoe"], t:"electoral", x:"Puente seguirá en la papeleta como número uno del PSOE por Valladolid: renunció el mismo día de la proclamación, cuando ya no se podían corregir las listas. Según el artículo 48.2 de la LOREG, la baja la cubren los candidatos siguientes; la número dos es la ministra de Igualdad, Ana Redondo. El líder del PSOE de Castilla y León dice que Ferraz estudia si hay margen ante la Junta Electoral Central para que su nombre no figure.", s:S.puentePapeleta}
+  {d:"2026-11-04", p:["psoe"], t:"electoral", x:"Puente seguirá en la papeleta como número uno del PSOE por Valladolid: renunció el mismo día de la proclamación, cuando ya no se podían corregir las listas. Según el artículo 48.2 de la LOREG, la baja la cubren los candidatos siguientes; la número dos es la ministra de Igualdad, Ana Redondo. El líder del PSOE de Castilla y León dice que Ferraz estudia si hay margen ante la Junta Electoral Central para que su nombre no figure.", s:S.puentePapeleta},
+  {d:"2026-11-05", p:["psoe"], t:"proceso", x:"La UCO detiene a seis personas en una nueva pieza separada y secreta del caso Koldo, abierta esta semana por el juez de la Audiencia Nacional Ismael Moreno sobre presuntas comisiones en contratos de obra pública. Registra la casa de Ábalos en Valencia, donde es interrogada su pareja, y pide documentación a Adif y a la constructora Azvi. Entre los detenidos está Cristian Corvillo, chófer de Sánchez en las primarias del PSOE de 2017. Los seis quedan en libertad ese mismo día; no han trascendido los delitos que se les atribuyen.", s:S.koldoAdif},
+  {d:"2026-11-05", p:["salf"], t:"archivada", x:"El Supremo archiva la causa contra Alvise Pérez por difundir una PCR falsa de Salvador Illa, por falta de indicios. Ese mismo día, otra magistrada pide al Parlamento Europeo un quinto suplicatorio contra él, por provocación a desórdenes públicos en las protestas agrarias de febrero de 2024.", s:S.alviseNov}
 ];
 
 /* ============================================================
