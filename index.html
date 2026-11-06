@@ -308,7 +308,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 5 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 6 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -320,7 +320,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "5 nov 2026";
+const VERIFIED = "6 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test de 50 preguntas para ver con quién coincides.";
 const S = {
@@ -415,6 +415,8 @@ const S = {
   targetNov:"https://www.democrata.es/encuestas/elecciones-generales/encuesta-target-point-urda-vox-72-escanos-psoe-29n/",
   koldoAdif:"https://www.infobae.com/espana/agencias/2026/11/05/quedan-en-libertad-los-seis-detenidos-por-la-uco-en-la-nueva-pieza-del-caso-koldo/",
   alviseNov:"https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Noticias-Judiciales/El-Tribunal-Supremo-pide-un-quinto-suplicatorio-contra--Alvise--Perez-por-delito-de-provocacion-a-desordenes-publicos",
+  puenteTachado:"https://www.eldiario.es/castilla-y-leon/politica/junta-electoral-rechaza-borrar-oscar-puente-papeletas-psoe-valladolid_1_13641444.html",
+  zapateroJoyas:"https://www.infobae.com/espana/2026/11/06/el-juez-del-caso-plus-ultra-rechaza-investigar-a-zapatero-por-malversacion-como-pedia-la-fiscalia-por-las-joyas-seguira-imputado-por-fraude-y-contrabando/",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -751,7 +753,9 @@ const TIMELINE = [
   {d:"2026-11-04", p:["psoe"], t:"hemeroteca", x:"El BOE publica el cese de Óscar Puente como ministro de Transportes (Real Decreto 974/2026) y encarga el despacho ordinario del ministerio al vicepresidente primero, Carlos Cuerpo, que sigue al frente de Economía (Real Decreto 975/2026). No se nombra un nuevo ministro.", s:S.puenteCese},
   {d:"2026-11-04", p:["psoe"], t:"electoral", x:"Puente seguirá en la papeleta como número uno del PSOE por Valladolid: renunció el mismo día de la proclamación, cuando ya no se podían corregir las listas. Según el artículo 48.2 de la LOREG, la baja la cubren los candidatos siguientes; la número dos es la ministra de Igualdad, Ana Redondo. El líder del PSOE de Castilla y León dice que Ferraz estudia si hay margen ante la Junta Electoral Central para que su nombre no figure.", s:S.puentePapeleta},
   {d:"2026-11-05", p:["psoe"], t:"proceso", x:"La UCO detiene a seis personas en una nueva pieza separada y secreta del caso Koldo, abierta esta semana por el juez de la Audiencia Nacional Ismael Moreno sobre presuntas comisiones en contratos de obra pública. Registra la casa de Ábalos en Valencia, donde es interrogada su pareja, y pide documentación a Adif y a la constructora Azvi. Entre los detenidos está Cristian Corvillo, chófer de Sánchez en las primarias del PSOE de 2017. Los seis quedan en libertad ese mismo día; no han trascendido los delitos que se les atribuyen.", s:S.koldoAdif},
-  {d:"2026-11-05", p:["salf"], t:"archivada", x:"El Supremo archiva la causa contra Alvise Pérez por difundir una PCR falsa de Salvador Illa, por falta de indicios. Ese mismo día, otra magistrada pide al Parlamento Europeo un quinto suplicatorio contra él, por provocación a desórdenes públicos en las protestas agrarias de febrero de 2024.", s:S.alviseNov}
+  {d:"2026-11-05", p:["salf"], t:"archivada", x:"El Supremo archiva la causa contra Alvise Pérez por difundir una PCR falsa de Salvador Illa, por falta de indicios. Ese mismo día, otra magistrada pide al Parlamento Europeo un quinto suplicatorio contra él, por provocación a desórdenes públicos en las protestas agrarias de febrero de 2024.", s:S.alviseNov},
+  {d:"2026-11-05", p:["psoe"], t:"electoral", x:"La Junta Electoral Provincial de Valladolid rechaza la petición del PSOE de quitar el nombre de Óscar Puente de las papeletas, porque no se pueden modificar tras la proclamación de las candidaturas. Ordena a las mesas dar por válidas las papeletas del PSOE con su nombre tachado. El PSOE de Castilla y León lo considera un «mal menor».", s:S.puenteTachado},
+  {d:"2026-11-06", p:["psoe"], t:"proceso", x:"El juez de la Audiencia Nacional José Luis Calama rechaza investigar a Zapatero por malversación, como pedía la Fiscalía Anticorrupción, por no entregar a Patrimonio del Estado las joyas halladas en su despacho. Razona que no se puede afirmar que fueran patrimonio público solo por haberse recibido en consideración al cargo. Zapatero dice que fueron un regalo personal del rey de Arabia Saudí en 2007. Sigue investigado en el caso Plus Ultra y, en la pieza de las joyas, por delito fiscal y contrabando.", s:S.zapateroJoyas}
 ];
 
 /* ============================================================
