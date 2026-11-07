@@ -308,7 +308,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 6 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 7 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -320,7 +320,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "6 nov 2026";
+const VERIFIED = "7 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test de 50 preguntas para ver con quién coincides.";
 const S = {
@@ -417,6 +417,8 @@ const S = {
   alviseNov:"https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Noticias-Judiciales/El-Tribunal-Supremo-pide-un-quinto-suplicatorio-contra--Alvise--Perez-por-delito-de-provocacion-a-desordenes-publicos",
   puenteTachado:"https://www.eldiario.es/castilla-y-leon/politica/junta-electoral-rechaza-borrar-oscar-puente-papeletas-psoe-valladolid_1_13641444.html",
   zapateroJoyas:"https://www.infobae.com/espana/2026/11/06/el-juez-del-caso-plus-ultra-rechaza-investigar-a-zapatero-por-malversacion-como-pedia-la-fiscalia-por-las-joyas-seguira-imputado-por-fraude-y-contrabando/",
+  lasexta13n:"https://www.servimedia.es/noticias/lasexta-retrasa-13-noviembre-celebracion-primer-debate-electoral/1413574388",
+  celesteNov:"https://democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-celeste-tel-pp-vox-psoe-urda",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -907,6 +909,7 @@ const POLLS = [
   {firm:"40dB", media:"El País / SER", campo:"7–8 oct", pp:132, psoe:112, vox:66, vpp:31.9, vpsoe:28.1, vvox:18.9, s:S.polls},
   {firm:"Sondaxe", media:"La Voz de Galicia", campo:"26–28 oct", pp:null, psoe:null, vox:null, vpp:29.2, vpsoe:26.9, vvox:19.2, s:S.sondaxeOct, note:"No publica escaños."},
   {firm:"GESOP", media:"El Periódico", campo:"6–8 oct", pp:[121,125], psoe:[108,112], vox:[68,72], vpp:null, vpsoe:26.1, vvox:18.9, s:S.polls},
+  {firm:"Celeste-Tel", media:"Onda Cero", campo:"pub. 6 nov", pp:136, psoe:101, vox:66, vpp:31.4, vpsoe:25.7, vvox:19.2, s:S.celesteNov, note:"Con los dos escaños de UPN, el PP llega a 138."},
   {firm:"SocioMétrica", media:"El Español", campo:"pub. 1 nov", pp:137, psoe:106, vox:64, vpp:32.2, vpsoe:26.6, vvox:19.1, s:S.sociometricaNov, note:"Con los dos escaños de UPN, el PP llega a 139."},
   {firm:"NC Report", media:"La Razón", campo:"26–29 oct", pp:[138,140], psoe:[100,102], vox:[66,68], vpp:32.6, vpsoe:25.6, vvox:19.3, s:S.ncNov},
   {firm:"Target Point", media:"El Debate", campo:"28–30 oct", pp:[131,135], psoe:[99,103], vox:[68,72], vpp:31.8, vpsoe:25.5, vvox:19.9, s:S.targetNov},
@@ -1187,9 +1190,9 @@ const KEY_DATES = [
   {d:"2026-10-28", t:"Candidaturas presentadas en el BOE", x:"Publicación de las listas presentadas, antes de su proclamación.", s:S.calendario29n},
   {d:"2026-10-31", t:"Sorteo de las mesas electorales", x:"Los ayuntamientos lo hacen entre el 31 de octubre y el 4 de noviembre. La notificación llega en los tres días siguientes.", s:S.sorteoMesas},
   {d:"2026-11-03", t:"Candidaturas proclamadas en el BOE", x:"Publicación oficial de las listas definitivas.", s:S.plazoListas},
-  {d:"2026-11-09", t:"Debate de portavoces en laSexta", x:"Con el PSOE, el PP, Vox y Frente Amplio, moderado por Ana Pastor. Aplazado desde el 2 de noviembre por el accidente de Urda. Vox (Figaredo) y Frente Amplio (Bustinduy) han dicho quién irá; el PSOE y el PP, todavía no.", s:S.lasexta9n},
   {d:"2026-11-11", t:"Huelga general por la vivienda", x:"Convocada por CCOO, UGT y los sindicatos de inquilinos.", s:S.huelga},
   {d:"2026-11-12", t:"Votación de los decretos de vivienda", x:"En la Diputación Permanente del Congreso.", s:S.decretos12n},
+  {d:"2026-11-13", t:"Debate de portavoces en laSexta", x:"Sobre economía, moderado por Ana Pastor. Con Carlos Cuerpo (PSOE), Juan Bravo (PP), José María Figaredo (Vox) y Pablo Bustinduy (Frente Amplio). Aplazado dos veces: del 2 al 9 de noviembre por el accidente de Urda y después al 13.", s:S.lasexta13n},
   {d:"2026-11-13", t:"Empieza la campaña", x:"Campaña electoral oficial, hasta el 27 de noviembre.", s:S.zapateroCampana},
   {d:"2026-11-13", t:"Entrevistas de Jordi Wild", x:"Se publican las de Sánchez, Feijóo, Abascal y Colau, con una hora entre cada una.", s:S.wild13n},
   {d:"2026-11-16", t:"Cara a cara Sánchez–Feijóo", x:"En Mediaset. Confirmado por el PP y el PSOE.", s:S.caraACara},
