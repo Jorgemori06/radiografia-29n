@@ -7,7 +7,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://radiografia-29n.vercel.app/">
 <meta property="og:title" content="Radiografía Electoral 29N">
-<meta property="og:description" content="Encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt con datos reales y test de 50 preguntas para las generales del 29N.">
+<meta property="og:description" content="Encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt con datos reales y test de afinidad (rápido de 15 preguntas o completo de 50) para las generales del 29N.">
 <meta name="twitter:card" content="summary">
 <title>Radiografía Electoral 29N</title>
 <meta name="description" content="Hechos, sentencias, hemeroteca, encuestas y aritmética D'Hondt de cara a las elecciones generales del 29 de noviembre de 2026.">
@@ -285,8 +285,13 @@
   <!-- MÓDULO 4: TEST -->
   <section id="m4" class="hidden">
     <div id="quizIntro" class="mb-5">
-      <h2 class="text-2xl font-bold mb-1">Test político de 50 preguntas y brújula de coherencia</h2>
-      <p class="text-slate-400 text-sm max-w-3xl">50 afirmaciones en 10 ejes. Responde del –2 al +2 y marca como «clave» las que más te importan (cuentan el doble). Si una pregunta no te queda clara, toca el botón <b class="text-sky-300">?</b> para ver qué significa y qué argumentos hay a favor y en contra. Tu progreso se guarda en este navegador y tus respuestas no salen de él salvo que compartas el enlace.</p>
+      <h2 class="text-2xl font-bold mb-1">Test político y brújula de coherencia</h2>
+      <div class="flex sm:inline-flex gap-1 p-1 rounded-lg bg-slate-800 border border-slate-700 text-sm my-3 w-full sm:w-auto" id="modeBtns">
+        <button class="btn flex-1 sm:flex-none px-4 py-2 rounded-md text-left" data-mode="quick"><b>Rápido</b><span class="block text-xs opacity-80">15 preguntas · unos 3 min</span></button>
+        <button class="btn flex-1 sm:flex-none px-4 py-2 rounded-md text-left" data-mode="full"><b>Completo</b><span class="block text-xs opacity-80">50 preguntas · unos 10 min</span></button>
+      </div>
+      <p class="text-slate-400 text-sm max-w-3xl mb-2" id="modeNote"></p>
+      <p class="text-slate-400 text-sm max-w-3xl">Responde del –2 al +2 y marca como «clave» las que más te importan (cuentan el doble). Si una pregunta no te queda clara, toca el botón <b class="text-sky-300">?</b> para ver qué significa y qué argumentos hay a favor y en contra. Tu progreso se guarda en este navegador y tus respuestas no salen de él salvo que compartas el enlace.</p>
     </div>
     <div id="quizBox">
       <div class="card p-4 mb-4">
@@ -322,7 +327,7 @@
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
 const VERIFIED = "8 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
-const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test de 50 preguntas para ver con quién coincides.";
+const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test (rápido de 15 preguntas o completo de 50) para ver con quién coincides.";
 const S = {
   moncloa29n:"https://www.lamoncloa.gob.es/presidente/actividades/Paginas/2026/051026-sanchez-convocatoria-elecciones.aspx",
   abalos:"https://www.infobae.com/espana/2026/10/13/el-ultimo-cartucho-de-abalos-y-koldo-presionar-al-supremo-para-que-suspenda-sus-condenas-a-24-y-19-anos-de-prision-y-abrir-la-via-del-amparo-ante-el-constitucional/",
@@ -1554,8 +1559,26 @@ function renderCost(){
 /* ============================================================
    MÓDULO 4: TEST
    ============================================================ */
-const PAGE_SIZE = 5, NPAGES = 10, STORE_KEY = "rx-test-v2";
+const PAGE_SIZE = 5, STORE_KEY = "rx-test-v2";
 let answers = Array(50).fill(null), imp = Array(50).fill(false), page = 0;
+/* Test rápido: 15 de las 50 preguntas. Son las de mayor peso que más separan a los partidos,
+   con al menos una por eje. Las respuestas se comparten con el completo, así que se puede
+   empezar por el rápido y afinar después sin repetir nada. */
+const QUICK = [0,7,11,13,15,19,23,25,26,32,35,40,44,45,46];
+const MODE_NOTE = {
+  quick:"15 preguntas, al menos una de cada uno de los 10 ejes. Es orientativo: al terminar puedes seguir con las 35 restantes para afinar, sin repetir las que ya has respondido.",
+  full:"50 afirmaciones en 10 ejes. Es la versión más precisa."
+};
+let mode = "quick";
+const qSet = () => mode==="quick" ? QUICK : QUESTIONS.map((_,i)=>i);
+const nPages = () => Math.ceil(qSet().length/PAGE_SIZE);
+const minAnswers = () => mode==="quick" ? 10 : 25;
+const answeredIn = idx => idx.filter(i=>answers[i]!==null).length;
+function firstOpenPage(){ const set=qSet(), k=set.findIndex(i=>answers[i]===null); return k<0 ? nPages()-1 : Math.floor(k/PAGE_SIZE); }
+function setMode(m){
+  if(m!=="quick" && m!=="full") return;
+  mode = m; page = firstOpenPage(); saveProgress(); renderQuiz();
+}
 const openHelp = new Set();
 
 function encodeAnswers(){
@@ -1569,23 +1592,26 @@ function decodeAnswers(str){
   });
   return true;
 }
-function saveProgress(){ store.set(STORE_KEY, {a:encodeAnswers(), p:page}); }
+function saveProgress(){ store.set(STORE_KEY, {a:encodeAnswers(), p:page, m:mode}); }
 
 function renderQuiz(){
-  const start = page*PAGE_SIZE;
-  $("#quizAxisName").textContent = `Eje ${page+1}/10 · ${AXES[page]}`;
-  const done = answers.filter(a=>a!==null).length;
-  $("#quizCount").textContent = `${done}/50 respondidas`;
-  $("#quizBar").style.width = (done/50*100)+"%";
-  $("#quizSteps").innerHTML = AXES_SHORT.map((n,i)=>{
-    const c = answers.slice(i*5,i*5+5).filter(a=>a!==null).length;
-    return `<button class="chip btn px-2.5 py-1 rounded-full text-xs ${i===page?"active":""}" data-p="${i}">${n}${c===5?" ✓":""}</button>`;
+  const set = qSet(), np = nPages(), start = page*PAGE_SIZE;
+  $$("#modeBtns [data-mode]").forEach(b=>{ const on=b.dataset.mode===mode; b.classList.toggle("bg-sky-500",on); b.classList.toggle("text-slate-900",on); b.classList.toggle("text-slate-300",!on); b.setAttribute("aria-pressed",String(on)); });
+  $("#modeNote").textContent = MODE_NOTE[mode];
+  $("#quizAxisName").textContent = mode==="quick" ? `Bloque ${page+1}/${np} · test rápido` : `Eje ${page+1}/10 · ${AXES[page]}`;
+  const done = answeredIn(set);
+  $("#quizCount").textContent = `${done}/${set.length} respondidas`;
+  $("#quizBar").style.width = (done/set.length*100)+"%";
+  const labels = mode==="quick" ? Array.from({length:np},(_,i)=>`Bloque ${i+1}`) : AXES_SHORT;
+  $("#quizSteps").innerHTML = labels.map((n,i)=>{
+    const blk = set.slice(i*PAGE_SIZE,i*PAGE_SIZE+PAGE_SIZE), c = answeredIn(blk);
+    return `<button class="chip btn px-2.5 py-1 rounded-full text-xs ${i===page?"active":""}" data-p="${i}">${n}${c===blk.length?" ✓":""}</button>`;
   }).join("");
   $$("#quizSteps [data-p]").forEach(b=>b.addEventListener("click",()=>{page=+b.dataset.p;saveProgress();renderQuiz();window.scrollTo({top:0,behavior:"smooth"});}));
-  $("#quizQs").innerHTML = QUESTIONS.slice(start,start+PAGE_SIZE).map(q=>{
-    const i = q.n-1;
+  $("#quizQs").innerHTML = set.slice(start,start+PAGE_SIZE).map((i,k)=>{
+    const q = QUESTIONS[i], num = mode==="quick" ? start+k+1 : q.n;
     return `<div class="card p-4 fade">
-      <div class="flex gap-3 mb-3 items-start"><span class="text-xs font-bold text-sky-400 pt-1">P${q.n}</span><p class="font-medium flex-1 min-w-0">${q.t}</p><button class="help-btn btn" data-help="${i}" aria-expanded="${openHelp.has(i)}" aria-controls="help-${i}" aria-label="¿Qué significa esta pregunta?" title="¿Qué significa?">?</button></div>
+      <div class="flex gap-3 mb-3 items-start"><span class="text-xs font-bold text-sky-400 pt-1">P${num}</span><p class="font-medium flex-1 min-w-0">${q.t}</p><button class="help-btn btn" data-help="${i}" aria-expanded="${openHelp.has(i)}" aria-controls="help-${i}" aria-label="¿Qué significa esta pregunta?" title="¿Qué significa?">?</button></div>
       <div class="help-bubble text-sm ${openHelp.has(i)?"":"hidden"}" id="help-${i}">
         <p class="text-slate-200 mb-2">${HELP[i][0]}</p>
         <div class="grid sm:grid-cols-2 gap-2 text-xs">
@@ -1606,17 +1632,18 @@ function renderQuiz(){
   }));
   $$("#quizQs [data-imp]").forEach(c=>c.addEventListener("change",()=>{imp[+c.dataset.imp]=c.checked;saveProgress();}));
   $("#btnPrev").style.visibility = page===0?"hidden":"visible";
-  const last = page===NPAGES-1;
+  const last = page===np-1;
   $("#btnNext").innerHTML = last ? `Ver resultados<i data-lucide="flag" class="w-4 h-4"></i>` : `Siguiente<i data-lucide="arrow-right" class="w-4 h-4"></i>`;
-  $("#quizHint").textContent = last && done<25 ? "Responde al menos 25 preguntas para calcular resultados." : "Las preguntas sin responder no cuentan.";
+  $("#quizHint").textContent = last && done<minAnswers() ? `Responde al menos ${minAnswers()} preguntas para calcular resultados.` : "Las preguntas sin responder no cuentan.";
   icons();
 }
 $("#btnPrev").addEventListener("click",()=>{ if(page>0){page--;saveProgress();renderQuiz();window.scrollTo({top:0,behavior:"smooth"});} });
 $("#btnNext").addEventListener("click",()=>{
-  if(page<NPAGES-1){page++;saveProgress();renderQuiz();window.scrollTo({top:0,behavior:"smooth"});return;}
-  if(answers.filter(a=>a!==null).length<25){ $("#quizHint").classList.add("text-amber-300"); return; }
+  if(page<nPages()-1){page++;saveProgress();renderQuiz();window.scrollTo({top:0,behavior:"smooth"});return;}
+  if(answeredIn(qSet())<minAnswers()){ $("#quizHint").classList.add("text-amber-300"); return; }
   showResults();
 });
+$$("#modeBtns [data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
 
 function copyText(text, okEl){
   const done = () => { okEl.textContent = "Resultado copiado: pégalo en WhatsApp"; setTimeout(()=>okEl.textContent="",2500); };
@@ -1645,6 +1672,10 @@ function showResults(){
       <button id="btnRedo" class="chip btn px-3 sm:px-4 py-2 rounded-lg flex items-center gap-2 text-sm"><i data-lucide="rotate-ccw" class="w-4 h-4"></i>Reiniciar</button>
     </div>
   </div>
+  ${mode==="quick" ? `<div class="card p-4 mb-4 flex flex-wrap items-center justify-between gap-3 border-sky-500/40">
+    <p class="text-sm text-slate-300 flex-1 min-w-[14rem]">Resultado del <b>test rápido</b> (${answeredIn(QUICK)} preguntas). Es orientativo: con las 50 el cálculo es más fino y el orden puede cambiar. Tus respuestas se conservan.</p>
+    <button id="btnRefine" class="btn bg-sky-500 hover:bg-sky-400 text-slate-900 font-semibold px-4 py-2 rounded-lg flex items-center gap-2 text-sm"><i data-lucide="sliders-horizontal" class="w-4 h-4"></i>Afinar con las 50</button>
+  </div>` : ""}
   <div class="grid lg:grid-cols-2 gap-4 mb-6">
     <div class="card p-4 sm:p-5">
       <h3 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="trophy" class="w-5 h-5 text-amber-400"></i>Podio de afinidad</h3>
@@ -1739,8 +1770,14 @@ function showResults(){
   $("#btnShare").addEventListener("click",()=>{
     const base = SITE_URL;
     const podium = ranking.slice(0,3).map((r,i)=>`${i+1}. ${r.p.short} (${r.aff.toFixed(0)}%)`).join(" · ");
-    const text = `Mi brújula para el 29N: ${podium}. Ningún partido me encaja al 100%. Haz el test de 50 preguntas: ${base}`;
+    const text = `Mi brújula para el 29N${mode==="quick"?" (test rápido)":""}: ${podium}. Ningún partido me encaja al 100%. Haz el test, rápido de 15 preguntas o completo de 50: ${base}`;
     copyText(text, $("#shareOk"));
+  });
+  const refine = $("#btnRefine");
+  if(refine) refine.addEventListener("click",()=>{
+    R.classList.add("hidden"); $("#quizBox").classList.remove("hidden"); $("#quizIntro").classList.remove("hidden");
+    try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
+    setMode("full"); window.scrollTo({top:0,behavior:"smooth"});
   });
   $("#btnEdit").addEventListener("click",()=>{
     R.classList.add("hidden"); $("#quizBox").classList.remove("hidden"); $("#quizIntro").classList.remove("hidden");
@@ -1786,13 +1823,18 @@ initCompareSelects();
 initSim();
 (function boot(){
   const m = location.hash.match(/^#t=([a-eA-Ex]{50})$/);
+  const onlyQuick = () => answers.every((a,i)=>a===null || QUICK.includes(i));
   if(m && decodeAnswers(m[1])){
+    mode = onlyQuick() ? "quick" : "full";
     renderQuiz(); showTab(4, true);
-    if(answers.filter(a=>a!==null).length>=25) showResults();
+    if(answeredIn(qSet())>=minAnswers()) showResults();
     return;
   }
   const saved = store.get(STORE_KEY);
-  if(saved && typeof saved.a==="string" && decodeAnswers(saved.a)) page = Math.min(NPAGES-1, Math.max(0, saved.p|0));
+  if(saved && typeof saved.a==="string" && decodeAnswers(saved.a)){
+    mode = (saved.m==="quick" || saved.m==="full") ? saved.m : (onlyQuick() ? "quick" : "full");
+    page = Math.min(nPages()-1, Math.max(0, saved.p|0));
+  }
   renderQuiz();
   const t = store.get("rx-tab");
   showTab(Number.isInteger(t) && t>=0 && t<=4 ? t : 0, true);
