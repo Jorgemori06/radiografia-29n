@@ -68,8 +68,13 @@ Cómo se redacta:
 3. Editar `index.html` con cambios mínimos y precisos (nada de reescribir secciones).
 4. Ejecutar `node scripts/check.mjs`. Tiene que terminar con «OK».
 5. Commit en `main` con un mensaje descriptivo en español y `git push origin main`.
-6. Comprobar al minuto que https://radiografia-29n.vercel.app/ sirve el cambio
-   (por ejemplo, buscando el texto nuevo).
+6. Comprobar el despliegue a través de GitHub, no de vercel.app (desde el entorno de las
+   revisiones el acceso a vercel.app está bloqueado; es normal y no hay que avisar de ello).
+   Al cabo de un minuto, ejecutar:
+   `gh api repos/Jorgemori06/radiografia-29n/commits/$(git rev-parse HEAD)/statuses --jq '.[0] | "\(.state) \(.description)"'`
+   - `success Deployment has completed`: está publicado. Decir solo «publicado».
+   - `pending` o sin respuesta todavía: esperar 1 minuto y repetir, hasta 5 veces.
+   - `failure` o `error`: avisar a Jorge de que Vercel ha fallado en ese commit.
 7. Enviar a Jorge un resumen breve: qué se ha añadido o cambiado, con las fuentes, y qué se
    ha visto pero se ha dejado fuera y por qué. Si no hay nada relevante, se dice y no se
    hace commit.
