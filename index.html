@@ -437,6 +437,20 @@ const S = {
   sociometricaNov8:"https://www.elespanol.com/espana/politica/20261108/pp-vox-suman-escanos-sanchez-recupera-perdio-urda-dimision-puente-sondeo-noche/1003744450645_0.html",
   dymNov:"https://www.electografica.com/2026/11/encuesta-dym-261110.html",
   ppPrograma:"https://www.infobae.com/espana/2026/11/10/el-pp-presenta-su-programa-electoral-para-concurrir-al-29-n-el-proyecto-no-tiene-unicornios-dice-la-verdad/",
+  ppProg:"https://www.pp.es/wp-content/uploads/2026/11/LA-RECONSTRUCCION-NACIONAL.pdf",
+  salfProg29:"https://theobjective.com/wp-content/uploads/2026/11/salf.pdf",
+  salfPres:"https://theobjective.com/espana/politica/2026-11-10/alvise-megacarcel-diputado/",
+  ercProg:"https://www.esquerrarepublicana.cat/documents/e2026-programa.pdf",
+  ercPres:"https://www.vilaweb.cat/noticies/erc-eleccions-defensat-malestar/",
+  pnvProg:"https://www.eaj-pnv.eus/es/adjuntos-documentos/21765/pdf/programa-electoral-29n",
+  pnvPres:"https://www.democrata.es/politica/el-pnv-reafirma-en-su-programa-el-derecho-a-decidir-el-reconocimiento-nacional-y-un-nuevo-estatus-politico/",
+  adelProg:"https://programa.adelanteandalucia.org/programa-29n-adelante-andalucia.pdf",
+  adelPres:"https://www.ultimahora.es/noticias/comunidades/2026/11/10/2746931/adelante-presenta-programa-electoral-limites-alquiler-desprivatizacion-ferroviaria-jornada-horas.html",
+  d21Viv:"https://democracia21.es/docs/vivienda-prioridad-1-democracia21.pdf",
+  d21Limpia:"https://democracia21.es/docs/espana-limpia-democracia21.pdf",
+  faFiscal:"https://frenteamplio.info/noticias/frente-amplio-propone-subir-impuestos-grandes-fortunas-empresas-mejorar-servicios/",
+  faViv:"https://frenteamplio.info/noticias/frente-amplio-propone-malaga-ley-expropiar-vivienda-grandes-fondos-inversion/",
+  podemosEjes:"https://www.telecinco.es/noticias/espana/20261110/elecciones-generales-2026-propuestas-partidos-jornada-laboral-salarios-empleo_18_020555612.html",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -468,6 +482,7 @@ const hm = (x, s) => it("hemeroteca", x, s);
 const PARTIES = [
 {
   id:"psoe", short:"PSOE", name:"PSOE (Pedro Sánchez)", color:"#ef4444", tags:["izquierda"],
+  programa:{nota:"sin publicar a 10 nov."},
   resumen:"Partido del Gobierno saliente. Gobernó desde 2018 con Unidas Podemos y luego con Sumar. Llega al 29N sin presupuestos aprobados en la legislatura, con su exministro Ábalos condenado y con varias investigaciones abiertas en su entorno.",
   hemeroteca:[
     hm("En 2019 Sánchez dijo que no dormiría tranquilo con Podemos en el Gobierno y descartó varias veces pactar con Bildu; después gobernó con el apoyo de ambos."),
@@ -491,12 +506,13 @@ const PARTIES = [
     it("valoracion","SMI de 735,90 € en 2018 a 1.221 € en 14 pagas en 2026.", S.smi),
     it("hemeroteca","Tras el desahucio de Maricarmen Abascal aprobó dos decretos de vivienda (escudo antidesahucios para personas vulnerables y prórroga de alquileres). El Congreso los rechazó el 2 oct con los votos de PP, Vox y Junts; el Gobierno los volvió a aprobar el 6 oct. La Diputación Permanente los votará el 12 nov: el escudo antidesahucios tendría mayoría (35 a 34) y la prórroga de alquileres podría caer si el PNV vota en contra.", S.decretos12n),
     it("hemeroteca","Su reducción de jornada a 37,5 horas cayó en el Congreso (sep 2025) por el voto de PP, Vox, Junts y UPN, y su gravamen a las energéticas, en ene 2025, por PP, Vox, Junts, PNV y UPN.", S.jornada),
-    it("propuesta","Para el 29N: Empresa Estatal de Vivienda, Plan de Vivienda 2026-2030 de 7.000 M€, jornada de 36 horas antes de 2030 y SMI del 60% del salario medio.", S.eco29n)
+    it("propuesta","Sin programa publicado a 10 nov. Medidas anunciadas: Empresa Estatal de Vivienda, Plan de Vivienda 2026-2030 de 7.000 M€, jornada de 36 horas antes de 2030 y SMI del 60% del salario medio.", S.eco29n)
   ],
   paradoja:"Tiene lógica para quien prioriza las subidas del SMI y las pensiones, la ley de vivienda y frenar a PP y Vox con la única fuerza de izquierdas capaz de gobernar. Choca con quien rechaza la amnistía y las cesiones a los independentistas, o con quien pone por delante la corrupción en el entorno del Gobierno."
 },
 {
   id:"pp", short:"PP", name:"PP (Alberto Núñez Feijóo)", color:"#3b82f6", tags:["derecha"],
+  programa:{url:S.ppProg, nota:"«Reconstrucción Nacional», presentado el 10 nov (PDF)."},
   resumen:"Primera fuerza en todas las encuestas salvo el CIS. Gobierna la mayoría de comunidades, varias con Vox. Arrastra la condena por Gürtel, tiene pendiente la sentencia de Kitchen y ha sido muy criticado por la gestión de la DANA en Valencia.",
   hemeroteca:[
     hm("En 2011 prometió bajar impuestos; ya en el Gobierno subió IRPF, IVA e IBI, alegando la crisis y el déficit heredado."),
@@ -516,12 +532,14 @@ const PARTIES = [
     it("hemeroteca","La deuda pública pasó de casi el 69% al 100% del PIB entre 2011 y 2014."),
     it("sentencia","La amnistía fiscal de Montoro (2012) fue declarada inconstitucional en 2017."),
     it("hemeroteca","Votó contra la reducción de jornada (sep 2025) y contra el gravamen a las energéticas (ene 2025).", S.jornada),
-    it("propuesta","Para el 29N: un millón de viviendas en 4 años, avales de hasta el 95-100% para jóvenes, IVA del 0% en alimentos básicos, IVA de la energía al 10%, deflactar el IRPF y doblar el mínimo por hijo.", S.eco29n)
+    it("propuesta","Programa: construir un millón de viviendas y derogar la Ley de Vivienda; para menores de 40 años, IVA de la compra de primera vivienda del 10% al 4% y aval público de hasta el 20% del valor; IVA del 0% en alimentos básicos mientras dure la crisis de inflación; deflactar el IRPF y que no lo pague quien cobre el salario mínimo.", S.ppProg),
+    it("propuesta","Programa: auditoría de todo el gasto en los primeros 100 días, pensiones revalorizadas cada año con el IPC, derogar la Ley de Amnistía, restablecer las penas por malversación y que los jueces elijan a los 12 vocales judiciales del CGPJ.", S.ppProg)
   ],
   paradoja:"Tiene lógica para quien quiere un cambio de Gobierno, bajar impuestos y una gestión previsible dentro de la UE. Choca con quien rechaza que gobierne con Vox, con quien no olvida la corrupción de la etapa Rajoy o con quien espera recortes de gasto que el PP no hizo cuando gobernó."
 },
 {
   id:"vox", short:"VOX", name:"VOX (Santiago Abascal)", color:"#84cc16", tags:["derecha"],
+  programa:{nota:"sin publicar a 10 nov."},
   resumen:"Tercera fuerza en las encuestas (cerca del 19%, casi el doble que en 2023). No tiene condenas por corrupción, pero sí multas del Tribunal de Cuentas por su financiación, y ha vuelto a gobernar con el PP en varias comunidades.",
   hemeroteca:[
     hm("En julio de 2024 salió de los cinco gobiernos autonómicos que compartía con el PP por el reparto de menores migrantes; en 2026 volvió a entrar en Extremadura, Aragón y Andalucía, con la «prioridad nacional» como condición.", S.andaluciaGob),
@@ -538,12 +556,13 @@ const PARTIES = [
   ],
   economia:[
     it("hemeroteca","En Andalucía pacta con el PP una rebaja del tramo autonómico del IRPF de 0,25 puntos anuales para rentas de menos de 60.000 € y deducciones por hijo.", S.andaluciaGob),
-    it("propuesta","Para el 29N: Impuesto de Sociedades al 15%, rebaja de IRPF e IVA, liberalizar el suelo, sin cuota de autónomos para ingresos inferiores al SMI y sin reducción legal de la jornada.", S.eco29n)
+    it("propuesta","Sin programa publicado a 10 nov. Medidas anunciadas: Impuesto de Sociedades al 15%, rebaja de IRPF e IVA, liberalizar el suelo, sin cuota de autónomos para ingresos inferiores al SMI y sin reducción legal de la jornada.", S.eco29n)
   ],
   paradoja:"Tiene lógica para quien prioriza por encima de todo el control de la inmigración, la seguridad y la unidad de España. Choca con quien defiende la regularización de inmigrantes o los derechos LGTBI, con quien quiere un liberalismo económico pleno o con quien exige transparencia total en las cuentas."
 },
 {
   id:"fa", short:"FRENTE AMPLIO", name:"Frente Amplio (Sumar, IU, Comuns y Más Madrid · Ada Colau)", color:"#c026d3", tags:["izquierda"],
+  programa:{nota:"sin publicar a 10 nov."},
   resumen:"Heredero de Sumar: coalición a la izquierda del PSOE con Ada Colau (Barcelona) y Emilio Delgado (Madrid) como cabezas de lista. Va sin Podemos salvo en Canarias y la Comunitat Valenciana. Las encuestas le dan entre el 4,7% y el 8%.",
   hemeroteca:[
     hm("Socio del Gobierno de coalición (2023-2026). Votó con el PSOE en casi todo, incluida la amnistía, aunque con desacuerdos públicos en defensa y política exterior."),
@@ -557,12 +576,14 @@ const PARTIES = [
   ],
   economia:[
     it("hemeroteca","Desde el Ministerio de Trabajo impulsó las subidas del SMI y la reducción de jornada a 37,5 horas, que el Congreso tumbó en sep 2025.", S.jornada),
-    it("propuesta","Para el 29N, sin programa cerrado: más progresividad sobre grandes herencias y patrimonios, más protección a los inquilinos y franquicia de IVA para autónomos que facturen menos de 85.000 €.", S.eco29n)
+    it("propuesta","Sin programa publicado a 10 nov. En una nota oficial (5 nov): impuesto del 2% a los patrimonios de más de un millón de euros y del 3% desde 50 millones, y del 10% a la acumulación de vivienda (empresas desde la primera, personas desde la cuarta, si su valor conjunto supera 800.000 € y no se alquila de forma asequible).", S.faFiscal),
+    it("propuesta","En otra nota oficial (6 nov): una ley para expropiar vivienda a propietarios corporativos por fases (más de 1.000 viviendas, después más de 700 y después más de 50 inmuebles).", S.faViv)
   ],
   paradoja:"Tiene lógica para quien quiere empujar al PSOE hacia la izquierda en salarios, jornada y vivienda. Choca con quien busca una izquierda unida (va separado de Podemos) o con quien no perdona el caso Errejón."
 },
 {
   id:"podemos", short:"PODEMOS", name:"Podemos (Ione Belarra / Irene Montero)", color:"#7c3aed", tags:["izquierda"],
+  programa:{nota:"sin publicar a 10 nov."},
   resumen:"El partido que nació del 15-M y llegó a tener 71 escaños (con sus confluencias) se mueve ahora entre el 2,3% y el 3,1% en las encuestas. Para el 29N va en solitario en casi toda España, con Irene Montero en Madrid, y apoya a ERC en Cataluña.",
   hemeroteca:[
     hm("Nació criticando a «la casta»; en 2018 sus líderes Pablo Iglesias e Irene Montero compraron un chalé en Galapagar, lo que sometieron a consulta de sus bases."),
@@ -576,13 +597,14 @@ const PARTIES = [
   ],
   economia:[
     it("hemeroteca","Pactó con PSOE, ERC y Bildu la ley de vivienda de 2023, con topes al alquiler en zonas tensionadas.", S.leyVivienda),
-    it("propuesta","Para el 29N: SMI de 1.800 € mensuales, jornada de 35 horas y empresa pública de energía.", S.eco29n),
+    it("propuesta","Sin programa publicado a 10 nov. Entre sus ejes de campaña: SMI de 1.800 € mensuales y jornada laboral de 30 horas.", S.podemosEjes),
     it("propuesta","Más impuestos a la banca, las eléctricas, las grandes fortunas y los beneficios extraordinarios; regular el precio del alquiler y penalizar la vivienda vacía de grandes propietarios.", S.podemosProg)
   ],
   paradoja:"Tiene lógica para quien quiere una izquierda sin rebajas y vota en Madrid u otra provincia grande, donde su voto puede contar. Choca con quien vota en una provincia pequeña, donde difícilmente sacará escaño, o con quien no perdona la ley del «solo sí es sí»."
 },
 {
   id:"salf", short:"SALF", name:"Se Acabó La Fiesta (Alvise Pérez)", color:"#f97316", tags:["antisistema"],
+  programa:{url:S.salfProg29, nota:"«Contrato Electoral Simplificado», presentado el 10 nov (PDF enlazado por The Objective)."},
   resumen:"Partido de protesta contra el sistema de partidos (1,8% según 40dB). Su líder tiene seis causas abiertas en el Supremo y varias condenas firmes por intromisión en el honor.",
   hemeroteca:[
     hm("Cumplió su promesa de sortear su sueldo de eurodiputado."),
@@ -594,14 +616,15 @@ const PARTIES = [
     it("sentencia","Varias condenas firmes por intromisión ilegítima en el honor por difundir bulos (contra Manuela Carmena o Ábalos, entre otros).")
   ],
   economia:[
-    it("opacidad","No ha publicado un programa oficial para el 29N: lo que sigue son posiciones públicas.", S.salfProg),
-    it("propuesta","Bajar impuestos y simplificar la fiscalidad, con foco en autónomos y pymes; recortar el gasto político y las subvenciones a partidos, sindicatos y patronales.", S.salfProg),
-    it("propuesta","Vivienda: más oferta con menos trabas al suelo y las licencias, y mano dura contra la okupación. Pensiones: sin propuesta detallada.", S.salfProg)
+    it("propuesta","Programa: no pagar IRPF por los primeros 35.000 € (escalonado hasta 2030), Sociedades del 25% al 20% (15% sobre el beneficio reinvertido), eliminar la cuota de autónomos y el IBI, e IVA del 4% en luz y agua.", S.salfProg29),
+    it("propuesta","Vivienda: ITP y AJD al 0% en la primera vivienda, el suelo de la Sareb y del Estado a concurso en 12 meses para vivienda protegida en propiedad, licencias en uno a tres meses o silencio positivo, y desalojo policial en 48 horas con denuncia y título de propiedad.", S.salfProg29),
+    it("propuesta","Pensiones: revalorización con el IPC con rango constitucional, mínimo de 1.000 € en 14 pagas con 35 años cotizados y una cuenta individual obligatoria (2% del salario) para menores de 45 años. Instituciones: 10 ministerios, suprimir el Senado y el Consejo de Estado y pasar el control constitucional a una sala del Supremo.", S.salfProg29)
   ],
   paradoja:"Tiene lógica para quien quiere, sobre todo, castigar a todos los partidos. Choca con quien exige rigor y legalidad a sus representantes (seis causas abiertas y condenas por bulos) o con quien quiere que su voto se traduzca en escaño fuera de Madrid."
 },
 {
   id:"junts", short:"JUNTS", name:"Junts per Catalunya (Carles Puigdemont)", color:"#06b6d4", tags:["nacionalista","derecha"],
+  programa:{nota:"sin publicar a 10 nov."},
   resumen:"Independentistas de centro-derecha. Sus 7 votos hicieron presidente a Sánchez en 2023 y su ruptura en 2025 bloqueó la legislatura. Su candidato, Puigdemont, ya puede volver a España: el Supremo le ha aplicado la amnistía.",
   hemeroteca:[
     hm("De la declaración unilateral de independencia de 2017 al pacto de investidura con el PSOE en 2023, a cambio de la amnistía y otras contrapartidas."),
@@ -621,6 +644,7 @@ const PARTIES = [
 },
 {
   id:"erc", short:"ERC", name:"Esquerra Republicana de Catalunya (Gabriel Rufián)", color:"#facc15", tags:["nacionalista","izquierda"],
+  programa:{url:S.ercProg, nota:"Presentado el 5 nov (PDF, en catalán)."},
   resumen:"Independentistas de izquierdas. Apoyaron a Sánchez durante toda la legislatura e invistieron a Salvador Illa en Cataluña a cambio de la financiación singular. Para el 29N suman a Podemos.",
   hemeroteca:[
     hm("Del 1-O de 2017 a apoyar al Gobierno de Sánchez y a investir al socialista Illa en Cataluña (2024)."),
@@ -634,12 +658,14 @@ const PARTIES = [
   ],
   economia:[
     it("hemeroteca","Pactó con PSOE, Podemos y Bildu la ley de vivienda de 2023, con topes al alquiler en zonas tensionadas.", S.leyVivienda),
-    it("hemeroteca","Votó a favor de la reducción de jornada a 37,5 horas (sep 2025).", S.jornada)
+    it("hemeroteca","Votó a favor de la reducción de jornada a 37,5 horas (sep 2025).", S.jornada),
+    it("propuesta","Programa: negociar la convocatoria de un referéndum de autodeterminación en Cataluña con acompañamiento internacional, un nuevo modelo de financiación, condonar los más de 17.100 millones del FLA y traspasar a la Agència Tributària de Catalunya la recaudación de los impuestos estatales.", S.ercProg)
   ],
   paradoja:"Tiene lógica para el votante catalán independentista de izquierdas que quiere conseguir recursos para Cataluña. Choca con quien ve la financiación singular como un privilegio o rechaza la vía unilateral del 1-O."
 },
 {
   id:"bildu", short:"EH BILDU", name:"EH Bildu (Arnaldo Otegi)", color:"#2dd4bf", tags:["nacionalista","izquierda"],
+  programa:{nota:"sin publicar a 10 nov."},
   resumen:"Izquierda independentista vasca y navarra. Fue un socio estable de Sánchez en lo social y lo presupuestario. Para muchos votantes es un límite que no condene expresamente la historia de ETA.",
   hemeroteca:[
     hm("Apoyó de forma estable los presupuestos y decretos sociales del Gobierno."),
@@ -659,6 +685,7 @@ const PARTIES = [
 },
 {
   id:"pnv", short:"PNV", name:"Partido Nacionalista Vasco (Aitor Esteban)", color:"#22c55e", tags:["nacionalista","derecha"],
+  programa:{url:S.pnvProg, nota:"Presentado el 9 nov (PDF)."},
   resumen:"Nacionalismo vasco de centro-derecha. Gobierna Euskadi con el PSE y negocia con quien gobierne en Madrid a cambio de competencias y del Concierto Económico.",
   hemeroteca:[
     hm("En 2018 apoyó los presupuestos de Rajoy y, una semana después, la moción de censura que lo desalojó."),
@@ -671,12 +698,15 @@ const PARTIES = [
   ],
   economia:[
     it("hemeroteca","Blindaje del Concierto Económico (Cupo) como eje de toda negociación."),
-    it("hemeroteca","Votó con PP, Vox, Junts y UPN contra el gravamen a las energéticas (ene 2025), pero apoyó la reducción de jornada (sep 2025).", S.energeticas)
+    it("hemeroteca","Votó con PP, Vox, Junts y UPN contra el gravamen a las energéticas (ene 2025), pero apoyó la reducción de jornada (sep 2025).", S.energeticas),
+    it("propuesta","Programa: reformar la Ley del Concierto Económico para aumentar las capacidades fiscales, culminar las transferencias pendientes del Estatuto de Gernika (entre ellas la gestión del régimen económico de la Seguridad Social) y, en un nuevo estatus político, la competencia para un salario mínimo propio.", S.pnvProg),
+    it("propuesta","Pensiones revalorizadas con el IPC y sin penalización por jubilación anticipada con más de 40 años cotizados, prestación por desempleo de hasta 36 meses, regular los alquileres de temporada y turísticos, y una nueva Ley de Secretos Oficiales.", S.pnvProg)
   ],
   paradoja:"Tiene lógica para el votante vasco moderado que prioriza el autogobierno y la buena gestión. Choca con quien quiere un socio fiel a un bloque ideológico o considera el Concierto un privilegio."
 },
 {
   id:"d21", short:"D21", name:"Democracia 21 (Miriam González Durántez)", color:"#a78bfa", tags:["centro"],
+  programa:{nota:"sin programa completo a 10 nov. Documentos oficiales de propuestas:", docs:[["vivienda", S.d21Viv],["regeneración («España Limpia»)", S.d21Limpia]]},
   resumen:"Partido de centro liberal y reformista presentado el 10 oct 2026. No ha gobernado ni tiene causas abiertas; su incógnita es si obtendrá algún escaño.",
   hemeroteca:[
     hm("Integra a ex cargos de UPyD (Rafael Calduch, Fernando Maura, Beatriz Becerra) y se presenta solo en Madrid y Barcelona.", S.d21),
@@ -688,14 +718,15 @@ const PARTIES = [
     it("limpio","Sin condenas ni causas abiertas. Al ser un partido nuevo, no tiene historial de gestión con el que compararlo.")
   ],
   economia:[
-    it("propuesta","Sin impuestos a la propiedad para menores de 35 años y un plan nacional para construir barrios con diez años de estabilidad normativa.", S.d21),
-    it("propuesta","Recortar el 90% de los asesores y las subvenciones a partidos; profesionalizar la Administración.", S.d21),
-    it("propuesta","Fiscalía dependiente del Parlamento, juzgados anticorrupción especializados y fin de los aforamientos.", S.d21)
+    it("propuesta","Vivienda: eliminar el IVA, el ITP y el AJD en la compra de vivienda habitual para menores de 35 años, un Plan Nacional de Barrios a 10 años y una limitación temporal y excepcional de los alquileres en zonas tensionadas.", S.d21Viv),
+    it("propuesta","Regeneración: reducir un 90% los asesores, juzgados especializados en corrupción, un fiscal general elegido por el Gobierno de una terna del Congreso (3/5) y eliminar los aforamientos no recogidos expresamente en la Constitución.", S.d21Limpia),
+    it("propuesta","Suspender la financiación pública de un partido cuando el partido o sus principales dirigentes estén investigados formalmente por corrupción, malversación o financiación ilegal.", S.d21Limpia)
   ],
   paradoja:"Tiene lógica para quien busca un centro reformista sin historial de corrupción y vota en Madrid o Barcelona. Choca con quien quiere asegurarse de que su voto obtenga escaño: todavía no aparece en las encuestas."
 },
 {
   id:"adel", short:"ADELANTE AND.", name:"Adelante Andalucía (José Ignacio García)", color:"#fda4af", tags:["izquierda","nacionalista"],
+  programa:{url:S.adelProg, nota:"«Un programa para frenar a las derechas», presentado el 10 nov (PDF)."},
   resumen:"Andalucismo de izquierdas. Fue la sorpresa de las andaluzas de 2026 (de 2 a 8 escaños), pero en generales solo se presenta en Andalucía y las encuestas le dan como mucho 1 escaño.",
   hemeroteca:[
     hm("Nació de una escisión de Podemos Andalucía liderada por Teresa Rodríguez y se mantiene al margen del Gobierno central."),
@@ -705,8 +736,8 @@ const PARTIES = [
     it("limpio","Sin condenas ni causas abiertas. Al no haber gobernado, no tiene historial de gestión con el que compararlo.")
   ],
   economia:[
-    it("propuesta","En su programa andaluz: congelar los alquileres y reservar al menos el 50% de la nueva vivienda a protegida, con el 60% de ella en alquiler social.", S.adelViv),
-    it("propuesta","Prohibir la venta de vivienda pública, traspasar al parque público las viviendas de la Sareb en Andalucía y paralizar los desahucios de familias vulnerables sin alternativa.", S.adelViv)
+    it("propuesta","Programa: ningún alquiler por encima del 20% del salario, contratos indefinidos y prórroga sin subida; el 100% de las viviendas y suelos de la Sareb al alquiler asequible; prohibir la venta de vivienda pública; al menos la mitad de cada nueva promoción protegida, con el 60% de ella en alquiler social, y ningún desahucio de hogares vulnerables sin alternativa.", S.adelProg),
+    it("propuesta","Jornada de 32 horas sin rebaja de sueldo (en dos años en las grandes empresas y en cuatro en las pymes), un impuesto a las grandes fortunas que sustituya a Patrimonio, pensiones mínimas y no contributivas iguales al salario mínimo neto, jubilación a los 64 años y una financiación autonómica sin ordinalidad.", S.adelProg)
   ],
   paradoja:"Tiene lógica para el votante andaluz de izquierdas que quiere una voz propia para Andalucía, sobre todo en Sevilla, Málaga o Cádiz. Choca con quien vota en una provincia andaluza pequeña, donde difícilmente sacará escaño."
 }
@@ -777,10 +808,14 @@ const TIMELINE = [
   {d:"2026-11-05", p:["salf"], t:"archivada", x:"El Supremo archiva la causa contra Alvise Pérez por difundir una PCR falsa de Salvador Illa, por falta de indicios. Ese mismo día, otra magistrada pide al Parlamento Europeo un quinto suplicatorio contra él, por provocación a desórdenes públicos en las protestas agrarias de febrero de 2024.", s:S.alviseNov},
   {d:"2026-11-05", p:["psoe"], t:"electoral", x:"La Junta Electoral Provincial de Valladolid rechaza la petición del PSOE de quitar el nombre de Óscar Puente de las papeletas, porque no se pueden modificar tras la proclamación de las candidaturas. Ordena a las mesas dar por válidas las papeletas del PSOE con su nombre tachado. El PSOE de Castilla y León lo considera un «mal menor».", s:S.puenteTachado},
   {d:"2026-11-05", p:["psoe"], t:"proceso", x:"Ábalos presenta ante el Constitucional un recurso de amparo contra su condena a más de 24 años por el caso mascarillas. Alega la vulneración de ocho derechos fundamentales y pide anular la sentencia. El tribunal no se ha pronunciado sobre su admisión.", s:S.abalosAmparo},
+  {d:"2026-11-05", p:["erc"], t:"propuesta", x:"ERC presenta su programa para el 29N, con el lema «Defensa't». La primera propuesta es negociar un referéndum de autodeterminación en Cataluña con acompañamiento internacional.", s:S.ercPres},
   {d:"2026-11-06", p:["psoe"], t:"proceso", x:"El juez de la Audiencia Nacional José Luis Calama rechaza investigar a Zapatero por malversación, como pedía la Fiscalía Anticorrupción, por no entregar a Patrimonio del Estado las joyas halladas en su despacho. Razona que no se puede afirmar que fueran patrimonio público solo por haberse recibido en consideración al cargo. Zapatero dice que fueron un regalo personal del rey de Arabia Saudí en 2007. Sigue investigado en el caso Plus Ultra y, en la pieza de las joyas, por delito fiscal y contrabando.", s:S.zapateroJoyas},
   {d:"2026-11-09", p:["general"], t:"electoral", x:"El Supremo rechaza, a petición de Vox e Iustitia Europa, suspender el voto de los 189.678 hijos de nacionalizados por la «ley de nietos», que podrán votar el 29N. Aprecia «serias dudas» sobre la viabilidad de ejecutar la medida a tres semanas de las elecciones y no descarta adoptarla en otras circunstancias. Sus padres, unos 163.000, siguen con el voto suspendido salvo que acrediten descender de exiliados. Hay un voto particular a favor de suspenderlo.", s:S.supremoHijos},
+  {d:"2026-11-09", p:["pnv"], t:"propuesta", x:"El PNV presenta en Bilbao su programa para el 29N. Incluye el reconocimiento nacional de Euskadi, un nuevo estatus político, la reforma de la Ley del Concierto Económico y una nueva Ley de Secretos Oficiales.", s:S.pnvPres},
   {d:"2026-11-09", p:["psoe","pp"], t:"electoral", x:"El PP acepta la propuesta del PSOE de que la Academia de la Televisión organice los debates electorales: un cara a cara entre Sánchez y Feijóo y otro entre cuatro o cinco candidatos. Quedan por negociar las fechas definitivas, el formato, los moderadores y los participantes del segundo.", s:S.academiaDebates},
-  {d:"2026-11-10", p:["pp"], t:"propuesta", x:"Feijóo presenta en Madrid el programa electoral del PP para el 29N, en cuatro ejes. Entre sus propuestas: una auditoría de todo el gasto público, la Administración y las empresas del Estado en los primeros 100 días de gobierno, y movilizar con el sector privado más de 300.000 millones de euros en 15 años para autovías, alta velocidad, Cercanías e infraestructuras hidráulicas y energéticas.", s:S.ppPrograma}
+  {d:"2026-11-10", p:["pp"], t:"propuesta", x:"Feijóo presenta en Madrid el programa electoral del PP para el 29N, en cuatro ejes. Entre sus propuestas: una auditoría de todo el gasto público, la Administración y las empresas del Estado en los primeros 100 días de gobierno, y movilizar con el sector privado más de 300.000 millones de euros en 15 años para autovías, alta velocidad, Cercanías e infraestructuras hidráulicas y energéticas.", s:S.ppPrograma},
+  {d:"2026-11-10", p:["salf"], t:"propuesta", x:"SALF presenta su programa para el 29N, que llama «contrato electoral». Entre sus medidas: no pagar IRPF por los primeros 35.000 €, eliminar la cuota de autónomos y el IBI, y pasar a 10 ministerios.", s:S.salfPres},
+  {d:"2026-11-10", p:["adel"], t:"propuesta", x:"Adelante Andalucía presenta en Jerez de la Frontera su programa para el 29N. Entre sus medidas: que ningún alquiler supere el 20% del salario y una jornada de 32 horas sin rebaja de sueldo.", s:S.adelPres}
 ];
 
 /* ============================================================
@@ -1304,6 +1339,13 @@ $$("#viewBtns [data-view]").forEach(b=>b.addEventListener("click",()=>{
   $("#timeline").classList.toggle("hidden", curView!=="timeline");
   renderFilters(); curView==="cards"?renderParties():renderTimeline(); icons();
 }));
+function progLine(p, withName){
+  const g = p.programa || {};
+  const docs = (g.docs||[]).map(d=>`<a href="${d[1]}" target="_blank" rel="noopener" class="text-sky-400 hover:text-sky-300 underline">${d[0]}</a>`).join(" · ");
+  const name = withName ? `<b class="text-slate-200">${p.short}</b> · ` : "";
+  const head = g.url ? `<a href="${g.url}" target="_blank" rel="noopener" class="font-semibold text-sky-400 hover:text-sky-300 underline">Programa 29N</a> · ` : `<b class="text-slate-300">Programa 29N:</b> `;
+  return `<div class="text-xs text-slate-400 flex items-start gap-1.5"><i data-lucide="file-text" class="w-4 h-4 shrink-0 text-slate-500"></i><span>${name}${head}${g.nota||"sin publicar."}${docs?" "+docs:""}</span></div>`;
+}
 function renderParties(){
   const list = PARTIES.filter(p=>curFilter==="todos"||p.tags.includes(curFilter));
   $("#partyGrid").innerHTML = list.map(p=>`
@@ -1314,7 +1356,8 @@ function renderParties(){
           <div><h3 class="font-bold text-lg leading-tight">${p.short}</h3><p class="text-xs text-slate-400">${p.name}</p></div>
           <div class="flex flex-wrap gap-1 justify-end">${p.tags.map(t=>`<span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-700 text-slate-300">${t}</span>`).join("")}</div>
         </div>
-        <p class="text-sm text-slate-300 mb-3">${p.resumen}</p>
+        <p class="text-sm text-slate-300 mb-2">${p.resumen}</p>
+        <div class="mb-3">${progLine(p)}</div>
         <button class="btn text-sm text-sky-400 hover:text-sky-300 flex items-center gap-1" data-toggle="${p.id}"><i data-lucide="chevron-down" class="w-4 h-4"></i><span>Ver ficha completa</span></button>
         <div class="hidden mt-4 space-y-4" id="det-${p.id}">
           <div><h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Hemeroteca · Dicho vs. Hecho</h4><ul class="space-y-2">${p.hemeroteca.map(itemRow).join("")}</ul></div>
@@ -1413,7 +1456,8 @@ function renderCompare(){
     <div class="card p-4 mb-4 flex flex-wrap items-center gap-4">
       <div class="text-3xl font-extrabold text-sky-400">${agree.toFixed(0)}%</div>
       <div class="text-sm text-slate-300 max-w-2xl"><p>Coincidencia programática entre <b>${A.short}</b> y <b>${B.short}</b> en las 50 afirmaciones del test. Coincidir mucho en programa no implica la misma trayectoria ni los mismos frentes judiciales.</p>
-      <p class="mt-1">${A.short}: ${seatLine(A)}<br>${B.short}: ${seatLine(B)}</p></div>
+      <p class="mt-1">${A.short}: ${seatLine(A)}<br>${B.short}: ${seatLine(B)}</p>
+      <div class="mt-2 space-y-1">${progLine(A,true)}${progLine(B,true)}</div></div>
     </div>
     ${block("Hemeroteca · Dicho vs. Hecho","newspaper", `<ul class="space-y-2">${A.hemeroteca.map(itemRow).join("")}</ul>`, `<ul class="space-y-2">${B.hemeroteca.map(itemRow).join("")}</ul>`)}
     ${block("Corrupción y calidad institucional","scale", `<ul class="space-y-2">${A.corrupcion.map(itemRow).join("")}</ul>`, `<ul class="space-y-2">${B.corrupcion.map(itemRow).join("")}</ul>`)}
