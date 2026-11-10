@@ -313,7 +313,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 9 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 10 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -325,7 +325,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "9 nov 2026";
+const VERIFIED = "10 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test (rápido de 15 preguntas o completo de 50) para ver con quién coincides.";
 const S = {
@@ -435,6 +435,8 @@ const S = {
   gad3Nov:"https://www.infobae.com/espana/2026/11/09/el-psoe-se-quedaria-cerca-de-ganar-las-elecciones-al-recortarle-2-puntos-la-ventaja-al-pp-segun-las-encuestas-posteriores-al-accidente-ferroviario-de-urda/",
   sondaxeNov:"https://www.electografica.com/2026/11/encuesta-sondaxe-261108.html",
   sociometricaNov8:"https://www.elespanol.com/espana/politica/20261108/pp-vox-suman-escanos-sanchez-recupera-perdio-urda-dimision-puente-sondeo-noche/1003744450645_0.html",
+  dymNov:"https://www.electografica.com/2026/11/encuesta-dym-261110.html",
+  ppPrograma:"https://www.infobae.com/espana/2026/11/10/el-pp-presenta-su-programa-electoral-para-concurrir-al-29-n-el-proyecto-no-tiene-unicornios-dice-la-verdad/",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -777,7 +779,8 @@ const TIMELINE = [
   {d:"2026-11-05", p:["psoe"], t:"proceso", x:"Ábalos presenta ante el Constitucional un recurso de amparo contra su condena a más de 24 años por el caso mascarillas. Alega la vulneración de ocho derechos fundamentales y pide anular la sentencia. El tribunal no se ha pronunciado sobre su admisión.", s:S.abalosAmparo},
   {d:"2026-11-06", p:["psoe"], t:"proceso", x:"El juez de la Audiencia Nacional José Luis Calama rechaza investigar a Zapatero por malversación, como pedía la Fiscalía Anticorrupción, por no entregar a Patrimonio del Estado las joyas halladas en su despacho. Razona que no se puede afirmar que fueran patrimonio público solo por haberse recibido en consideración al cargo. Zapatero dice que fueron un regalo personal del rey de Arabia Saudí en 2007. Sigue investigado en el caso Plus Ultra y, en la pieza de las joyas, por delito fiscal y contrabando.", s:S.zapateroJoyas},
   {d:"2026-11-09", p:["general"], t:"electoral", x:"El Supremo rechaza, a petición de Vox e Iustitia Europa, suspender el voto de los 189.678 hijos de nacionalizados por la «ley de nietos», que podrán votar el 29N. Aprecia «serias dudas» sobre la viabilidad de ejecutar la medida a tres semanas de las elecciones y no descarta adoptarla en otras circunstancias. Sus padres, unos 163.000, siguen con el voto suspendido salvo que acrediten descender de exiliados. Hay un voto particular a favor de suspenderlo.", s:S.supremoHijos},
-  {d:"2026-11-09", p:["psoe","pp"], t:"electoral", x:"El PP acepta la propuesta del PSOE de que la Academia de la Televisión organice los debates electorales: un cara a cara entre Sánchez y Feijóo y otro entre cuatro o cinco candidatos. Quedan por negociar las fechas definitivas, el formato, los moderadores y los participantes del segundo.", s:S.academiaDebates}
+  {d:"2026-11-09", p:["psoe","pp"], t:"electoral", x:"El PP acepta la propuesta del PSOE de que la Academia de la Televisión organice los debates electorales: un cara a cara entre Sánchez y Feijóo y otro entre cuatro o cinco candidatos. Quedan por negociar las fechas definitivas, el formato, los moderadores y los participantes del segundo.", s:S.academiaDebates},
+  {d:"2026-11-10", p:["pp"], t:"propuesta", x:"Feijóo presenta en Madrid el programa electoral del PP para el 29N, en cuatro ejes. Entre sus propuestas: una auditoría de todo el gasto público, la Administración y las empresas del Estado en los primeros 100 días de gobierno, y movilizar con el sector privado más de 300.000 millones de euros en 15 años para autovías, alta velocidad, Cercanías e infraestructuras hidráulicas y energéticas.", s:S.ppPrograma}
 ];
 
 /* ============================================================
@@ -925,7 +928,7 @@ const STANCE = {
 const POLLS = [
   {firm:"Sigma Dos", media:"El Mundo", campo:"29–30 oct", pp:[133,139], psoe:[97,103], vox:[63,69], vpp:31.1, vpsoe:24.6, vvox:19.3, s:S.sigmaNov},
   {firm:"Imop", media:"El Confidencial", campo:"13–16 oct", pp:123, psoe:113, vox:72, vpp:28.5, vpsoe:27.1, vvox:20.0, s:S.imopOct},
-  {firm:"DYM", media:"—", campo:"pub. 8 oct", pp:[139,143], psoe:[107,111], vox:[61,65], vpp:34.0, vpsoe:28.2, vvox:18.2, s:S.imop},
+  {firm:"DYM", media:"20minutos", campo:"4–6 nov", pp:[135,139], psoe:[104,108], vox:[63,66], vpp:33.1, vpsoe:27.3, vvox:18.6, s:S.dymNov},
   {firm:"40dB", media:"El País / SER", campo:"2–4 nov", pp:129, psoe:119, vox:61, vpp:31.9, vpsoe:29.9, vvox:18.0, s:S.db40Nov, note:"Con los dos escaños de UPN, el PP llega a 131."},
   {firm:"Sondaxe", media:"La Voz de Galicia", campo:"2–4 nov", pp:null, psoe:null, vox:null, vpp:29.7, vpsoe:27.3, vvox:18.6, s:S.sondaxeNov, note:"No publica escaños."},
   {firm:"GESOP", media:"El Periódico", campo:"6–8 oct", pp:[121,125], psoe:[108,112], vox:[68,72], vpp:null, vpsoe:26.1, vvox:18.9, s:S.polls},
