@@ -37,6 +37,36 @@ Cómo se redacta:
   resolución o un informe formal que lo respalde. Un suceso cuya causa no está establecida
   (un accidente, por ejemplo) va como `hemeroteca`.
 
+## Programas electorales
+
+Cada ficha de `PARTIES` tiene `programa:{url, nota}` (o solo `nota:"sin publicar a …"`).
+En cada revisión, comprobar si algún partido sin programa lo ha publicado. Cuando salga uno:
+
+1. Confirmar que es el programa del 29N de 2026. La portada o la introducción deben citar
+   las generales de 2026 o el 29 de noviembre. Cuidado con documentos que no son el
+   programa: programas de 2023, programas autonómicos, manifiestos previos como el
+   «Contrato con España» del PP (19 oct) o notas de prensa.
+2. Enlazar preferiblemente el PDF en la web oficial del partido. Si solo está alojado en un
+   medio, se enlaza ese y se dice en la `nota`.
+3. Leer el PDF entero (WebFetch con `offset` hasta el final). Cada medida que se ponga en la
+   ficha tiene que estar en el texto con esa misma cifra o formulación: pide la cita literal.
+   Si una parte no se ha podido leer o la herramienta solo devuelve un resumen, esa parte
+   no se usa, y se le dice a Jorge qué ha quedado pendiente de comprobar.
+4. Sustituir en la ficha las propuestas anteriores por las del programa (tipo `propuesta`,
+   empezando por «Programa:») y quitar las que el programa no recoja.
+5. Añadir a `TIMELINE` la presentación del programa (tipo `propuesta`).
+6. Actualizar la fecha de la `nota` («sin publicar a …») de los partidos que siguen sin programa.
+
+## Veda de encuestas (art. 69.7 LOREG)
+
+Del **24 al 29 de noviembre de 2026** (hasta el cierre de los colegios a las 20:00) la ley
+prohíbe publicar, difundir o reproducir sondeos electorales. En esos días:
+- No se añade ni se cambia ninguna encuesta en `POLLS`, ni se menciona ninguna encuesta
+  nueva en la cronología, las fichas o el resumen a Jorge. Tampoco las que se publican en
+  Andorra u otros países para sortear la veda.
+- `scripts/check.mjs` falla si en esas fechas `POLLS` difiere de lo ya publicado en `origin/main`.
+- La revisión del 23 de noviembre es la última que puede añadir encuestas.
+
 ## Estructura de `index.html` (todo está en el `<script>` principal)
 
 - `VERIFIED` (`"24 oct 2026"`) y el pie («Datos verificados a 24 de octubre de 2026.»): se

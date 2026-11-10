@@ -78,5 +78,22 @@ if (D) {
   if (!m || `${m[1]} ${meses[m[2]]} ${m[3]}` !== D.VERIFIED) errors.push(`El pie («${m && m[0]}») no coincide con VERIFIED («${D.VERIFIED}»)`);
 }
 
+// Veda de encuestas (art. 69.7 LOREG): del 24 al 29 de noviembre no se puede cambiar POLLS
+{
+  // CHECK_NOW="2026-11-25T12:00" permite probar la veda con otra fecha (hora de Madrid)
+  const now = process.env.CHECK_NOW ? new Date(process.env.CHECK_NOW) : new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Madrid" }));
+  const ymd = now.getFullYear()*10000 + (now.getMonth()+1)*100 + now.getDate();
+  const veda = ymd >= 20261124 && (ymd < 20261129 || (ymd === 20261129 && now.getHours() < 20));
+  if (veda && D) {
+    try {
+      const pub = execFileSync("git", ["show", "origin/main:index.html"], { cwd: new URL("..", import.meta.url).pathname, maxBuffer: 1 << 26 }).toString();
+      const pm = (pub.match(/const POLLS = \[[\s\S]*?\n\];/) || [""])[0];
+      const cm = (main.match(/const POLLS = \[[\s\S]*?\n\];/) || [""])[0];
+      if (!pm || !cm) errors.push("Veda de encuestas: no se ha podido localizar POLLS para compararlo");
+      else if (pm !== cm) errors.push("Veda de encuestas (24-29 nov, art. 69.7 LOREG): POLLS no puede cambiar. Deshaz los cambios en las encuestas.");
+    } catch (e) { errors.push("Veda de encuestas: no se ha podido leer origin/main para comparar POLLS (" + e.message + ")"); }
+  }
+}
+
 if (errors.length) { console.error("FALLOS:\n- " + errors.join("\n- ")); process.exit(1); }
 console.log(`OK · ${D.TIMELINE.length} entradas de cronología · ${D.POLLS.length} encuestas · verificado ${D.VERIFIED}`);
