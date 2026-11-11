@@ -313,7 +313,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 10 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 11 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -325,7 +325,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "10 nov 2026";
+const VERIFIED = "11 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test (rápido de 15 preguntas o completo de 50) para ver con quién coincides.";
 const S = {
@@ -451,6 +451,9 @@ const S = {
   faFiscal:"https://frenteamplio.info/noticias/frente-amplio-propone-subir-impuestos-grandes-fortunas-empresas-mejorar-servicios/",
   faViv:"https://frenteamplio.info/noticias/frente-amplio-propone-malaga-ley-expropiar-vivienda-grandes-fondos-inversion/",
   podemosEjes:"https://www.telecinco.es/noticias/espana/20261110/elecciones-generales-2026-propuestas-partidos-jornada-laboral-salarios-empleo_18_020555612.html",
+  wildSin:"https://www.infobae.com/espana/2026/11/11/jordi-wild-denuncia-una-jugarreta-de-vox-y-revela-las-condiciones-que-le-pusieron-antes-de-cancelar-la-entrevista-con-abascal-querian-los-derechos-audiovisuales-en-exclusiva/",
+  catalaJez:"https://www.infobae.com/espana/agencias/2026/11/11/la-junta-electoral-abre-expediente-sancionador-a-la-alcaldesa-de-valencia-por-un-video/",
+  koldoAmparo:"https://www.infobae.com/espana/agencias/2026/11/11/koldo-garcia-tambien-pide-al-tc-que-suspenda-su-condena-mientras-resuelve-su-recurso/",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -482,7 +485,7 @@ const hm = (x, s) => it("hemeroteca", x, s);
 const PARTIES = [
 {
   id:"psoe", short:"PSOE", name:"PSOE (Pedro Sánchez)", color:"#ef4444", tags:["izquierda"],
-  programa:{nota:"sin publicar a 10 nov."},
+  programa:{nota:"sin publicar a 11 nov."},
   resumen:"Partido del Gobierno saliente. Gobernó desde 2018 con Unidas Podemos y luego con Sumar. Llega al 29N sin presupuestos aprobados en la legislatura, con su exministro Ábalos condenado y con varias investigaciones abiertas en su entorno.",
   hemeroteca:[
     hm("En 2019 Sánchez dijo que no dormiría tranquilo con Podemos en el Gobierno y descartó varias veces pactar con Bildu; después gobernó con el apoyo de ambos."),
@@ -539,7 +542,7 @@ const PARTIES = [
 },
 {
   id:"vox", short:"VOX", name:"VOX (Santiago Abascal)", color:"#84cc16", tags:["derecha"],
-  programa:{nota:"sin publicar a 10 nov."},
+  programa:{nota:"sin publicar a 11 nov."},
   resumen:"Tercera fuerza en las encuestas (cerca del 19%, casi el doble que en 2023). No tiene condenas por corrupción, pero sí multas del Tribunal de Cuentas por su financiación, y ha vuelto a gobernar con el PP en varias comunidades.",
   hemeroteca:[
     hm("En julio de 2024 salió de los cinco gobiernos autonómicos que compartía con el PP por el reparto de menores migrantes; en 2026 volvió a entrar en Extremadura, Aragón y Andalucía, con la «prioridad nacional» como condición.", S.andaluciaGob),
@@ -562,7 +565,7 @@ const PARTIES = [
 },
 {
   id:"fa", short:"FRENTE AMPLIO", name:"Frente Amplio (Sumar, IU, Comuns y Más Madrid · Ada Colau)", color:"#c026d3", tags:["izquierda"],
-  programa:{nota:"sin publicar a 10 nov."},
+  programa:{nota:"sin publicar a 11 nov."},
   resumen:"Heredero de Sumar: coalición a la izquierda del PSOE con Ada Colau (Barcelona) y Emilio Delgado (Madrid) como cabezas de lista. Va sin Podemos salvo en Canarias y la Comunitat Valenciana. Las encuestas le dan entre el 4,7% y el 8%.",
   hemeroteca:[
     hm("Socio del Gobierno de coalición (2023-2026). Votó con el PSOE en casi todo, incluida la amnistía, aunque con desacuerdos públicos en defensa y política exterior."),
@@ -583,7 +586,7 @@ const PARTIES = [
 },
 {
   id:"podemos", short:"PODEMOS", name:"Podemos (Ione Belarra / Irene Montero)", color:"#7c3aed", tags:["izquierda"],
-  programa:{nota:"sin publicar a 10 nov."},
+  programa:{nota:"sin publicar a 11 nov."},
   resumen:"El partido que nació del 15-M y llegó a tener 71 escaños (con sus confluencias) se mueve ahora entre el 2,3% y el 3,1% en las encuestas. Para el 29N va en solitario en casi toda España, con Irene Montero en Madrid, y apoya a ERC en Cataluña.",
   hemeroteca:[
     hm("Nació criticando a «la casta»; en 2018 sus líderes Pablo Iglesias e Irene Montero compraron un chalé en Galapagar, lo que sometieron a consulta de sus bases."),
@@ -624,7 +627,7 @@ const PARTIES = [
 },
 {
   id:"junts", short:"JUNTS", name:"Junts per Catalunya (Carles Puigdemont)", color:"#06b6d4", tags:["nacionalista","derecha"],
-  programa:{nota:"sin publicar a 10 nov."},
+  programa:{nota:"sin publicar a 11 nov."},
   resumen:"Independentistas de centro-derecha. Sus 7 votos hicieron presidente a Sánchez en 2023 y su ruptura en 2025 bloqueó la legislatura. Su candidato, Puigdemont, ya puede volver a España: el Supremo le ha aplicado la amnistía.",
   hemeroteca:[
     hm("De la declaración unilateral de independencia de 2017 al pacto de investidura con el PSOE en 2023, a cambio de la amnistía y otras contrapartidas."),
@@ -666,7 +669,7 @@ const PARTIES = [
 },
 {
   id:"bildu", short:"EH BILDU", name:"EH Bildu (Arnaldo Otegi)", color:"#2dd4bf", tags:["nacionalista","izquierda"],
-  programa:{nota:"sin publicar a 10 nov."},
+  programa:{nota:"sin publicar a 11 nov."},
   resumen:"Izquierda independentista vasca y navarra. Fue un socio estable de Sánchez en lo social y lo presupuestario. Para muchos votantes es un límite que no condene expresamente la historia de ETA.",
   hemeroteca:[
     hm("Apoyó de forma estable los presupuestos y decretos sociales del Gobierno."),
@@ -707,7 +710,7 @@ const PARTIES = [
 },
 {
   id:"d21", short:"D21", name:"Democracia 21 (Miriam González Durántez)", color:"#a78bfa", tags:["centro"],
-  programa:{nota:"sin programa completo a 10 nov. Documentos oficiales de propuestas:", docs:[["vivienda", S.d21Viv],["regeneración («España Limpia»)", S.d21Limpia]]},
+  programa:{nota:"sin programa completo a 11 nov. Documentos oficiales de propuestas:", docs:[["vivienda", S.d21Viv],["regeneración («España Limpia»)", S.d21Limpia]]},
   resumen:"Partido de centro liberal y reformista presentado el 10 oct 2026. No ha gobernado ni tiene causas abiertas; su incógnita es si obtendrá algún escaño.",
   hemeroteca:[
     hm("Integra a ex cargos de UPyD (Rafael Calduch, Fernando Maura, Beatriz Becerra) y se presenta solo en Madrid y Barcelona.", S.d21),
@@ -816,7 +819,10 @@ const TIMELINE = [
   {d:"2026-11-09", p:["psoe","pp"], t:"electoral", x:"El PP acepta la propuesta del PSOE de que la Academia de la Televisión organice los debates electorales: un cara a cara entre Sánchez y Feijóo y otro entre cuatro o cinco candidatos. Quedan por negociar las fechas definitivas, el formato, los moderadores y los participantes del segundo.", s:S.academiaDebates},
   {d:"2026-11-10", p:["pp"], t:"propuesta", x:"Feijóo presenta en Madrid el programa electoral del PP para el 29N, en cuatro ejes. Entre sus propuestas: una auditoría de todo el gasto público, la Administración y las empresas del Estado en los primeros 100 días de gobierno, y movilizar con el sector privado más de 300.000 millones de euros en 15 años para autovías, alta velocidad, Cercanías e infraestructuras hidráulicas y energéticas.", s:S.ppPrograma},
   {d:"2026-11-10", p:["salf"], t:"propuesta", x:"SALF presenta su programa para el 29N, que llama «contrato electoral». Entre sus medidas: no pagar IRPF por los primeros 35.000 €, eliminar la cuota de autónomos y el IBI, y pasar a 10 ministerios.", s:S.salfPres},
-  {d:"2026-11-10", p:["adel"], t:"propuesta", x:"Adelante Andalucía presenta en Jerez de la Frontera su programa para el 29N. Entre sus medidas: que ningún alquiler supere el 20% del salario y una jornada de 32 horas sin rebaja de sueldo.", s:S.adelPres}
+  {d:"2026-11-10", p:["adel"], t:"propuesta", x:"Adelante Andalucía presenta en Jerez de la Frontera su programa para el 29N. Entre sus medidas: que ningún alquiler supere el 20% del salario y una jornada de 32 horas sin rebaja de sueldo.", s:S.adelPres},
+  {d:"2026-11-11", p:["psoe"], t:"proceso", x:"Koldo García recurre en amparo ante el Constitucional su condena a 19 años y 8 meses por el caso mascarillas. Pide anularla, alegando que tras la renuncia de Ábalos a su escaño la causa debía pasar a la Audiencia Nacional, y que se suspenda mientras se resuelve. El tribunal no se ha pronunciado sobre su admisión.", s:S.koldoAmparo},
+  {d:"2026-11-11", p:["pp"], t:"proceso", x:"La Junta Electoral de Zona de Valencia abre un expediente sancionador, con multa de 300 a 3.000 euros, a María José Catalá, alcaldesa de Valencia y cabeza de lista del PP al Congreso por Valencia, por un vídeo en el que anunciaba su candidatura grabado en su despacho de alcaldesa. Lo ordenó la Junta Electoral Provincial tras un recurso del PSPV-PSOE. Catalá ya había retirado el vídeo. Todavía no hay sanción.", s:S.catalaJez},
+  {d:"2026-11-11", p:["vox","general"], t:"electoral", x:"Vox cancela la entrevista de Abascal con Jordi Wild, prevista para ese día. Lo atribuye a que RTVE no ha publicado 40 minutos de su entrevista en «La Revuelta» y dice que no cederá en exclusiva su imagen. Wild afirma que Vox le pidió horas antes los derechos audiovisuales en exclusiva y que publicará el 13 de noviembre las de Sánchez, Feijóo y Colau.", s:S.wildSin}
 ];
 
 /* ============================================================
@@ -1253,7 +1259,7 @@ const KEY_DATES = [
   {d:"2026-11-12", t:"Votación de los decretos de vivienda", x:"En la Diputación Permanente del Congreso.", s:S.decretos12n},
   {d:"2026-11-13", t:"Debate de portavoces en laSexta", x:"Sobre economía, moderado por Ana Pastor. Con Carlos Cuerpo (PSOE), Juan Bravo (PP), José María Figaredo (Vox) y Pablo Bustinduy (Frente Amplio). Aplazado dos veces: del 2 al 9 de noviembre por el accidente de Urda y después al 13.", s:S.lasexta13n},
   {d:"2026-11-13", t:"Empieza la campaña", x:"Campaña electoral oficial, hasta el 27 de noviembre.", s:S.zapateroCampana},
-  {d:"2026-11-13", t:"Entrevistas de Jordi Wild", x:"Se publican las de Sánchez, Feijóo, Abascal y Colau, con una hora entre cada una.", s:S.wild13n},
+  {d:"2026-11-13", t:"Entrevistas de Jordi Wild", x:"Se publican las de Sánchez, Feijóo y Colau. Vox canceló la de Abascal.", s:S.wildSin},
   {d:"2026-11-16", t:"Cara a cara Sánchez–Feijóo", x:"Fecha prevista. El PP y el PSOE han aceptado que lo organice la Academia de la Televisión, en lugar de Mediaset; faltan por cerrar la fecha definitiva, el formato y los moderadores.", s:S.academiaFechas},
   {d:"2026-11-23", t:"Debate de portavoces", x:"En RTVE, que ha propuesto a la Junta Electoral un debate con PSOE, PP, Vox, Frente Amplio, ERC, Junts, PNV y Bildu; las fechas pueden cambiar. Confirmado por el PP; el PSOE no lo ha confirmado.", s:S.rtveDebates},
   {d:"2026-11-23", t:"Último día para publicar encuestas", x:"Desde el 24 de noviembre la ley prohíbe publicar sondeos.", s:S.calendario29n},
