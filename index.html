@@ -459,6 +459,7 @@ const S = {
   ceutaImputa:"https://rtvc.es/jueza-imputa-exdelegado-gobierno-en-ceuta-12-noviembre-2026/",
   voxPres:"https://www.eldebate.com/espana/20261112/vox-desvela-programa-29n-115-medidas-ceuta-melilla-primer-lugar_480280.html",
   cisPre:"https://www.aragondigital.es/articulo/espana/cis-augura-victoria-psoe-29-n-aleja-pp-vox-mayoria-absoluta/202611121740191021521.html",
+  voxProg:"https://votasentidocomun.es/general/files/programa-elecct-vox.pdf",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -547,7 +548,7 @@ const PARTIES = [
 },
 {
   id:"vox", short:"VOX", name:"VOX (Santiago Abascal)", color:"#84cc16", tags:["derecha"],
-  programa:{nota:"presentado el 12 nov (115 medidas en 13 bloques); el texto completo no se ha podido revisar todavía."},
+  programa:{url:S.voxProg, nota:"«Es sentido común», presentado el 12 nov: 115 medidas en 13 bloques (PDF en su web de campaña)."},
   resumen:"Tercera fuerza en las encuestas (cerca del 19%, casi el doble que en 2023). No tiene condenas por corrupción, pero sí multas del Tribunal de Cuentas por su financiación, y ha vuelto a gobernar con el PP en varias comunidades.",
   hemeroteca:[
     hm("En julio de 2024 salió de los cinco gobiernos autonómicos que compartía con el PP por el reparto de menores migrantes; en 2026 volvió a entrar en Extremadura, Aragón y Andalucía, con la «prioridad nacional» como condición.", S.andaluciaGob),
@@ -565,7 +566,9 @@ const PARTIES = [
   ],
   economia:[
     it("hemeroteca","En Andalucía pacta con el PP una rebaja del tramo autonómico del IRPF de 0,25 puntos anuales para rentas de menos de 60.000 € y deducciones por hijo.", S.andaluciaGob),
-    it("propuesta","Anunciadas antes de presentar el programa (12 nov), cuyo texto está pendiente de revisar: Impuesto de Sociedades al 15%, rebaja de IRPF e IVA, liberalizar el suelo, sin cuota de autónomos para ingresos inferiores al SMI y sin reducción legal de la jornada.", S.eco29n)
+    it("propuesta","Programa: rebajar el IRPF según el número de hijos, el IVA general y reducido y el Impuesto de Sociedades, sin fijar tipos; cuota de autónomos de cero euros si no llegan al SMI y progresiva desde 50 euros; mantener las nucleares derogando el calendario de cierre; reducir hasta eliminarlas las subvenciones a partidos, sindicatos y patronales.", S.voxProg),
+    it("propuesta","Programa: derogar la Ley de Vivienda y reformar la Ley del Suelo; desalojar una vivienda okupada en menos de 24 horas; IVA del 0% en la primera vivienda nueva y bonificación del 100% del ITP en la de segunda mano; exigir residencia legal para alquilar; prioridad nacional en vivienda protegida y ayudas al alquiler.", S.voxProg),
+    it("propuesta","Programa: prohibir las regularizaciones masivas, deportar a quienes cometan delitos graves o «hagan del delito leve su forma de vida», un plan de «remigración» para los extranjeros que no contribuyan, un gravamen sobre las remesas y atención sanitaria a inmigrantes irregulares solo en urgencias graves.", S.voxProg)
   ],
   paradoja:"Tiene lógica para quien prioriza por encima de todo el control de la inmigración, la seguridad y la unidad de España. Choca con quien defiende la regularización de inmigrantes o los derechos LGTBI, con quien quiere un liberalismo económico pleno o con quien exige transparencia total en las cuentas."
 },
