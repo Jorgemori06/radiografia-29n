@@ -313,7 +313,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 11 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 12 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -325,7 +325,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "11 nov 2026";
+const VERIFIED = "12 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test (rápido de 15 preguntas o completo de 50) para ver con quién coincides.";
 const S = {
@@ -454,6 +454,11 @@ const S = {
   wildSin:"https://www.infobae.com/espana/2026/11/11/jordi-wild-denuncia-una-jugarreta-de-vox-y-revela-las-condiciones-que-le-pusieron-antes-de-cancelar-la-entrevista-con-abascal-querian-los-derechos-audiovisuales-en-exclusiva/",
   catalaJez:"https://www.infobae.com/espana/agencias/2026/11/11/la-junta-electoral-abre-expediente-sancionador-a-la-alcaldesa-de-valencia-por-un-video/",
   koldoAmparo:"https://www.infobae.com/espana/agencias/2026/11/11/koldo-garcia-tambien-pide-al-tc-que-suspenda-su-condena-mientras-resuelve-su-recurso/",
+  decretosVoto:"https://www.idealista.com/news/inmobiliario/vivienda/2026/11/12/923779-la-diputacion-permanente-convalida-el-decreto-de-vivienda-y-rechaza-el-de",
+  huelga11n:"https://www.eldiario.es/economia/huelga-general-11-noviembre-ultima-hora-directo-arranca-gran-paro-vivienda_133_13653845.html",
+  ceutaImputa:"https://rtvc.es/jueza-imputa-exdelegado-gobierno-en-ceuta-12-noviembre-2026/",
+  voxPres:"https://www.eldebate.com/espana/20261112/vox-desvela-programa-29n-115-medidas-ceuta-melilla-primer-lugar_480280.html",
+  cisPre:"https://www.aragondigital.es/articulo/espana/cis-augura-victoria-psoe-29-n-aleja-pp-vox-mayoria-absoluta/202611121740191021521.html",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -485,7 +490,7 @@ const hm = (x, s) => it("hemeroteca", x, s);
 const PARTIES = [
 {
   id:"psoe", short:"PSOE", name:"PSOE (Pedro Sánchez)", color:"#ef4444", tags:["izquierda"],
-  programa:{nota:"sin publicar a 11 nov."},
+  programa:{nota:"sin publicar a 12 nov."},
   resumen:"Partido del Gobierno saliente. Gobernó desde 2018 con Unidas Podemos y luego con Sumar. Llega al 29N sin presupuestos aprobados en la legislatura, con su exministro Ábalos condenado y con varias investigaciones abiertas en su entorno.",
   hemeroteca:[
     hm("En 2019 Sánchez dijo que no dormiría tranquilo con Podemos en el Gobierno y descartó varias veces pactar con Bildu; después gobernó con el apoyo de ambos."),
@@ -507,7 +512,7 @@ const PARTIES = [
   economia:[
     it("hemeroteca","Presupuestos de 2023 prorrogados tres veces: es la primera legislatura completa que termina sin nuevas cuentas del Estado.", S.presupuestos),
     it("valoracion","SMI de 735,90 € en 2018 a 1.221 € en 14 pagas en 2026.", S.smi),
-    it("hemeroteca","Tras el desahucio de Maricarmen Abascal aprobó dos decretos de vivienda (escudo antidesahucios para personas vulnerables y prórroga de alquileres). El Congreso los rechazó el 2 oct con los votos de PP, Vox y Junts; el Gobierno los volvió a aprobar el 6 oct. La Diputación Permanente los votará el 12 nov: el escudo antidesahucios tendría mayoría (35 a 34) y la prórroga de alquileres podría caer si el PNV vota en contra.", S.decretos12n),
+    it("hemeroteca","Tras el desahucio de Maricarmen Abascal aprobó dos decretos de vivienda (escudo antidesahucios para personas vulnerables y prórroga de alquileres). El Congreso los rechazó el 2 oct con los votos de PP, Vox y Junts; el Gobierno los volvió a aprobar el 6 oct. El 12 nov la Diputación Permanente convalidó el decreto amplio (escudo antidesahucios, prórroga de alquileres, préstamos «Tu Casa»), por 35 votos a 34, y derogó el de alquileres indefinidos, por 34 a 35, con el voto en contra del PNV.", S.decretosVoto),
     it("hemeroteca","Su reducción de jornada a 37,5 horas cayó en el Congreso (sep 2025) por el voto de PP, Vox, Junts y UPN, y su gravamen a las energéticas, en ene 2025, por PP, Vox, Junts, PNV y UPN.", S.jornada),
     it("propuesta","Sin programa publicado a 10 nov. Medidas anunciadas: Empresa Estatal de Vivienda, Plan de Vivienda 2026-2030 de 7.000 M€, jornada de 36 horas antes de 2030 y SMI del 60% del salario medio.", S.eco29n)
   ],
@@ -542,7 +547,7 @@ const PARTIES = [
 },
 {
   id:"vox", short:"VOX", name:"VOX (Santiago Abascal)", color:"#84cc16", tags:["derecha"],
-  programa:{nota:"sin publicar a 11 nov."},
+  programa:{nota:"presentado el 12 nov (115 medidas en 13 bloques); el texto completo no se ha podido revisar todavía."},
   resumen:"Tercera fuerza en las encuestas (cerca del 19%, casi el doble que en 2023). No tiene condenas por corrupción, pero sí multas del Tribunal de Cuentas por su financiación, y ha vuelto a gobernar con el PP en varias comunidades.",
   hemeroteca:[
     hm("En julio de 2024 salió de los cinco gobiernos autonómicos que compartía con el PP por el reparto de menores migrantes; en 2026 volvió a entrar en Extremadura, Aragón y Andalucía, con la «prioridad nacional» como condición.", S.andaluciaGob),
@@ -560,13 +565,13 @@ const PARTIES = [
   ],
   economia:[
     it("hemeroteca","En Andalucía pacta con el PP una rebaja del tramo autonómico del IRPF de 0,25 puntos anuales para rentas de menos de 60.000 € y deducciones por hijo.", S.andaluciaGob),
-    it("propuesta","Sin programa publicado a 10 nov. Medidas anunciadas: Impuesto de Sociedades al 15%, rebaja de IRPF e IVA, liberalizar el suelo, sin cuota de autónomos para ingresos inferiores al SMI y sin reducción legal de la jornada.", S.eco29n)
+    it("propuesta","Anunciadas antes de presentar el programa (12 nov), cuyo texto está pendiente de revisar: Impuesto de Sociedades al 15%, rebaja de IRPF e IVA, liberalizar el suelo, sin cuota de autónomos para ingresos inferiores al SMI y sin reducción legal de la jornada.", S.eco29n)
   ],
   paradoja:"Tiene lógica para quien prioriza por encima de todo el control de la inmigración, la seguridad y la unidad de España. Choca con quien defiende la regularización de inmigrantes o los derechos LGTBI, con quien quiere un liberalismo económico pleno o con quien exige transparencia total en las cuentas."
 },
 {
   id:"fa", short:"FRENTE AMPLIO", name:"Frente Amplio (Sumar, IU, Comuns y Más Madrid · Ada Colau)", color:"#c026d3", tags:["izquierda"],
-  programa:{nota:"sin publicar a 11 nov."},
+  programa:{nota:"sin publicar a 12 nov."},
   resumen:"Heredero de Sumar: coalición a la izquierda del PSOE con Ada Colau (Barcelona) y Emilio Delgado (Madrid) como cabezas de lista. Va sin Podemos salvo en Canarias y la Comunitat Valenciana. Las encuestas le dan entre el 4,7% y el 8%.",
   hemeroteca:[
     hm("Socio del Gobierno de coalición (2023-2026). Votó con el PSOE en casi todo, incluida la amnistía, aunque con desacuerdos públicos en defensa y política exterior."),
@@ -587,7 +592,7 @@ const PARTIES = [
 },
 {
   id:"podemos", short:"PODEMOS", name:"Podemos (Ione Belarra / Irene Montero)", color:"#7c3aed", tags:["izquierda"],
-  programa:{nota:"sin publicar a 11 nov."},
+  programa:{nota:"sin publicar a 12 nov."},
   resumen:"El partido que nació del 15-M y llegó a tener 71 escaños (con sus confluencias) se mueve ahora entre el 2,3% y el 3,1% en las encuestas. Para el 29N va en solitario en casi toda España, con Irene Montero en Madrid, y apoya a ERC en Cataluña.",
   hemeroteca:[
     hm("Nació criticando a «la casta»; en 2018 sus líderes Pablo Iglesias e Irene Montero compraron un chalé en Galapagar, lo que sometieron a consulta de sus bases."),
@@ -628,7 +633,7 @@ const PARTIES = [
 },
 {
   id:"junts", short:"JUNTS", name:"Junts per Catalunya (Carles Puigdemont)", color:"#06b6d4", tags:["nacionalista","derecha"],
-  programa:{nota:"sin publicar a 11 nov."},
+  programa:{nota:"sin publicar a 12 nov."},
   resumen:"Independentistas de centro-derecha. Sus 7 votos hicieron presidente a Sánchez en 2023 y su ruptura en 2025 bloqueó la legislatura. Su candidato, Puigdemont, ya puede volver a España: el Supremo le ha aplicado la amnistía.",
   hemeroteca:[
     hm("De la declaración unilateral de independencia de 2017 al pacto de investidura con el PSOE en 2023, a cambio de la amnistía y otras contrapartidas."),
@@ -670,7 +675,7 @@ const PARTIES = [
 },
 {
   id:"bildu", short:"EH BILDU", name:"EH Bildu (Arnaldo Otegi)", color:"#2dd4bf", tags:["nacionalista","izquierda"],
-  programa:{nota:"sin publicar a 11 nov."},
+  programa:{nota:"sin publicar a 12 nov."},
   resumen:"Izquierda independentista vasca y navarra. Fue un socio estable de Sánchez en lo social y lo presupuestario. Para muchos votantes es un límite que no condene expresamente la historia de ETA.",
   hemeroteca:[
     hm("Apoyó de forma estable los presupuestos y decretos sociales del Gobierno."),
@@ -823,7 +828,11 @@ const TIMELINE = [
   {d:"2026-11-10", p:["adel"], t:"propuesta", x:"Adelante Andalucía presenta en Jerez de la Frontera su programa para el 29N. Entre sus medidas: que ningún alquiler supere el 20% del salario y una jornada de 32 horas sin rebaja de sueldo.", s:S.adelPres},
   {d:"2026-11-11", p:["psoe"], t:"proceso", x:"Koldo García recurre en amparo ante el Constitucional su condena a 19 años y 8 meses por el caso mascarillas. Pide anularla, alegando que tras la renuncia de Ábalos a su escaño la causa debía pasar a la Audiencia Nacional, y que se suspenda mientras se resuelve. El tribunal no se ha pronunciado sobre su admisión.", s:S.koldoAmparo},
   {d:"2026-11-11", p:["pp"], t:"proceso", x:"La Junta Electoral de Zona de Valencia abre un expediente sancionador, con multa de 300 a 3.000 euros, a María José Catalá, alcaldesa de Valencia y cabeza de lista del PP al Congreso por Valencia, por un vídeo en el que anunciaba su candidatura grabado en su despacho de alcaldesa. Lo ordenó la Junta Electoral Provincial tras un recurso del PSPV-PSOE. Catalá ya había retirado el vídeo. Todavía no hay sanción.", s:S.catalaJez},
-  {d:"2026-11-11", p:["vox","general"], t:"electoral", x:"Vox cancela la entrevista de Abascal con Jordi Wild, prevista para ese día. Lo atribuye a que RTVE no ha publicado 40 minutos de su entrevista en «La Revuelta» y dice que no cederá en exclusiva su imagen. Wild afirma que Vox le pidió horas antes los derechos audiovisuales en exclusiva y que publicará el 13 de noviembre las de Sánchez, Feijóo y Colau.", s:S.wildSin}
+  {d:"2026-11-11", p:["vox","general"], t:"electoral", x:"Vox cancela la entrevista de Abascal con Jordi Wild, prevista para ese día. Lo atribuye a que RTVE no ha publicado 40 minutos de su entrevista en «La Revuelta» y dice que no cederá en exclusiva su imagen. Wild afirma que Vox le pidió horas antes los derechos audiovisuales en exclusiva y que publicará el 13 de noviembre las de Sánchez, Feijóo y Colau.", s:S.wildSin},
+  {d:"2026-11-11", p:["general"], t:"electoral", x:"Huelga general por la vivienda y los salarios, convocada por CCOO, UGT y el Sindicato de Inquilinas. Los sindicatos hablan de un seguimiento desigual, del 41% al más del 80% según la comunidad; la CEOE lo sitúa por debajo del 5% de media. En Madrid, 120.000 manifestantes según la Delegación del Gobierno y 400.000 según los organizadores; en Barcelona, 55.000 según la Guardia Urbana y 400.000 según los organizadores.", s:S.huelga11n},
+  {d:"2026-11-12", p:["general"], t:"electoral", x:"La Diputación Permanente del Congreso convalida, por 35 votos a 34, el decreto de vivienda que incluye el escudo antidesahucios hasta 2030, la prórroga de alquileres y los préstamos «Tu Casa» (a favor PSOE, Sumar, PNV, ERC, Bildu y Podemos; en contra PP, Vox y Junts). Deroga, por 34 a 35, el de alquileres indefinidos, que iba a entrar en vigor el 15 de noviembre, con el voto en contra del PNV.", s:S.decretosVoto},
+  {d:"2026-11-12", p:["general"], t:"proceso", x:"La jueza de la Audiencia Nacional María Tardón cita como investigado para el 18 de noviembre a Miguel Ángel Pérez Triano, exdelegado del Gobierno en Ceuta, por la entrada masiva de inmigrantes del 30 y 31 de julio. Es la primera imputación de la causa. Pérez Triano dimitió del cargo el 28 de septiembre.", s:S.ceutaImputa},
+  {d:"2026-11-12", p:["vox"], t:"propuesta", x:"Vox presenta su programa para el 29N, con el lema «Es sentido común»: 115 medidas en 13 bloques, el primero dedicado a Ceuta y Melilla.", s:S.voxPres}
 ];
 
 /* ============================================================
@@ -980,7 +989,7 @@ const POLLS = [
   {firm:"NC Report", media:"La Razón", campo:"2–5 nov", pp:[136,138], psoe:[99,101], vox:[67,69], vpp:32.6, vpsoe:25.6, vvox:19.3, s:S.ncNov9},
   {firm:"Target Point", media:"El Debate", campo:"28–30 oct", pp:[131,135], psoe:[99,103], vox:[68,72], vpp:31.8, vpsoe:25.5, vvox:19.9, s:S.targetNov},
   {firm:"GAD3", media:"ABC", campo:"3–5 nov", pp:136, psoe:103, vox:63, vpp:31.9, vpsoe:25.9, vvox:18.6, s:S.gad3Nov},
-  {firm:"CIS", media:"Barómetro de octubre", campo:"1–6 oct", pp:null, psoe:null, vox:null, vpp:22.2, vpsoe:34.0, vvox:17.1, s:S.cisOct, note:"No publica escaños. Es el único gran sondeo que sitúa al PSOE primero, ahora con casi 12 puntos de ventaja."}
+  {firm:"CIS", media:"Estudio preelectoral", campo:"7–30 oct", pp:[98,106], psoe:[134,143], vox:[57,65], vpp:25.5, vpsoe:33.3, vvox:18.4, s:S.cisPre, note:"45.074 entrevistas. Es el único gran sondeo que sitúa al PSOE primero, con casi 8 puntos de ventaja."}
 ];
 const mid = v => v===null ? null : (Array.isArray(v) ? (v[0]+v[1])/2 : v);
 const avgOf = key => { const xs = POLLS.map(p=>mid(p[key])).filter(v=>v!==null); return xs.reduce((a,b)=>a+b,0)/xs.length; };
@@ -1257,7 +1266,6 @@ const KEY_DATES = [
   {d:"2026-10-31", t:"Sorteo de las mesas electorales", x:"Los ayuntamientos lo hacen entre el 31 de octubre y el 4 de noviembre. La notificación llega en los tres días siguientes.", s:S.sorteoMesas},
   {d:"2026-11-03", t:"Candidaturas proclamadas en el BOE", x:"Publicación oficial de las listas definitivas.", s:S.plazoListas},
   {d:"2026-11-11", t:"Huelga general por la vivienda", x:"Convocada por CCOO, UGT y los sindicatos de inquilinos.", s:S.huelga},
-  {d:"2026-11-12", t:"Votación de los decretos de vivienda", x:"En la Diputación Permanente del Congreso.", s:S.decretos12n},
   {d:"2026-11-13", t:"Debate de portavoces en laSexta", x:"Sobre economía, moderado por Ana Pastor. Con Carlos Cuerpo (PSOE), Juan Bravo (PP), José María Figaredo (Vox) y Pablo Bustinduy (Frente Amplio). Aplazado dos veces: del 2 al 9 de noviembre por el accidente de Urda y después al 13.", s:S.lasexta13n},
   {d:"2026-11-13", t:"Empieza la campaña", x:"Campaña electoral oficial, hasta el 27 de noviembre.", s:S.zapateroCampana},
   {d:"2026-11-13", t:"Entrevistas de Jordi Wild", x:"Se publican las de Sánchez, Feijóo y Colau. Vox canceló la de Abascal.", s:S.wildSin},
