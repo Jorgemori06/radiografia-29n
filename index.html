@@ -313,7 +313,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 13 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 14 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -325,7 +325,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "13 nov 2026";
+const VERIFIED = "14 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test (rápido de 15 preguntas o completo de 50) para ver con quién coincides.";
 const S = {
@@ -464,6 +464,8 @@ const S = {
   rtve23n:"https://www.infobae.com/espana/agencias/2026/11/13/rtve-celebrara-el-23-de-noviembre-un-debate-con-los-portavoces-parlamentarios/",
   jecPuente:"https://www.libertaddigital.com/espana/politica/2026-11-12/la-junta-electoral-central-mantiene-a-oscar-puente-y-anulara-los-votos-que-lo-tachen-en-valladolid-7490697/",
   wildPub:"https://www.diariodepontevedra.es/articulo/elecciones-generales-29n/asi-han-sido-entrevistas-jordi-wild-colau-feijoo-sanchez-candidatos-elecciones-generales-29n/202611131459511476899.html",
+  debate26:"https://www.infobae.com/espana/2026/11/14/el-debate-entre-los-principales-candidatos-ya-tiene-fecha-se-celebrara-una-semana-despues-del-cara-a-cara/",
+  sigmaTrack13:"https://www.electografica.com/2026/11/encuesta-sigmados-2611130.html",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -495,7 +497,7 @@ const hm = (x, s) => it("hemeroteca", x, s);
 const PARTIES = [
 {
   id:"psoe", short:"PSOE", name:"PSOE (Pedro Sánchez)", color:"#ef4444", tags:["izquierda"],
-  programa:{nota:"sin publicar a 13 nov."},
+  programa:{nota:"sin publicar a 14 nov."},
   resumen:"Partido del Gobierno saliente. Gobernó desde 2018 con Unidas Podemos y luego con Sumar. Llega al 29N sin presupuestos aprobados en la legislatura, con su exministro Ábalos condenado y con varias investigaciones abiertas en su entorno.",
   hemeroteca:[
     hm("En 2019 Sánchez dijo que no dormiría tranquilo con Podemos en el Gobierno y descartó varias veces pactar con Bildu; después gobernó con el apoyo de ambos."),
@@ -578,7 +580,7 @@ const PARTIES = [
 },
 {
   id:"fa", short:"FRENTE AMPLIO", name:"Frente Amplio (Sumar, IU, Comuns y Más Madrid · Ada Colau)", color:"#c026d3", tags:["izquierda"],
-  programa:{nota:"sin publicar a 13 nov."},
+  programa:{nota:"sin publicar a 14 nov."},
   resumen:"Heredero de Sumar: coalición a la izquierda del PSOE con Ada Colau (Barcelona) y Emilio Delgado (Madrid) como cabezas de lista. Va sin Podemos salvo en Canarias y la Comunitat Valenciana. Las encuestas le dan entre el 4,7% y el 8%.",
   hemeroteca:[
     hm("Socio del Gobierno de coalición (2023-2026). Votó con el PSOE en casi todo, incluida la amnistía, aunque con desacuerdos públicos en defensa y política exterior."),
@@ -599,7 +601,7 @@ const PARTIES = [
 },
 {
   id:"podemos", short:"PODEMOS", name:"Podemos (Ione Belarra / Irene Montero)", color:"#7c3aed", tags:["izquierda"],
-  programa:{nota:"sin publicar a 13 nov."},
+  programa:{nota:"sin publicar a 14 nov."},
   resumen:"El partido que nació del 15-M y llegó a tener 71 escaños (con sus confluencias) se mueve ahora entre el 2,3% y el 3,1% en las encuestas. Para el 29N va en solitario en casi toda España, con Irene Montero en Madrid, y apoya a ERC en Cataluña.",
   hemeroteca:[
     hm("Nació criticando a «la casta»; en 2018 sus líderes Pablo Iglesias e Irene Montero compraron un chalé en Galapagar, lo que sometieron a consulta de sus bases."),
@@ -640,7 +642,7 @@ const PARTIES = [
 },
 {
   id:"junts", short:"JUNTS", name:"Junts per Catalunya (Carles Puigdemont)", color:"#06b6d4", tags:["nacionalista","derecha"],
-  programa:{nota:"sin publicar a 13 nov."},
+  programa:{nota:"sin publicar a 14 nov."},
   resumen:"Independentistas de centro-derecha. Sus 7 votos hicieron presidente a Sánchez en 2023 y su ruptura en 2025 bloqueó la legislatura. Su candidato, Puigdemont, ya puede volver a España: el Supremo le ha aplicado la amnistía.",
   hemeroteca:[
     hm("De la declaración unilateral de independencia de 2017 al pacto de investidura con el PSOE en 2023, a cambio de la amnistía y otras contrapartidas."),
@@ -682,7 +684,7 @@ const PARTIES = [
 },
 {
   id:"bildu", short:"EH BILDU", name:"EH Bildu (Arnaldo Otegi)", color:"#2dd4bf", tags:["nacionalista","izquierda"],
-  programa:{nota:"sin publicar a 13 nov."},
+  programa:{nota:"sin publicar a 14 nov."},
   resumen:"Izquierda independentista vasca y navarra. Fue un socio estable de Sánchez en lo social y lo presupuestario. Para muchos votantes es un límite que no condene expresamente la historia de ETA.",
   hemeroteca:[
     hm("Apoyó de forma estable los presupuestos y decretos sociales del Gobierno."),
@@ -842,7 +844,8 @@ const TIMELINE = [
   {d:"2026-11-12", p:["psoe"], t:"electoral", x:"La Junta Electoral Central estima el recurso del PP y corrige a la Junta Provincial de Valladolid: los votos en papeletas del PSOE por Valladolid con el nombre de Óscar Puente tachado serán nulos, por alterar la papeleta (art. 96.2 LOREG). Rechaza también la petición del PSOE de reimprimirlas sin su nombre, porque la candidatura ya está proclamada. La resolución solo puede recurrirse ante la Sala Tercera del Supremo.", s:S.jecPuente},
   {d:"2026-11-12", p:["vox"], t:"propuesta", x:"Vox presenta su programa para el 29N, con el lema «Es sentido común»: 115 medidas en 13 bloques, el primero dedicado a Ceuta y Melilla.", s:S.voxPres},
   {d:"2026-11-13", p:["psoe","pp"], t:"electoral", x:"La Academia de la Televisión fija el cara a cara entre Sánchez y Feijóo para el jueves 19 de noviembre, moderado por María Casado. El mismo día, RTVE anuncia para el 23 de noviembre un debate con los portavoces de los grupos del Congreso, moderado por Xabier Fortes. Empieza la campaña electoral.", s:S.caraCara19},
-  {d:"2026-11-13", p:["general"], t:"electoral", x:"Jordi Wild publica en su pódcast The Wild Project las entrevistas a Ada Colau, Alberto Núñez Feijóo y Pedro Sánchez. No hay entrevista a Abascal: Vox la canceló el 11 de noviembre.", s:S.wildPub}
+  {d:"2026-11-13", p:["general"], t:"electoral", x:"Jordi Wild publica en su pódcast The Wild Project las entrevistas a Ada Colau, Alberto Núñez Feijóo y Pedro Sánchez. No hay entrevista a Abascal: Vox la canceló el 11 de noviembre.", s:S.wildPub},
+  {d:"2026-11-14", p:["general"], t:"electoral", x:"La Academia de la Televisión fija para el jueves 26 de noviembre el debate entre los principales candidatos, con los mismos cinco bloques que el cara a cara. Previsiblemente participarán Sánchez, Feijóo, Abascal y Colau. La Junta Electoral Central debe decidir si participa Podemos, que ya pidió estar en el debate económico de laSexta del 13 de noviembre y vio rechazada su solicitud.", s:S.debate26}
 ];
 
 /* ============================================================
@@ -988,7 +991,7 @@ const STANCE = {
    DATOS: ENCUESTAS 29N Y ESCAÑOS
    ============================================================ */
 const POLLS = [
-  {firm:"Sigma Dos", media:"El Mundo", campo:"29–30 oct", pp:[133,139], psoe:[97,103], vox:[63,69], vpp:31.1, vpsoe:24.6, vvox:19.3, s:S.sigmaNov},
+  {firm:"Sigma Dos", media:"El Mundo", campo:"3–12 nov", pp:[126,132], psoe:[104,109], vox:[62,69], vpp:31.0, vpsoe:25.4, vvox:19.7, s:S.sigmaTrack13, note:"Tracking diario de campaña, entrega publicada el 13 nov (4.620 entrevistas). El PP incluye a UPN."},
   {firm:"Imop", media:"El Confidencial", campo:"13–16 oct", pp:123, psoe:113, vox:72, vpp:28.5, vpsoe:27.1, vvox:20.0, s:S.imopOct},
   {firm:"DYM", media:"20minutos", campo:"4–6 nov", pp:[135,139], psoe:[104,108], vox:[63,66], vpp:33.1, vpsoe:27.3, vvox:18.6, s:S.dymNov},
   {firm:"40dB", media:"El País / SER", campo:"2–4 nov", pp:129, psoe:119, vox:61, vpp:31.9, vpsoe:29.9, vvox:18.0, s:S.db40Nov, note:"Con los dos escaños de UPN, el PP llega a 131."},
@@ -1282,7 +1285,7 @@ const KEY_DATES = [
   {d:"2026-11-19", t:"Cara a cara Sánchez–Feijóo", x:"Organizado por la Academia de la Televisión y moderado por su presidenta, María Casado. Cinco bloques: vivienda; economía y fiscalidad; política social y servicios públicos; corrupción y regeneración democrática; migración y política exterior. Por sorteo, abre Feijóo y cierra Sánchez. Señal institucional para las televisiones que quieran emitirlo.", s:S.caraCara19},
   {d:"2026-11-23", t:"Debate de portavoces", x:"En La 1, Canal 24 horas y Radio 5, moderado por Xabier Fortes. Con Ester Muñoz (PP), Patxi López (PSOE), Pepa Millán (Vox), Emilio Delgado (Frente Amplio), Gabriel Rufián (ERC), Oskar Matute (Bildu) y Maribel Vaquero (PNV). RTVE informó primero de que Junts había declinado; fuentes de Junts dicen que fue un malentendido y que participará Míriam Nogueras.", s:S.rtve23n},
   {d:"2026-11-23", t:"Último día para publicar encuestas", x:"Desde el 24 de noviembre la ley prohíbe publicar sondeos.", s:S.calendario29n},
-  {d:"2026-11-26", t:"Debate a cuatro o cinco", x:"Fecha prevista. El PP y el PSOE han aceptado que lo organice la Academia de la Televisión; faltan por cerrar la fecha definitiva, el formato, los moderadores y los participantes.", s:S.academiaFechas},
+  {d:"2026-11-26", t:"Debate entre candidatos", x:"Organizado por la Academia de la Televisión, con los mismos cinco bloques que el cara a cara y señal institucional. Previsiblemente participarán Sánchez (PSOE), Feijóo (PP), Abascal (Vox) y Colau (Frente Amplio). La Junta Electoral Central debe decidir si participa Podemos.", s:S.debate26},
   {d:"2026-11-28", t:"Jornada de reflexión", x:"No se puede pedir el voto."},
   {d:"2026-11-29", t:"Elecciones generales", x:"Colegios abiertos de 9:00 a 20:00.", s:S.moncloa29n}
 ];
