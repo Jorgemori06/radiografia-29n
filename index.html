@@ -313,7 +313,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 14 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 15 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -325,7 +325,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "14 nov 2026";
+const VERIFIED = "15 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test (rápido de 15 preguntas o completo de 50) para ver con quién coincides.";
 const S = {
@@ -466,6 +466,9 @@ const S = {
   wildPub:"https://www.diariodepontevedra.es/articulo/elecciones-generales-29n/asi-han-sido-entrevistas-jordi-wild-colau-feijoo-sanchez-candidatos-elecciones-generales-29n/202611131459511476899.html",
   debate26:"https://www.infobae.com/espana/2026/11/14/el-debate-entre-los-principales-candidatos-ya-tiene-fecha-se-celebrara-una-semana-despues-del-cara-a-cara/",
   sigmaTrack13:"https://www.electografica.com/2026/11/encuesta-sigmados-2611130.html",
+  psoeProg:"https://www.psoe.es/media-content/2026/11/PROGRAMAPSOE29N26.pdf",
+  psoePres:"https://www.elindependiente.com/espana/2026/11/15/programa-psoe-29n-gestion-adif-renfe-vivienda-corrupcion-tecnoligarcas/",
+  sondaxeNov15:"https://www.electografica.com/2026/11/encuesta-sondaxe-261115.html",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -497,7 +500,7 @@ const hm = (x, s) => it("hemeroteca", x, s);
 const PARTIES = [
 {
   id:"psoe", short:"PSOE", name:"PSOE (Pedro Sánchez)", color:"#ef4444", tags:["izquierda"],
-  programa:{nota:"sin publicar a 14 nov."},
+  programa:{url:S.psoeProg, nota:"«La fuerza de seguir avanzando», presentado el 15 nov (PDF)."},
   resumen:"Partido del Gobierno saliente. Gobernó desde 2018 con Unidas Podemos y luego con Sumar. Llega al 29N sin presupuestos aprobados en la legislatura, con su exministro Ábalos condenado y con varias investigaciones abiertas en su entorno.",
   hemeroteca:[
     hm("En 2019 Sánchez dijo que no dormiría tranquilo con Podemos en el Gobierno y descartó varias veces pactar con Bildu; después gobernó con el apoyo de ambos."),
@@ -521,7 +524,8 @@ const PARTIES = [
     it("valoracion","SMI de 735,90 € en 2018 a 1.221 € en 14 pagas en 2026.", S.smi),
     it("hemeroteca","Tras el desahucio de Maricarmen Abascal aprobó dos decretos de vivienda (escudo antidesahucios para personas vulnerables y prórroga de alquileres). El Congreso los rechazó el 2 oct con los votos de PP, Vox y Junts; el Gobierno los volvió a aprobar el 6 oct. El 12 nov la Diputación Permanente convalidó el decreto amplio (escudo antidesahucios, prórroga de alquileres, préstamos «Tu Casa»), por 35 votos a 34, y derogó el de alquileres indefinidos, por 34 a 35, con el voto en contra del PNV.", S.decretosVoto),
     it("hemeroteca","Su reducción de jornada a 37,5 horas cayó en el Congreso (sep 2025) por el voto de PP, Vox, Junts y UPN, y su gravamen a las energéticas, en ene 2025, por PP, Vox, Junts, PNV y UPN.", S.jornada),
-    it("propuesta","Sin programa publicado a 10 nov. Medidas anunciadas: Empresa Estatal de Vivienda, Plan de Vivienda 2026-2030 de 7.000 M€, jornada de 36 horas antes de 2030 y SMI del 60% del salario medio.", S.eco29n)
+    it("propuesta","Programa: reformar la Constitución para que la vivienda sea un derecho fundamental; movilizar cada año el 1% del PIB para garantizar el acceso a la vivienda; destinar el 1% de la licitación anual de obra pública a un fondo para comprar vivienda protegida y asequible; un parque público estatal de 100.000 viviendas.", S.psoeProg),
+    it("propuesta","Programa: blindar por ley el SMI por encima del 60% del salario medio; completar la reducción de jornada a 37,5 horas; blindar en la Constitución las pensiones públicas y su revalorización con el IPC; IRPF de hasta el 35% para rentas del capital de más de 300.000 €; subir los impuestos a los «tecnooligarcas»; una Ley Orgánica de Integridad Pública; votar desde los 16 años.", S.psoeProg)
   ],
   paradoja:"Tiene lógica para quien prioriza las subidas del SMI y las pensiones, la ley de vivienda y frenar a PP y Vox con la única fuerza de izquierdas capaz de gobernar. Choca con quien rechaza la amnistía y las cesiones a los independentistas, o con quien pone por delante la corrupción en el entorno del Gobierno."
 },
@@ -580,7 +584,7 @@ const PARTIES = [
 },
 {
   id:"fa", short:"FRENTE AMPLIO", name:"Frente Amplio (Sumar, IU, Comuns y Más Madrid · Ada Colau)", color:"#c026d3", tags:["izquierda"],
-  programa:{nota:"sin publicar a 14 nov."},
+  programa:{nota:"sin publicar a 15 nov."},
   resumen:"Heredero de Sumar: coalición a la izquierda del PSOE con Ada Colau (Barcelona) y Emilio Delgado (Madrid) como cabezas de lista. Va sin Podemos salvo en Canarias y la Comunitat Valenciana. Las encuestas le dan entre el 4,7% y el 8%.",
   hemeroteca:[
     hm("Socio del Gobierno de coalición (2023-2026). Votó con el PSOE en casi todo, incluida la amnistía, aunque con desacuerdos públicos en defensa y política exterior."),
@@ -601,7 +605,7 @@ const PARTIES = [
 },
 {
   id:"podemos", short:"PODEMOS", name:"Podemos (Ione Belarra / Irene Montero)", color:"#7c3aed", tags:["izquierda"],
-  programa:{nota:"sin publicar a 14 nov."},
+  programa:{nota:"sin publicar a 15 nov."},
   resumen:"El partido que nació del 15-M y llegó a tener 71 escaños (con sus confluencias) se mueve ahora entre el 2,3% y el 3,1% en las encuestas. Para el 29N va en solitario en casi toda España, con Irene Montero en Madrid, y apoya a ERC en Cataluña.",
   hemeroteca:[
     hm("Nació criticando a «la casta»; en 2018 sus líderes Pablo Iglesias e Irene Montero compraron un chalé en Galapagar, lo que sometieron a consulta de sus bases."),
@@ -642,7 +646,7 @@ const PARTIES = [
 },
 {
   id:"junts", short:"JUNTS", name:"Junts per Catalunya (Carles Puigdemont)", color:"#06b6d4", tags:["nacionalista","derecha"],
-  programa:{nota:"sin publicar a 14 nov."},
+  programa:{nota:"sin publicar a 15 nov."},
   resumen:"Independentistas de centro-derecha. Sus 7 votos hicieron presidente a Sánchez en 2023 y su ruptura en 2025 bloqueó la legislatura. Su candidato, Puigdemont, ya puede volver a España: el Supremo le ha aplicado la amnistía.",
   hemeroteca:[
     hm("De la declaración unilateral de independencia de 2017 al pacto de investidura con el PSOE en 2023, a cambio de la amnistía y otras contrapartidas."),
@@ -684,7 +688,7 @@ const PARTIES = [
 },
 {
   id:"bildu", short:"EH BILDU", name:"EH Bildu (Arnaldo Otegi)", color:"#2dd4bf", tags:["nacionalista","izquierda"],
-  programa:{nota:"sin publicar a 14 nov."},
+  programa:{nota:"sin publicar a 15 nov."},
   resumen:"Izquierda independentista vasca y navarra. Fue un socio estable de Sánchez en lo social y lo presupuestario. Para muchos votantes es un límite que no condene expresamente la historia de ETA.",
   hemeroteca:[
     hm("Apoyó de forma estable los presupuestos y decretos sociales del Gobierno."),
@@ -845,7 +849,8 @@ const TIMELINE = [
   {d:"2026-11-12", p:["vox"], t:"propuesta", x:"Vox presenta su programa para el 29N, con el lema «Es sentido común»: 115 medidas en 13 bloques, el primero dedicado a Ceuta y Melilla.", s:S.voxPres},
   {d:"2026-11-13", p:["psoe","pp"], t:"electoral", x:"La Academia de la Televisión fija el cara a cara entre Sánchez y Feijóo para el jueves 19 de noviembre, moderado por María Casado. El mismo día, RTVE anuncia para el 23 de noviembre un debate con los portavoces de los grupos del Congreso, moderado por Xabier Fortes. Empieza la campaña electoral.", s:S.caraCara19},
   {d:"2026-11-13", p:["general"], t:"electoral", x:"Jordi Wild publica en su pódcast The Wild Project las entrevistas a Ada Colau, Alberto Núñez Feijóo y Pedro Sánchez. No hay entrevista a Abascal: Vox la canceló el 11 de noviembre.", s:S.wildPub},
-  {d:"2026-11-14", p:["general"], t:"electoral", x:"La Academia de la Televisión fija para el jueves 26 de noviembre el debate entre los principales candidatos, con los mismos cinco bloques que el cara a cara. Previsiblemente participarán Sánchez, Feijóo, Abascal y Colau. La Junta Electoral Central debe decidir si participa Podemos, que ya pidió estar en el debate económico de laSexta del 13 de noviembre y vio rechazada su solicitud.", s:S.debate26}
+  {d:"2026-11-14", p:["general"], t:"electoral", x:"La Academia de la Televisión fija para el jueves 26 de noviembre el debate entre los principales candidatos, con los mismos cinco bloques que el cara a cara. Previsiblemente participarán Sánchez, Feijóo, Abascal y Colau. La Junta Electoral Central debe decidir si participa Podemos, que ya pidió estar en el debate económico de laSexta del 13 de noviembre y vio rechazada su solicitud.", s:S.debate26},
+  {d:"2026-11-15", p:["psoe"], t:"propuesta", x:"Sánchez presenta en Alcorcón (Madrid) el programa del PSOE para el 29N, «La fuerza de seguir avanzando». La vivienda es su principal prioridad.", s:S.psoePres}
 ];
 
 /* ============================================================
@@ -995,7 +1000,7 @@ const POLLS = [
   {firm:"Imop", media:"El Confidencial", campo:"13–16 oct", pp:123, psoe:113, vox:72, vpp:28.5, vpsoe:27.1, vvox:20.0, s:S.imopOct},
   {firm:"DYM", media:"20minutos", campo:"4–6 nov", pp:[135,139], psoe:[104,108], vox:[63,66], vpp:33.1, vpsoe:27.3, vvox:18.6, s:S.dymNov},
   {firm:"40dB", media:"El País / SER", campo:"2–4 nov", pp:129, psoe:119, vox:61, vpp:31.9, vpsoe:29.9, vvox:18.0, s:S.db40Nov, note:"Con los dos escaños de UPN, el PP llega a 131."},
-  {firm:"Sondaxe", media:"La Voz de Galicia", campo:"2–4 nov", pp:null, psoe:null, vox:null, vpp:29.7, vpsoe:27.3, vvox:18.6, s:S.sondaxeNov, note:"No publica escaños."},
+  {firm:"Sondaxe", media:"La Voz de Galicia", campo:"9–13 nov", pp:130, psoe:106, vox:65, vpp:30.8, vpsoe:26.4, vvox:18.2, s:S.sondaxeNov15, note:"Primera entrega de su tracking de campaña (1.000 entrevistas). El PP incluye a UPN."},
   {firm:"GESOP", media:"El Periódico", campo:"6–8 oct", pp:[121,125], psoe:[108,112], vox:[68,72], vpp:null, vpsoe:26.1, vvox:18.9, s:S.polls},
   {firm:"Celeste-Tel", media:"Onda Cero", campo:"pub. 6 nov", pp:136, psoe:101, vox:66, vpp:31.4, vpsoe:25.7, vvox:19.2, s:S.celesteNov, note:"Con los dos escaños de UPN, el PP llega a 138."},
   {firm:"SocioMétrica", media:"El Español", campo:"pub. 8 nov", pp:134, psoe:108, vox:66, vpp:32.0, vpsoe:27.7, vvox:18.9, s:S.sociometricaNov8, note:"Con los dos escaños de UPN, el PP llega a 136."},
