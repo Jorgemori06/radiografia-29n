@@ -470,7 +470,7 @@ const S = {
   psoePres:"https://www.elindependiente.com/espana/2026/11/15/programa-psoe-29n-gestion-adif-renfe-vivienda-corrupcion-tecnoligarcas/",
   sondaxeNov15:"https://www.electografica.com/2026/11/encuesta-sondaxe-261115.html",
   faPres:"https://www.infobae.com/espana/2026/11/16/frente-amplio-presenta-sus-propuestas-para-el-29-n-con-impuestos-a-superricos-ayudas-por-menor-a-cargo-y-jornada-de-32-horas-sera-el-programa-del-psoe-para-la-siguiente-legislatura/",
-  faProgWeb:"https://frenteamplio.info/programa/todas/",
+  faProg:"https://frenteamplio.info/pdf/ProgramaFrenteAmplio.pdf",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -586,7 +586,7 @@ const PARTIES = [
 },
 {
   id:"fa", short:"FRENTE AMPLIO", name:"Frente Amplio (Sumar, IU, Comuns y Más Madrid · Ada Colau)", color:"#c026d3", tags:["izquierda"],
-  programa:{nota:"presentado el 16 nov, pero sin texto completo publicado a esa fecha: su web anuncia el PDF «próximamente». Avance de medidas en su web:", docs:[["frenteamplio.info", S.faProgWeb]]},
+  programa:{url:S.faProg, nota:"Presentado el 16 nov (PDF)."},
   resumen:"Heredero de Sumar: coalición a la izquierda del PSOE con Ada Colau (Barcelona) y Emilio Delgado (Madrid) como cabezas de lista. Va sin Podemos salvo en Canarias y la Comunitat Valenciana. Las encuestas le dan entre el 4,7% y el 8%.",
   hemeroteca:[
     hm("Socio del Gobierno de coalición (2023-2026). Votó con el PSOE en casi todo, incluida la amnistía, aunque con desacuerdos públicos en defensa y política exterior."),
@@ -600,8 +600,11 @@ const PARTIES = [
   ],
   economia:[
     it("hemeroteca","Desde el Ministerio de Trabajo impulsó las subidas del SMI y la reducción de jornada a 37,5 horas, que el Congreso tumbó en sep 2025.", S.jornada),
-    it("propuesta","Sin programa publicado a 10 nov. En una nota oficial (5 nov): impuesto del 2% a los patrimonios de más de un millón de euros y del 3% desde 50 millones, y del 10% a la acumulación de vivienda (empresas desde la primera, personas desde la cuarta, si su valor conjunto supera 800.000 € y no se alquila de forma asequible).", S.faFiscal),
-    it("propuesta","En otra nota oficial (6 nov): una ley para expropiar vivienda a propietarios corporativos por fases (más de 1.000 viviendas, después más de 700 y después más de 50 inmuebles).", S.faViv)
+    it("propuesta","Programa: destinar el 1% del PIB al año a 1,5 millones de viviendas públicas en 12 años, hasta el 20% del parque total en 2035; topar los alquileres vinculándolos al 25% de los ingresos del hogar; expropiar vivienda por fases a entidades con más de 1.000 viviendas, después con más de 700 y después a empresas con más de 50 inmuebles; impuesto del 10% sobre el valor de los pisos (empresas desde el primero, particulares desde el cuarto si superan 800.000 €).", S.faProg),
+    it("propuesta","Programa: jornada de 37,5 horas de inmediato y reducción progresiva hasta un máximo de 32 horas semanales sin reducción salarial; SMI con un suelo del 60% del salario medio neto; jubilación a los 65 años, y a los 60 en trabajos de especial esfuerzo físico como la construcción, la limpieza o los cuidados a domicilio; ninguna pensión inferior al SMI.", S.faProg),
+    it("propuesta","Programa: tributación mínima del 2% para los patrimonios de más de un millón de euros y del 3% anual desde 50 millones; herencias limitadas a 10 millones de euros por heredero, con un tipo marginal del 100% por encima; tipo mínimo efectivo del 20% en el Impuesto sobre Sociedades.", S.faProg),
+    it("propuesta","Programa: Prestación Universal por Crianza de 200 € al mes por cada menor de 18 años a cargo, en tres fases; comedor escolar gratuito en Infantil y Primaria de la red pública; cobertura bucodental para al menos el 50% de la población, gafas y lentillas gratuitas para todas las edades y audífonos en la cartera común; banca pública y comercializadora eléctrica pública con tres horas de luz gratuita al día.", S.faProg),
+    it("propuesta","Programa: avanzar hacia una República Federal y Plurinacional, con el derecho a decidir mediante referéndum para resolver la cuestión territorial.", S.faProg)
   ],
   paradoja:"Tiene lógica para quien quiere empujar al PSOE hacia la izquierda en salarios, jornada y vivienda. Choca con quien busca una izquierda unida (va separado de Podemos) o con quien no perdona el caso Errejón."
 },
