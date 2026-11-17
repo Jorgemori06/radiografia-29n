@@ -313,7 +313,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 16 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 17 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -325,7 +325,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "16 nov 2026";
+const VERIFIED = "17 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test (rápido de 15 preguntas o completo de 50) para ver con quién coincides.";
 const S = {
@@ -472,6 +472,10 @@ const S = {
   faPres:"https://www.infobae.com/espana/2026/11/16/frente-amplio-presenta-sus-propuestas-para-el-29-n-con-impuestos-a-superricos-ayudas-por-menor-a-cargo-y-jornada-de-32-horas-sera-el-programa-del-psoe-para-la-siguiente-legislatura/",
   faProg:"https://frenteamplio.info/pdf/ProgramaFrenteAmplio.pdf",
   errejon:"https://www.infobae.com/espana/agencias/2026/11/04/la-audiencia-de-madrid-decidira-el-1-de-diciembre-si-envia-a-juicio-a-errejon/",
+  targetNov16:"https://www.electografica.com/2026/11/encuesta-target-point-261116.html",
+  sondaxeNov16:"https://www.electografica.com/2026/11/encuesta-sondaxe-261116.html",
+  ncNov16:"https://www.democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-psoe-recorta-distancias-pero-pp-vox-conservan-hasta-205-escanos-segun-nc-report/",
+  db40Nov17:"https://www.democrata.es/encuestas/elecciones-generales/elecciones-generales-tracking-encuesta-29n-hoy-40db-17-noviembre-2026/",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -611,7 +615,7 @@ const PARTIES = [
 },
 {
   id:"podemos", short:"PODEMOS", name:"Podemos (Ione Belarra / Irene Montero)", color:"#7c3aed", tags:["izquierda"],
-  programa:{nota:"sin publicar a 16 nov."},
+  programa:{nota:"sin publicar a 17 nov."},
   resumen:"El partido que nació del 15-M y llegó a tener 71 escaños (con sus confluencias) se mueve ahora entre el 2,3% y el 3,1% en las encuestas. Para el 29N va en solitario en casi toda España, con Irene Montero en Madrid, y apoya a ERC en Cataluña.",
   hemeroteca:[
     hm("Nació criticando a «la casta»; en 2018 sus líderes Pablo Iglesias e Irene Montero compraron un chalé en Galapagar, lo que sometieron a consulta de sus bases."),
@@ -652,7 +656,7 @@ const PARTIES = [
 },
 {
   id:"junts", short:"JUNTS", name:"Junts per Catalunya (Carles Puigdemont)", color:"#06b6d4", tags:["nacionalista","derecha"],
-  programa:{nota:"sin publicar a 16 nov."},
+  programa:{nota:"sin publicar a 17 nov."},
   resumen:"Independentistas de centro-derecha. Sus 7 votos hicieron presidente a Sánchez en 2023 y su ruptura en 2025 bloqueó la legislatura. Su candidato, Puigdemont, ya puede volver a España: el Supremo le ha aplicado la amnistía.",
   hemeroteca:[
     hm("De la declaración unilateral de independencia de 2017 al pacto de investidura con el PSOE en 2023, a cambio de la amnistía y otras contrapartidas."),
@@ -694,7 +698,7 @@ const PARTIES = [
 },
 {
   id:"bildu", short:"EH BILDU", name:"EH Bildu (Arnaldo Otegi)", color:"#2dd4bf", tags:["nacionalista","izquierda"],
-  programa:{nota:"sin publicar a 16 nov."},
+  programa:{nota:"sin publicar a 17 nov."},
   resumen:"Izquierda independentista vasca y navarra. Fue un socio estable de Sánchez en lo social y lo presupuestario. Para muchos votantes es un límite que no condene expresamente la historia de ETA.",
   hemeroteca:[
     hm("Apoyó de forma estable los presupuestos y decretos sociales del Gobierno."),
@@ -1006,13 +1010,13 @@ const POLLS = [
   {firm:"Sigma Dos", media:"El Mundo", campo:"3–12 nov", pp:[126,132], psoe:[104,109], vox:[62,69], vpp:31.0, vpsoe:25.4, vvox:19.7, s:S.sigmaTrack13, note:"Tracking diario de campaña, entrega publicada el 13 nov (4.620 entrevistas). El PP incluye a UPN."},
   {firm:"Imop", media:"El Confidencial", campo:"13–16 oct", pp:123, psoe:113, vox:72, vpp:28.5, vpsoe:27.1, vvox:20.0, s:S.imopOct},
   {firm:"DYM", media:"20minutos", campo:"4–6 nov", pp:[135,139], psoe:[104,108], vox:[63,66], vpp:33.1, vpsoe:27.3, vvox:18.6, s:S.dymNov},
-  {firm:"40dB", media:"El País / SER", campo:"2–4 nov", pp:129, psoe:119, vox:61, vpp:31.9, vpsoe:29.9, vvox:18.0, s:S.db40Nov, note:"Con los dos escaños de UPN, el PP llega a 131."},
-  {firm:"Sondaxe", media:"La Voz de Galicia", campo:"9–13 nov", pp:130, psoe:106, vox:65, vpp:30.8, vpsoe:26.4, vvox:18.2, s:S.sondaxeNov15, note:"Primera entrega de su tracking de campaña (1.000 entrevistas). El PP incluye a UPN."},
+  {firm:"40dB", media:"El País / SER", campo:"pub. 17 nov", pp:131, psoe:120, vox:58, vpp:31.8, vpsoe:30.6, vvox:17.5, s:S.db40Nov17, note:"Quinta entrega de su tracking diario de campaña. Con los dos escaños de UPN, el PP llega a 133."},
+  {firm:"Sondaxe", media:"La Voz de Galicia", campo:"10–14 nov", pp:127, psoe:109, vox:65, vpp:30.2, vpsoe:26.7, vvox:17.6, s:S.sondaxeNov16, note:"Segunda entrega de su tracking de campaña (1.000 entrevistas). El PP incluye a UPN."},
   {firm:"GESOP", media:"El Periódico", campo:"6–8 oct", pp:[121,125], psoe:[108,112], vox:[68,72], vpp:null, vpsoe:26.1, vvox:18.9, s:S.polls},
   {firm:"Celeste-Tel", media:"Onda Cero", campo:"pub. 6 nov", pp:136, psoe:101, vox:66, vpp:31.4, vpsoe:25.7, vvox:19.2, s:S.celesteNov, note:"Con los dos escaños de UPN, el PP llega a 138."},
   {firm:"SocioMétrica", media:"El Español", campo:"pub. 8 nov", pp:134, psoe:108, vox:66, vpp:32.0, vpsoe:27.7, vvox:18.9, s:S.sociometricaNov8, note:"Con los dos escaños de UPN, el PP llega a 136."},
-  {firm:"NC Report", media:"La Razón", campo:"2–5 nov", pp:[136,138], psoe:[99,101], vox:[67,69], vpp:32.6, vpsoe:25.6, vvox:19.3, s:S.ncNov9},
-  {firm:"Target Point", media:"El Debate", campo:"28–30 oct", pp:[131,135], psoe:[99,103], vox:[68,72], vpp:31.8, vpsoe:25.5, vvox:19.9, s:S.targetNov},
+  {firm:"NC Report", media:"La Razón", campo:"6–12 nov", pp:[135,137], psoe:[102,104], vox:[66,68], vpp:32.1, vpsoe:26.1, vvox:19.0, s:S.ncNov16, note:"Con los dos escaños de UPN, PP y Vox suman de 203 a 207."},
+  {firm:"Target Point", media:"El Debate", campo:"12 nov", pp:[125,129], psoe:[110,114], vox:[64,68], vpp:30.6, vpsoe:27.0, vvox:18.7, s:S.targetNov16, note:"1.013 entrevistas online. El PP incluye a UPN."},
   {firm:"GAD3", media:"ABC", campo:"3–5 nov", pp:136, psoe:103, vox:63, vpp:31.9, vpsoe:25.9, vvox:18.6, s:S.gad3Nov},
   {firm:"CIS", media:"Estudio preelectoral", campo:"7–30 oct", pp:[98,106], psoe:[134,143], vox:[57,65], vpp:25.5, vpsoe:33.3, vvox:18.4, s:S.cisPre, note:"45.074 entrevistas. Es el único gran sondeo que sitúa al PSOE primero, con casi 8 puntos de ventaja."}
 ];
