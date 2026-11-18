@@ -313,7 +313,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 17 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 18 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -325,7 +325,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "17 nov 2026";
+const VERIFIED = "18 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test (rápido de 15 preguntas o completo de 50) para ver con quién coincides.";
 const S = {
@@ -476,6 +476,12 @@ const S = {
   sondaxeNov16:"https://www.electografica.com/2026/11/encuesta-sondaxe-261116.html",
   ncNov16:"https://www.democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-psoe-recorta-distancias-pero-pp-vox-conservan-hasta-205-escanos-segun-nc-report/",
   db40Nov17:"https://www.democrata.es/encuestas/elecciones-generales/elecciones-generales-tracking-encuesta-29n-hoy-40db-17-noviembre-2026/",
+  podemosPres:"https://www.publico.es/politica/supermercados-publicos-carcel-empresarios-pagan-horas-extra-nacionalizacion-repsol-claves-programa-podemos-29n.html",
+  bilduPres:"https://www.infobae.com/espana/agencias/2026/11/16/eh-bildu-prioriza-en-su-programa-el-reconocimiento-nacional-y-politico-la-vivienda-el-empleo-y-las-pensiones/",
+  ceutaAplaza:"https://www.estrelladigital.es/espana/tribunales/ceuta-perez-triano-declaracion-audiencia-nacional-aviso-cni-delitos-querellas/20261117060000453449.html",
+  decretos18n:"https://www.infobae.com/espana/agencias/2026/11/18/la-diputacion-permanente-del-congreso-convalida-siete-decretos-ley-aprobados-en-precampana-con-apoyo-del-pp/",
+  db40Nov18:"https://www.electografica.com/2026/11/encuesta-40db-261118.html",
+  imopNov:"https://www.democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-pp-psoe-suben-vox-pierde-cuatro-escanos-derecha-mantiene-mayoria-segun-imop/",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -615,7 +621,7 @@ const PARTIES = [
 },
 {
   id:"podemos", short:"PODEMOS", name:"Podemos (Ione Belarra / Irene Montero)", color:"#7c3aed", tags:["izquierda"],
-  programa:{nota:"sin publicar a 17 nov."},
+  programa:{nota:"presentado el 17 nov. Texto completo pendiente de verificar."},
   resumen:"El partido que nació del 15-M y llegó a tener 71 escaños (con sus confluencias) se mueve ahora entre el 2,3% y el 3,1% en las encuestas. Para el 29N va en solitario en casi toda España, con Irene Montero en Madrid, y apoya a ERC en Cataluña.",
   hemeroteca:[
     hm("Nació criticando a «la casta»; en 2018 sus líderes Pablo Iglesias e Irene Montero compraron un chalé en Galapagar, lo que sometieron a consulta de sus bases."),
@@ -629,7 +635,7 @@ const PARTIES = [
   ],
   economia:[
     it("hemeroteca","Pactó con PSOE, ERC y Bildu la ley de vivienda de 2023, con topes al alquiler en zonas tensionadas.", S.leyVivienda),
-    it("propuesta","Sin programa publicado a 10 nov. Entre sus ejes de campaña: SMI de 1.800 € mensuales y jornada laboral de 30 horas.", S.podemosEjes),
+    it("propuesta","Entre sus ejes de campaña: SMI de 1.800 € mensuales y jornada laboral de 30 horas.", S.podemosEjes),
     it("propuesta","Más impuestos a la banca, las eléctricas, las grandes fortunas y los beneficios extraordinarios; regular el precio del alquiler y penalizar la vivienda vacía de grandes propietarios.", S.podemosProg)
   ],
   paradoja:"Tiene lógica para quien quiere una izquierda sin rebajas y vota en Madrid u otra provincia grande, donde su voto puede contar. Choca con quien vota en una provincia pequeña, donde difícilmente sacará escaño, o con quien no perdona la ley del «solo sí es sí»."
@@ -656,7 +662,7 @@ const PARTIES = [
 },
 {
   id:"junts", short:"JUNTS", name:"Junts per Catalunya (Carles Puigdemont)", color:"#06b6d4", tags:["nacionalista","derecha"],
-  programa:{nota:"sin publicar a 17 nov."},
+  programa:{nota:"sin publicar a 18 nov."},
   resumen:"Independentistas de centro-derecha. Sus 7 votos hicieron presidente a Sánchez en 2023 y su ruptura en 2025 bloqueó la legislatura. Su candidato, Puigdemont, ya puede volver a España: el Supremo le ha aplicado la amnistía.",
   hemeroteca:[
     hm("De la declaración unilateral de independencia de 2017 al pacto de investidura con el PSOE en 2023, a cambio de la amnistía y otras contrapartidas."),
@@ -698,7 +704,7 @@ const PARTIES = [
 },
 {
   id:"bildu", short:"EH BILDU", name:"EH Bildu (Arnaldo Otegi)", color:"#2dd4bf", tags:["nacionalista","izquierda"],
-  programa:{nota:"sin publicar a 17 nov."},
+  programa:{nota:"presentado el 16 nov. Texto completo pendiente de verificar."},
   resumen:"Izquierda independentista vasca y navarra. Fue un socio estable de Sánchez en lo social y lo presupuestario. Para muchos votantes es un límite que no condene expresamente la historia de ETA.",
   hemeroteca:[
     hm("Apoyó de forma estable los presupuestos y decretos sociales del Gobierno."),
@@ -861,7 +867,11 @@ const TIMELINE = [
   {d:"2026-11-13", p:["general"], t:"electoral", x:"Jordi Wild publica en su pódcast The Wild Project las entrevistas a Ada Colau, Alberto Núñez Feijóo y Pedro Sánchez. No hay entrevista a Abascal: Vox la canceló el 11 de noviembre.", s:S.wildPub},
   {d:"2026-11-14", p:["general"], t:"electoral", x:"La Academia de la Televisión fija para el jueves 26 de noviembre el debate entre los principales candidatos, con los mismos cinco bloques que el cara a cara. Previsiblemente participarán Sánchez, Feijóo, Abascal y Colau. La Junta Electoral Central debe decidir si participa Podemos, que ya pidió estar en el debate económico de laSexta del 13 de noviembre y vio rechazada su solicitud.", s:S.debate26},
   {d:"2026-11-15", p:["psoe"], t:"propuesta", x:"Sánchez presenta en Alcorcón (Madrid) el programa del PSOE para el 29N, «La fuerza de seguir avanzando». La vivienda es su principal prioridad.", s:S.psoePres},
-  {d:"2026-11-16", p:["fa"], t:"propuesta", x:"Frente Amplio presenta su programa para el 29N. Entre sus propuestas: 200 euros al mes por cada menor de 18 años a cargo y que una persona no pueda recibir más de 10 millones de euros en herencias.", s:S.faPres}
+  {d:"2026-11-16", p:["fa"], t:"propuesta", x:"Frente Amplio presenta su programa para el 29N. Entre sus propuestas: 200 euros al mes por cada menor de 18 años a cargo y que una persona no pueda recibir más de 10 millones de euros en herencias.", s:S.faPres},
+  {d:"2026-11-16", p:["bildu"], t:"propuesta", x:"EH Bildu difunde su programa para el 29N. Prioriza el reconocimiento nacional y político, la vivienda, el empleo y las pensiones. Entre sus propuestas: una jornada de 32 horas semanales o de cuatro días sin bajada salarial.", s:S.bilduPres},
+  {d:"2026-11-17", p:["podemos"], t:"propuesta", x:"Irene Montero presenta en Madrid el programa de Podemos para el 29N, «Paz, casa y trabajo». Entre sus propuestas: bajar un 40% los precios de los alquileres, subir el salario mínimo a 1.800 euros y una jornada laboral de 30 horas semanales.", s:S.podemosPres},
+  {d:"2026-11-17", p:["general"], t:"proceso", x:"La jueza María Tardón aplaza al 1 de diciembre, a petición de su defensa, la declaración como investigado de Miguel Ángel Pérez Triano, exdelegado del Gobierno en Ceuta, prevista para el 18 de noviembre. La causa parte de una denuncia de Manos Limpias y una querella de Hazte Oír; la jueza no ha concretado aún los delitos.", s:S.ceutaAplaza},
+  {d:"2026-11-18", p:["general"], t:"electoral", x:"La Diputación Permanente del Congreso convalida siete decretos ley: ayudas a las víctimas del accidente de Urda, seguridad ferroviaria, ayuda a Ceuta tras la entrada masiva de julio, familias monoparentales, la dana Adam, prestaciones de la Seguridad Social y la reforma de la dependencia. PP y PNV votan a favor de todos; Vox, en contra de seis (el de Urda sale por unanimidad); Junts se abstiene en los de Ceuta y familias monoparentales.", s:S.decretos18n}
 ];
 
 /* ============================================================
@@ -1008,9 +1018,9 @@ const STANCE = {
    ============================================================ */
 const POLLS = [
   {firm:"Sigma Dos", media:"El Mundo", campo:"3–12 nov", pp:[126,132], psoe:[104,109], vox:[62,69], vpp:31.0, vpsoe:25.4, vvox:19.7, s:S.sigmaTrack13, note:"Tracking diario de campaña, entrega publicada el 13 nov (4.620 entrevistas). El PP incluye a UPN."},
-  {firm:"Imop", media:"El Confidencial", campo:"13–16 oct", pp:123, psoe:113, vox:72, vpp:28.5, vpsoe:27.1, vvox:20.0, s:S.imopOct},
+  {firm:"Imop", media:"El Confidencial", campo:"10–13 nov", pp:128, psoe:109, vox:66, vpp:31.5, vpsoe:26.9, vvox:19.0, s:S.imopNov, note:"Cuarta oleada."},
   {firm:"DYM", media:"20minutos", campo:"4–6 nov", pp:[135,139], psoe:[104,108], vox:[63,66], vpp:33.1, vpsoe:27.3, vvox:18.6, s:S.dymNov},
-  {firm:"40dB", media:"El País / SER", campo:"pub. 17 nov", pp:131, psoe:120, vox:58, vpp:31.8, vpsoe:30.6, vvox:17.5, s:S.db40Nov17, note:"Quinta entrega de su tracking diario de campaña. Con los dos escaños de UPN, el PP llega a 133."},
+  {firm:"40dB", media:"El País / SER", campo:"13–17 nov", pp:131, psoe:122, vox:55, vpp:32.2, vpsoe:30.7, vvox:17.0, s:S.db40Nov18, note:"Sexta entrega de su tracking diario de campaña (2.000 entrevistas). El voto del PP incluye a UPN."},
   {firm:"Sondaxe", media:"La Voz de Galicia", campo:"10–14 nov", pp:127, psoe:109, vox:65, vpp:30.2, vpsoe:26.7, vvox:17.6, s:S.sondaxeNov16, note:"Segunda entrega de su tracking de campaña (1.000 entrevistas). El PP incluye a UPN."},
   {firm:"GESOP", media:"El Periódico", campo:"6–8 oct", pp:[121,125], psoe:[108,112], vox:[68,72], vpp:null, vpsoe:26.1, vvox:18.9, s:S.polls},
   {firm:"Celeste-Tel", media:"Onda Cero", campo:"pub. 6 nov", pp:136, psoe:101, vox:66, vpp:31.4, vpsoe:25.7, vvox:19.2, s:S.celesteNov, note:"Con los dos escaños de UPN, el PP llega a 138."},
