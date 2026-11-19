@@ -482,6 +482,8 @@ const S = {
   decretos18n:"https://www.infobae.com/espana/agencias/2026/11/18/la-diputacion-permanente-del-congreso-convalida-siete-decretos-ley-aprobados-en-precampana-con-apoyo-del-pp/",
   db40Nov18:"https://www.electografica.com/2026/11/encuesta-40db-261118.html",
   imopNov:"https://www.democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-pp-psoe-suben-vox-pierde-cuatro-escanos-derecha-mantiene-mayoria-segun-imop/",
+  podemosProg29:"https://www.democrata.es/uploads/s1/35/51/60/4/29n-programa-podemos-paz-casa-y-trabajo.pdf",
+  bilduProg:"https://www.naiz.eus/media/asset_publics/resources/001/388/034/original/posibleegin-programa-cas.pdf",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -621,7 +623,7 @@ const PARTIES = [
 },
 {
   id:"podemos", short:"PODEMOS", name:"Podemos (Ione Belarra / Irene Montero)", color:"#7c3aed", tags:["izquierda"],
-  programa:{nota:"presentado el 17 nov. Texto completo pendiente de verificar."},
+  programa:{url:S.podemosProg29, nota:"«Así de básico: paz, casa y trabajo», presentado el 17 nov (PDF; copia alojada en Demócrata)."},
   resumen:"El partido que nació del 15-M y llegó a tener 71 escaños (con sus confluencias) se mueve ahora entre el 2,3% y el 3,1% en las encuestas. Para el 29N va en solitario en casi toda España, con Irene Montero en Madrid, y apoya a ERC en Cataluña.",
   hemeroteca:[
     hm("Nació criticando a «la casta»; en 2018 sus líderes Pablo Iglesias e Irene Montero compraron un chalé en Galapagar, lo que sometieron a consulta de sus bases."),
@@ -635,8 +637,10 @@ const PARTIES = [
   ],
   economia:[
     it("hemeroteca","Pactó con PSOE, ERC y Bildu la ley de vivienda de 2023, con topes al alquiler en zonas tensionadas.", S.leyVivienda),
-    it("propuesta","Entre sus ejes de campaña: SMI de 1.800 € mensuales y jornada laboral de 30 horas.", S.podemosEjes),
-    it("propuesta","Más impuestos a la banca, las eléctricas, las grandes fortunas y los beneficios extraordinarios; regular el precio del alquiler y penalizar la vivienda vacía de grandes propietarios.", S.podemosProg)
+    it("propuesta","Programa: bajar los alquileres un 40% por ley, contratos de alquiler de vivienda habitual indefinidos por defecto y prohibir los desahucios de personas vulnerables sin alternativa habitacional.", S.podemosProg29),
+    it("propuesta","Programa: SMI de 1.800 euros al mes en una legislatura, jornada de 30 horas semanales durante la legislatura, 45 días de indemnización por año en los despidos ilegales, jubilación ordinaria a los 63 años y sanciones penales a los empresarios que incumplan la prohibición de las horas extra.", S.podemosProg29),
+    it("propuesta","Programa: red pública de supermercados; que el Estado adquiera la mayoría absoluta de Repsol; una banca pública que integre el ICO, el CDTI y ENISA; equiparar en una legislatura la tributación de las rentas del capital y del trabajo, y transporte público gratuito con tarjeta única.", S.podemosProg29),
+    it("propuesta","Programa: salida de la OTAN y cierre de las bases de Rota y Morón; ruptura de relaciones diplomáticas, culturales y comerciales con Israel; referéndum para decidir entre monarquía y república.", S.podemosProg29)
   ],
   paradoja:"Tiene lógica para quien quiere una izquierda sin rebajas y vota en Madrid u otra provincia grande, donde su voto puede contar. Choca con quien vota en una provincia pequeña, donde difícilmente sacará escaño, o con quien no perdona la ley del «solo sí es sí»."
 },
@@ -704,7 +708,7 @@ const PARTIES = [
 },
 {
   id:"bildu", short:"EH BILDU", name:"EH Bildu (Arnaldo Otegi)", color:"#2dd4bf", tags:["nacionalista","izquierda"],
-  programa:{nota:"presentado el 16 nov. Texto completo pendiente de verificar."},
+  programa:{url:S.bilduProg, nota:"«Garantía y derechos», difundido el 16 nov (PDF alojado en Naiz)."},
   resumen:"Izquierda independentista vasca y navarra. Fue un socio estable de Sánchez en lo social y lo presupuestario. Para muchos votantes es un límite que no condene expresamente la historia de ETA.",
   hemeroteca:[
     hm("Apoyó de forma estable los presupuestos y decretos sociales del Gobierno."),
@@ -718,7 +722,12 @@ const PARTIES = [
   ],
   economia:[
     it("hemeroteca","Pactó con PSOE, Podemos y ERC la ley de vivienda de 2023 y presionó para ampliar las zonas tensionadas.", S.leyVivienda),
-    it("hemeroteca","Votó a favor de la reducción de jornada a 37,5 horas (sep 2025).", S.jornada)
+    it("hemeroteca","Votó a favor de la reducción de jornada a 37,5 horas (sep 2025).", S.jornada),
+    it("propuesta","Programa: jornada de 32 horas semanales o de 4 días sin reducción salarial, indemnización por despido improcedente de al menos 45 días y que las comunidades autónomas puedan fijar su propio SMI.", S.bilduProg),
+    it("propuesta","Programa: pensiones mínimas de al menos 1.220 €, con su cuantía y actualización acordes al SMI; subir al menos un 15% las de viudedad y no contributivas, y mantener la revalorización anual con el IPC.", S.bilduProg),
+    it("propuesta","Programa: tope estructural del 2% a la actualización anual del alquiler cuando el IPC lo supere; prohibir los desahucios de familias vulnerables sin alternativa habitacional y la compra especulativa de vivienda por entidades con ánimo de lucro; eliminar las SOCIMIs e IVA del 21% para los alojamientos turísticos de corta duración.", S.bilduProg),
+    it("propuesta","Programa: aumentar el impuesto a la banca y a las grandes fortunas y recuperar de forma permanente el impuesto a las energéticas.", S.bilduProg),
+    it("propuesta","Programa: reconocimiento de Euskal Herria como nación y del derecho a decidir del pueblo vasco; repliegue de las Fuerzas y Cuerpos de Seguridad del Estado; cerrar y desmantelar el campo de tiro de las Bardenas; rechazo a la OTAN.", S.bilduProg)
   ],
   paradoja:"Tiene lógica para el votante vasco o navarro de izquierdas y soberanista que valora su agenda social. Choca con quien considera imprescindible una condena expresa de ETA."
 },
