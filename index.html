@@ -313,7 +313,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 20 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 21 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -325,7 +325,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "20 nov 2026";
+const VERIFIED = "21 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test (rápido de 15 preguntas o completo de 50) para ver con quién coincides.";
 const S = {
@@ -493,6 +493,10 @@ const S = {
   juntsProg29:"https://www.tualcentre.cat/app/uploads/2026/11/PROGRAMA-ELECTORAL_JUNTS_29N.pdf",
   sigmaTrack19:"https://www.electografica.com/2026/11/encuesta-sigmados-261119.html",
   sondaxeNov19:"https://www.electografica.com/2026/11/encuesta-sondaxe-261119.html",
+  jecRevuelta:"https://www.eldiario.es/vertele/noticias/junta-electoral-rechaza-denuncia-vox-rtve-minutos-no-emitidos-entrevista-abascal-la-revuelta_1_13678507.html",
+  ceutaTestigos:"https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Audiencia-Nacional/Noticias-Judiciales/La-Audiencia-Nacional-cita-como-testigos-al-consul-de-Espana-en-Tetuan-y-al-exjefe-de-Gabinete-del-delegado-del-Gobierno-el-proximo-26-noviembre",
+  sociometricaNov21:"https://www.democrata.es/encuestas/elecciones-generales/tracking-encuesta-29n-hoy-sociometrica-21-noviembre-2026/",
+  sondaxeNov21:"https://www.democrata.es/encuestas/elecciones-generales/tracking-encuesta-29n-hoy-sondaxe-21-noviembre-2026/",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -889,12 +893,14 @@ const TIMELINE = [
   {d:"2026-11-16", p:["bildu"], t:"propuesta", x:"EH Bildu difunde su programa para el 29N. Prioriza el reconocimiento nacional y político, la vivienda, el empleo y las pensiones. Entre sus propuestas: una jornada de 32 horas semanales o de cuatro días sin bajada salarial.", s:S.bilduPres},
   {d:"2026-11-17", p:["podemos"], t:"propuesta", x:"Irene Montero presenta en Madrid el programa de Podemos para el 29N, «Paz, casa y trabajo». Entre sus propuestas: bajar un 40% los precios de los alquileres, subir el salario mínimo a 1.800 euros y una jornada laboral de 30 horas semanales.", s:S.podemosPres},
   {d:"2026-11-17", p:["general"], t:"proceso", x:"La jueza María Tardón aplaza al 1 de diciembre, a petición de su defensa, la declaración como investigado de Miguel Ángel Pérez Triano, exdelegado del Gobierno en Ceuta, prevista para el 18 de noviembre. La causa parte de una denuncia de Manos Limpias y una querella de Hazte Oír; la jueza no ha concretado aún los delitos.", s:S.ceutaAplaza},
+  {d:"2026-11-17", p:["general"], t:"proceso", x:"La jueza María Tardón cita como testigos para el 26 de noviembre, a petición de la Fiscalía, al cónsul de España en Tetuán en la fecha de los hechos y, por segunda vez, a Gonzalo Sanz Ruiz, exjefe de Gabinete del delegado del Gobierno en Ceuta, en la causa por la entrada masiva en Ceuta.", s:S.ceutaTestigos},
   {d:"2026-11-18", p:["general"], t:"electoral", x:"La Diputación Permanente del Congreso convalida siete decretos ley: ayudas a las víctimas del accidente de Urda, seguridad ferroviaria, ayuda a Ceuta tras la entrada masiva de julio, familias monoparentales, la dana Adam, prestaciones de la Seguridad Social y la reforma de la dependencia. PP y PNV votan a favor de todos; Vox, en contra de seis (el de Urda sale por unanimidad); Junts se abstiene en los de Ceuta y familias monoparentales.", s:S.decretos18n},
   {d:"2026-11-19", p:["psoe","pp"], t:"electoral", x:"Se celebra el cara a cara entre Sánchez y Feijóo, organizado por la Academia de la Televisión y moderado por María Casado. Lo emiten 20 cadenas nacionales y autonómicas. Según Barlovento Comunicación, con datos de Fifty5Blue, tiene una audiencia media de 10,15 millones de espectadores y una cuota de pantalla del 70,8%.", s:S.caraCaraAud},
   {d:"2026-11-19", p:["pp"], t:"proceso", x:"La Junta Electoral Central abre un expediente sancionador, con multa de 300 a 3.000 euros, a Miguel Tellado, secretario general del PP, por pedir el voto expresamente antes de la campaña en «La Hora de La 1» (TVE) el 3 de noviembre. Estima en parte denuncias de Frente Amplio y el PSOE. Cabe recurso ante el Supremo.", s:S.jecTellado},
   {d:"2026-11-19", p:["pp","vox","psoe"], t:"archivada", x:"La Junta Electoral Central desestima tres denuncias: la del PSOE contra un vídeo del PP hecho con inteligencia artificial (la ley no lo prohíbe y estaba etiquetado), la del PSOE contra Santiago Abascal por pedir el voto en una entrevista del 3 de noviembre y la del PP contra Óscar Puente por la rueda de prensa del Consejo de Ministros de ese día.", s:S.jecDenuncias19},
   {d:"2026-11-19", p:["podemos","general"], t:"electoral", x:"La Junta Electoral Central confirma que Podemos no participará en el debate de candidatos del 26 de noviembre, que queda con PP, PSOE, Vox y Frente Amplio. Razona que no existe un derecho de todas las candidaturas con representación a estar en los debates y pide a las cadenas información compensatoria suficiente para los partidos excluidos.", s:S.jecPodemos26},
   {d:"2026-11-19", p:["general"], t:"electoral", x:"La Junta Electoral Central amplía el plazo para depositar el voto por correo en Correos del 25 al 26 de noviembre, hasta las 14:00.", s:S.votoCorreo26},
+  {d:"2026-11-19", p:["vox"], t:"archivada", x:"La Junta Electoral Central desestima la denuncia de Vox contra RTVE por los 40 minutos no emitidos de la entrevista a Abascal en «La Revuelta»: no ve pruebas de trato discriminatorio y recuerda que no es un programa informativo. Inadmite también tres recursos de Vox contra RTVE. Cabe recurso ante el Supremo.", s:S.jecRevuelta},
   {d:"2026-11-20", p:["general"], t:"electoral", x:"El Supremo ordena a la Junta Electoral Central y a la Oficina del Censo que ninguna de las 163.355 personas nacionalizadas por la «ley de nietos» con el voto suspendido figure como electora el 29N, tampoco en el censo de residentes en España. Quedan fuera las 901 que han acreditado con certificado consular descender de exiliados y quienes lo hagan antes de la votación. El 18 de noviembre había rechazado el recurso de Vox para extender la suspensión a sus hijos.", s:S.nietos20n}
 ];
 
@@ -1045,10 +1051,10 @@ const POLLS = [
   {firm:"Imop", media:"El Confidencial", campo:"10–13 nov", pp:128, psoe:109, vox:66, vpp:31.5, vpsoe:26.9, vvox:19.0, s:S.imopNov, note:"Cuarta oleada."},
   {firm:"DYM", media:"20minutos", campo:"4–6 nov", pp:[135,139], psoe:[104,108], vox:[63,66], vpp:33.1, vpsoe:27.3, vvox:18.6, s:S.dymNov},
   {firm:"40dB", media:"El País / SER", campo:"13–17 nov", pp:131, psoe:122, vox:55, vpp:32.2, vpsoe:30.7, vvox:17.0, s:S.db40Nov18, note:"Sexta entrega de su tracking diario de campaña (2.000 entrevistas). El voto del PP incluye a UPN."},
-  {firm:"Sondaxe", media:"La Voz de Galicia", campo:"13–17 nov", pp:121, psoe:112, vox:69, vpp:28.5, vpsoe:27.8, vvox:19.6, s:S.sondaxeNov19, note:"Tracking de campaña, entrega publicada el 19 nov (1.000 entrevistas)."},
+  {firm:"Sondaxe", media:"La Voz de Galicia", campo:"pub. 21 nov", pp:125, psoe:110, vox:70, vpp:29.5, vpsoe:27.9, vvox:19.8, s:S.sondaxeNov21, note:"Tracking de campaña, entrega publicada el 21 nov."},
   {firm:"GESOP", media:"El Periódico", campo:"6–8 oct", pp:[121,125], psoe:[108,112], vox:[68,72], vpp:null, vpsoe:26.1, vvox:18.9, s:S.polls},
   {firm:"Celeste-Tel", media:"Onda Cero", campo:"pub. 6 nov", pp:136, psoe:101, vox:66, vpp:31.4, vpsoe:25.7, vvox:19.2, s:S.celesteNov, note:"Con los dos escaños de UPN, el PP llega a 138."},
-  {firm:"SocioMétrica", media:"El Español", campo:"pub. 8 nov", pp:134, psoe:108, vox:66, vpp:32.0, vpsoe:27.7, vvox:18.9, s:S.sociometricaNov8, note:"Con los dos escaños de UPN, el PP llega a 136."},
+  {firm:"SocioMétrica", media:"El Español", campo:"pub. 21 nov", pp:132, psoe:113, vox:65, vpp:31.8, vpsoe:28.5, vvox:18.8, s:S.sociometricaNov21, note:"Con los dos escaños de UPN, el PP llega a 134."},
   {firm:"NC Report", media:"La Razón", campo:"6–12 nov", pp:[135,137], psoe:[102,104], vox:[66,68], vpp:32.1, vpsoe:26.1, vvox:19.0, s:S.ncNov16, note:"Con los dos escaños de UPN, PP y Vox suman de 203 a 207."},
   {firm:"Target Point", media:"El Debate", campo:"12 nov", pp:[125,129], psoe:[110,114], vox:[64,68], vpp:30.6, vpsoe:27.0, vvox:18.7, s:S.targetNov16, note:"1.013 entrevistas online. El PP incluye a UPN."},
   {firm:"GAD3", media:"ABC", campo:"3–5 nov", pp:136, psoe:103, vox:63, vpp:31.9, vpsoe:25.9, vvox:18.6, s:S.gad3Nov},
