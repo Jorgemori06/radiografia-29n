@@ -313,7 +313,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 21 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 22 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -325,7 +325,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "21 nov 2026";
+const VERIFIED = "22 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test (rápido de 15 preguntas o completo de 50) para ver con quién coincides.";
 const S = {
@@ -497,6 +497,8 @@ const S = {
   ceutaTestigos:"https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Audiencia-Nacional/Noticias-Judiciales/La-Audiencia-Nacional-cita-como-testigos-al-consul-de-Espana-en-Tetuan-y-al-exjefe-de-Gabinete-del-delegado-del-Gobierno-el-proximo-26-noviembre",
   sociometricaNov21:"https://www.democrata.es/encuestas/elecciones-generales/tracking-encuesta-29n-hoy-sociometrica-21-noviembre-2026/",
   sondaxeNov21:"https://www.democrata.es/encuestas/elecciones-generales/tracking-encuesta-29n-hoy-sondaxe-21-noviembre-2026/",
+  d21Prog:"https://mi.democracia21.es/docs/programa/programa-democracia21.pdf",
+  d21ProgPres:"https://www.democrata.es/actualidad/programa-democracia21-elecciones-29n/",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -767,7 +769,7 @@ const PARTIES = [
 },
 {
   id:"d21", short:"D21", name:"Democracia 21 (Miriam González Durántez)", color:"#a78bfa", tags:["centro"],
-  programa:{nota:"sin programa completo a 11 nov. Documentos oficiales de propuestas:", docs:[["vivienda", S.d21Viv],["regeneración («España Limpia»)", S.d21Limpia]]},
+  programa:{url:S.d21Prog, nota:"«La España que merecemos», presentado el 14 nov (PDF)."},
   resumen:"Partido de centro liberal y reformista presentado el 10 oct 2026. No ha gobernado ni tiene causas abiertas; su incógnita es si obtendrá algún escaño.",
   hemeroteca:[
     hm("Integra a ex cargos de UPyD (Rafael Calduch, Fernando Maura, Beatriz Becerra) y se presenta solo en Madrid y Barcelona.", S.d21),
@@ -779,9 +781,10 @@ const PARTIES = [
     it("limpio","Sin condenas ni causas abiertas. Al ser un partido nuevo, no tiene historial de gestión con el que compararlo.")
   ],
   economia:[
-    it("propuesta","Vivienda: eliminar el IVA, el ITP y el AJD en la compra de vivienda habitual para menores de 35 años, un Plan Nacional de Barrios a 10 años y una limitación temporal y excepcional de los alquileres en zonas tensionadas.", S.d21Viv),
-    it("propuesta","Regeneración: reducir un 90% los asesores, juzgados especializados en corrupción, un fiscal general elegido por el Gobierno de una terna del Congreso (3/5) y eliminar los aforamientos no recogidos expresamente en la Constitución.", S.d21Limpia),
-    it("propuesta","Suspender la financiación pública de un partido cuando el partido o sus principales dirigentes estén investigados formalmente por corrupción, malversación o financiación ilegal.", S.d21Limpia)
+    it("propuesta","Programa: eliminar el IVA, el ITP y el AJD en la compra de vivienda habitual para menores de 35 años (hasta 400.000 €), un Plan Nacional de Barrios a 10 años, una limitación temporal y excepcional de los alquileres con el Estado como escudo ante impagos, y reinvertir en vivienda 10.000 millones de fondos europeos.", S.d21Prog),
+    it("propuesta","Programa: reducir un 90% los asesores, juzgados especializados en corrupción, un fiscal general elegido por el Gobierno de una terna del Congreso (3/5) y eliminar los aforamientos no recogidos expresamente en la Constitución.", S.d21Prog),
+    it("propuesta","Programa: suspender la financiación pública de un partido cuando el partido o sus principales dirigentes estén formalmente investigados por corrupción.", S.d21Prog),
+    it("propuesta","Programa: los pluses ligados a mejoras de productividad tributarán al 5% en el IRPF (hasta 5.000 € al año) y el Impuesto de Sociedades será del 5% para los beneficios que las pymes reinviertan.", S.d21Prog)
   ],
   paradoja:"Tiene lógica para quien busca un centro reformista sin historial de corrupción y vota en Madrid o Barcelona. Choca con quien quiere asegurarse de que su voto obtenga escaño: todavía no aparece en las encuestas."
 },
@@ -901,7 +904,8 @@ const TIMELINE = [
   {d:"2026-11-19", p:["podemos","general"], t:"electoral", x:"La Junta Electoral Central confirma que Podemos no participará en el debate de candidatos del 26 de noviembre, que queda con PP, PSOE, Vox y Frente Amplio. Razona que no existe un derecho de todas las candidaturas con representación a estar en los debates y pide a las cadenas información compensatoria suficiente para los partidos excluidos.", s:S.jecPodemos26},
   {d:"2026-11-19", p:["general"], t:"electoral", x:"La Junta Electoral Central amplía el plazo para depositar el voto por correo en Correos del 25 al 26 de noviembre, hasta las 14:00.", s:S.votoCorreo26},
   {d:"2026-11-19", p:["vox"], t:"archivada", x:"La Junta Electoral Central desestima la denuncia de Vox contra RTVE por los 40 minutos no emitidos de la entrevista a Abascal en «La Revuelta»: no ve pruebas de trato discriminatorio y recuerda que no es un programa informativo. Inadmite también tres recursos de Vox contra RTVE. Cabe recurso ante el Supremo.", s:S.jecRevuelta},
-  {d:"2026-11-20", p:["general"], t:"electoral", x:"El Supremo ordena a la Junta Electoral Central y a la Oficina del Censo que ninguna de las 163.355 personas nacionalizadas por la «ley de nietos» con el voto suspendido figure como electora el 29N, tampoco en el censo de residentes en España. Quedan fuera las 901 que han acreditado con certificado consular descender de exiliados y quienes lo hagan antes de la votación. El 18 de noviembre había rechazado el recurso de Vox para extender la suspensión a sus hijos.", s:S.nietos20n}
+  {d:"2026-11-20", p:["general"], t:"electoral", x:"El Supremo ordena a la Junta Electoral Central y a la Oficina del Censo que ninguna de las 163.355 personas nacionalizadas por la «ley de nietos» con el voto suspendido figure como electora el 29N, tampoco en el censo de residentes en España. Quedan fuera las 901 que han acreditado con certificado consular descender de exiliados y quienes lo hagan antes de la votación. El 18 de noviembre había rechazado el recurso de Vox para extender la suspensión a sus hijos.", s:S.nietos20n},
+  {d:"2026-11-14", p:["d21"], t:"propuesta", x:"Democracia 21 presenta su programa, «La España que merecemos»: vivienda, regeneración institucional, rebajas fiscales y menos burocracia.", s:S.d21ProgPres}
 ];
 
 /* ============================================================
