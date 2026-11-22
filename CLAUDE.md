@@ -67,6 +67,26 @@ prohíbe publicar, difundir o reproducir sondeos electorales. En esos días:
 - `scripts/check.mjs` falla si en esas fechas `POLLS` difiere de lo ya publicado en `origin/main`.
 - La revisión del 23 de noviembre es la última que puede añadir encuestas.
 
+## Noche electoral (29 nov desde las 20:00)
+
+`RESULTS29` (en `index.html`, junto a `SEATS`) está a `null` hasta que haya escrutinio. Al
+rellenarlo, la portada muestra el bloque «Resultados del 29N» y la calculadora de mayorías pasa a
+usar los escaños reales. Formato:
+
+```js
+const RESULTS29 = {hora:"23:40", escrutado:99.6, final:false, s:"URL de la fuente",
+ seats:[{id:"psoe", label:"PSOE", c:"#ef4444", s:120, v:28.1}, ...]};
+```
+
+- Fuente: la web oficial del Ministerio del Interior (29neleccionesgenerales.es) o, si no se puede
+  abrir, un medio de referencia que cite ese escrutinio. Contrasta los escaños con una segunda fuente.
+- Solo partidos con escaño, ordenados de izquierda a derecha con los mismos `id`, `label` y
+  colores `c` que `SEATS.enc` (para partidos nuevos, un color distinto y el `id` de su ficha si la
+  tiene). La suma de `s` debe ser 350. `v` es el % de voto válido.
+- `escrutado` es el % escrutado, `hora` la del dato (hora peninsular) y `final:true` solo cuando el
+  escrutinio provisional esté al 100%.
+- No se añade ninguna valoración del resultado ni proyecciones de pactos: solo los datos.
+
 ## Estructura de `index.html` (todo está en el `<script>` principal)
 
 - `VERIFIED` (`"24 oct 2026"`) y el pie («Datos verificados a 24 de octubre de 2026.»): se

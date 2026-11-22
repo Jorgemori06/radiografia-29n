@@ -104,6 +104,7 @@
       </div>
     </div>
 
+    <div id="results29"></div>
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5" id="kpis"></div>
 
     <div class="card p-4 mb-5 min-w-0">
@@ -1142,6 +1143,54 @@ const SEATS = {
   rest[2].s += 350 - tot;
   SEATS.enc = rest;
 })();
+
+/* ============================================================
+   NOCHE ELECTORAL: escrutinio oficial del 29N
+   Se rellena tras el cierre de los colegios. Formato:
+   {hora:"23:40", escrutado:99.6, final:false, s:"URL de la fuente",
+    seats:[{id:"psoe", label:"PSOE", c:"#ef4444", s:120, v:28.1}, ...]}
+   seats va ordenado de izquierda a derecha, como SEATS.enc (así se pinta el hemiciclo),
+   s = escaños y v = % de voto. Mientras sea null, la web muestra las encuestas.
+   ============================================================ */
+const RESULTS29 = null;
+const CLOSE_29N = new Date("2026-11-29T20:00:00+01:00");
+if(RESULTS29){
+  SEATS.res = RESULTS29.seats.map(x=>({id:x.id, label:x.label, s:x.s, c:x.c}));
+  const sb = document.getElementById("scenarioBtns");
+  if(sb) sb.insertAdjacentHTML("afterbegin", `<button class="chip btn px-3 py-1.5 rounded-full" data-sc="res">Resultado 29N</button>`);
+}
+function renderResults29(){
+  const box = $("#results29"); if(!box) return;
+  if(!RESULTS29){
+    box.innerHTML = new Date() >= CLOSE_29N ? `<div class="card p-4 mb-5 border-amber-500/40"><div class="font-bold flex items-center gap-2 mb-1"><i data-lucide="vote" class="w-5 h-5 text-amber-300"></i>Noche electoral</div><p class="text-sm text-slate-300">Los colegios ya han cerrado. El escrutinio oficial se irá incorporando aquí a lo largo de la noche; hasta entonces, los escaños de esta página son la media de las encuestas previas al 29N. El recuento en directo está en la web oficial del Ministerio del Interior: <a class="src" href="https://29neleccionesgenerales.es/" target="_blank" rel="noopener">29neleccionesgenerales.es ↗</a></p></div>` : "";
+    return;
+  }
+  const R = RESULTS29;
+  const s23 = id => { if(id==="fa"||id==="podemos") return null; const x = SEATS["2023"].find(y=>y.id===id); return x ? x.s : null; };
+  const sEnc = id => { const x = SEATS.enc.find(y=>y.id===id); return x ? x.s : null; };
+  const diff = (a,b) => b===null ? `<span class="text-slate-500">—</span>` : (a-b===0 ? `<span class="text-slate-400">=</span>` : `<span class="${a>b?"text-emerald-300":"text-red-300"}">${a>b?"+":""}${a-b}</span>`);
+  const sum = ids => R.seats.filter(x=>ids.includes(x.id)).reduce((a,b)=>a+b.s,0);
+  const der = sum(["pp","vox","upn"]), inv = sum(COAL_PRESETS.inv23);
+  const rows = R.seats.slice().sort((a,b)=>b.s-a.s || b.v-a.v).map(x=>`<tr class="border-t border-slate-700/70">
+      <td class="py-1.5 pr-2"><span class="inline-block w-2.5 h-2.5 rounded-full mr-1.5" style="background:${x.c}"></span>${x.label}</td>
+      <td class="text-right font-bold">${x.s}</td>
+      <td class="text-right">${x.v!=null?x.v.toFixed(1).replace(".",",")+"%":"—"}</td>
+      <td class="text-right">${diff(x.s, s23(x.id))}</td>
+      <td class="text-right">${diff(x.s, sEnc(x.id))}</td></tr>`).join("");
+  box.innerHTML = `<div class="card p-4 sm:p-5 mb-5 border-amber-500/40 min-w-0">
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
+      <h3 class="font-bold text-lg flex items-center gap-2"><i data-lucide="vote" class="w-5 h-5 text-amber-300"></i>Resultados del 29N</h3>
+      <span class="text-xs px-2 py-1 rounded-full ${R.final?"bg-emerald-500/15 text-emerald-300":"bg-amber-500/15 text-amber-300"}">${R.final?"Escrutinio finalizado":"Provisional"} · ${String(R.escrutado).replace(".",",")}% escrutado · ${R.hora}</span>
+    </div>
+    <p class="text-xs text-slate-400 mb-3">Escrutinio oficial del Congreso. <a class="src" href="${R.s}" target="_blank" rel="noopener">↗ Fuente</a> · La calculadora de mayorías de más abajo ya usa estos escaños.</p>
+    <div class="grid grid-cols-2 gap-3 mb-3">
+      <div class="rounded-lg bg-slate-900/60 border border-slate-700 p-3"><div class="text-xs text-slate-400">PP + Vox + UPN</div><div class="text-2xl font-extrabold ${der>=176?"text-amber-300":""}">${der}</div><div class="text-[11px] text-slate-500">${der>=176?"Mayoría absoluta":"Faltan "+(176-der)+" para 176"}</div></div>
+      <div class="rounded-lg bg-slate-900/60 border border-slate-700 p-3"><div class="text-xs text-slate-400">Partidos que invistieron a Sánchez en 2023</div><div class="text-2xl font-extrabold ${inv>=176?"text-amber-300":""}">${inv}</div><div class="text-[11px] text-slate-500">${inv>=176?"Mayoría absoluta":"Faltan "+(176-inv)+" para 176"}</div></div>
+    </div>
+    <div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-left text-xs text-slate-400"><th class="py-1 pr-2">Partido</th><th class="text-right">Escaños</th><th class="text-right">Voto</th><th class="text-right">vs 2023</th><th class="text-right">vs encuestas</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p class="text-[11px] text-slate-500 mt-2">«vs encuestas» compara con la media de sondeos publicada hasta el 23 de noviembre. Frente Amplio y Podemos no tienen comparación con 2023 porque entonces concurrieron juntos en Sumar (31 escaños; hoy suman ${sum(["fa","podemos"])}).</p>
+  </div>`;
+}
 const COAL_PRESETS = {
   inv23:["psoe","fa","podemos","erc","junts","bildu","pnv","bng","cc"],
   derecha:["pp","vox","upn"],
@@ -1294,10 +1343,12 @@ function renderCountdown(){
   let small, big;
   if(days > 1){ small = `<div class="text-xl font-extrabold text-sky-400 leading-none">${days}</div><div class="text-[10px] text-slate-400 uppercase tracking-wide">días al 29N</div>`;
     big = `<div class="text-4xl font-extrabold text-sky-300">${days}</div><div class="text-xs text-slate-300 uppercase tracking-wide">días para votar</div>`; }
+  else if(new Date() >= CLOSE_29N && days >= 0){ small = `<div class="text-sm font-bold text-amber-300">29N</div><div class="text-[10px] text-slate-400">${RESULTS29?"resultados":"escrutinio"}</div>`;
+    big = `<div class="text-xl font-extrabold text-amber-300">Colegios cerrados</div><div class="text-xs text-slate-300">${RESULTS29?"Resultados más abajo":"El escrutinio se irá añadiendo"}</div>`; }
   else if(days >= 0){ small = `<div class="text-sm font-bold text-sky-400">29N</div><div class="text-[10px] text-slate-400">${days===1?"mañana":"hoy"}</div>`;
     big = `<div class="text-2xl font-extrabold text-sky-300">${days===1?"Mañana":"Hoy"} se vota</div>`; }
   else { small = `<div class="text-xs text-slate-400">29N celebrado</div>`;
-    big = `<div class="text-sm text-slate-300 max-w-[12rem]">Elecciones celebradas: los datos de esta página son previos al 29N.</div>`; }
+    big = RESULTS29 ? `<div class="text-sm text-slate-300 max-w-[12rem]">Elecciones celebradas: resultados más abajo.</div>` : `<div class="text-sm text-slate-300 max-w-[12rem]">Elecciones celebradas: el escrutinio se añadirá en cuanto esté disponible.</div>`; }
   $("#countdown").innerHTML = small; $("#bigCountdown").innerHTML = big;
 }
 
@@ -1323,7 +1374,7 @@ $$(".tab-btn, .bn-btn").forEach(b=>b.addEventListener("click",()=>showTab(+b.dat
 /* ============================================================
    MÓDULO 0: TABLERO 29N
    ============================================================ */
-let scenario = "enc";
+let scenario = RESULTS29 ? "res" : "enc";
 let coalition = new Set(["pp","vox","upn"]);
 function rng(v){ return v===null ? `<span class="text-slate-600">—</span>` : (Array.isArray(v) ? `${v[0]}–${v[1]}` : v); }
 function pct(v){ return v===null ? "" : ` <span class="text-slate-500 text-xs">(${v.toFixed(1).replace(".",",")}%)</span>`; }
@@ -1349,6 +1400,7 @@ function renderBoard(){
     {label:"Media encuestas 29N",data:[enc("pp"),enc("psoe"),enc("vox"),izq],backgroundColor:["#3b82f6","#ef4444","#84cc16","#c026d3"]}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom"}},scales:{y:{beginAtZero:true,title:{display:true,text:"Escaños"}}}}});
 
+  renderResults29();
   renderCoalition();
   renderKeyDates();
   renderLatest();
@@ -1432,7 +1484,9 @@ function renderCoalition(){
     ? `<span class="text-amber-300 font-semibold">Mayoría absoluta</span>: investidura posible en primera votación (${sum} síes frente a un máximo de ${others} noes).`
     : sum>0 ? `<span class="text-slate-300">Faltan <b>${176-sum}</b> escaños para la absoluta.</span> En segunda votación bastaría con que los otros ${others} no sumen más de ${sum-1} noes, es decir, con al menos <b>${Math.max(0,others-(sum-1))}</b> abstenciones.`
     : `<span class="text-slate-500">Selecciona partidos para formar una mayoría.</span>`;
-  $("#seatNote").innerHTML = scenario==="enc"
+  $("#seatNote").innerHTML = scenario==="res"
+    ? `Resultado del 29N: escrutinio oficial al ${String(RESULTS29.escrutado).replace(".",",")}% (${RESULTS29.hora})${RESULTS29.final?"":", provisional"}. <a class="src" href="${RESULTS29.s}" target="_blank" rel="noopener">↗ Fuente</a>`
+    : scenario==="enc"
     ? `Escenario de encuestas: PP, PSOE y Vox según la media de ${POLLS.filter(p=>p.pp!==null).length} sondeos (puntos medios de los rangos). Resto de partidos según el reparto de Imop (5–7 oct), ajustando el Frente Amplio para cuadrar 350; CC mantiene su escaño de 2023 porque no aparece en los sondeos consultados. Es una aproximación, no una proyección propia. <a class="src" href="${S.imop}" target="_blank" rel="noopener">↗ Imop</a>`
     : `Resultado oficial del 23J. En 2023 Podemos formaba parte de Sumar. <a class="src" href="${S.g2023}" target="_blank" rel="noopener">↗ Resultados</a>`;
 }
