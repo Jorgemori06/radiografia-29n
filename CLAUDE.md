@@ -71,7 +71,8 @@ prohíbe publicar, difundir o reproducir sondeos electorales. En esos días:
 
 `RESULTS29` (en `index.html`, junto a `SEATS`) está a `null` hasta que haya escrutinio. Al
 rellenarlo, la portada muestra el bloque «Resultados del 29N» y la calculadora de mayorías pasa a
-usar los escaños reales. Formato:
+usar los escaños reales. Desde las 20:00 del 29 (o en cuanto haya `RESULTS29`) se ocultan las
+encuestas y los indicadores de la portada, por decisión de Jorge, para no mezclarlas con el escrutinio. Formato:
 
 ```js
 const RESULTS29 = {hora:"23:40", escrutado:99.6, final:false, s:"URL de la fuente",

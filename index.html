@@ -121,7 +121,7 @@
       <ul class="space-y-3" id="latestNews"></ul>
     </div>
 
-    <div class="grid lg:grid-cols-5 gap-4 mb-5">
+    <div class="grid lg:grid-cols-5 gap-4 mb-5" id="pollsGrid">
       <div class="card p-4 lg:col-span-3 min-w-0">
         <h3 class="font-bold mb-1 flex items-center gap-2"><i data-lucide="bar-chart-3" class="w-5 h-5 text-sky-400"></i>Encuestas publicadas</h3>
         <p class="text-xs text-slate-400 mb-3">Escaños estimados (rango si la encuestadora lo da) y, debajo, % de voto.</p>
@@ -138,7 +138,7 @@
       <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
         <h3 class="font-bold text-lg flex items-center gap-2"><i data-lucide="landmark" class="w-5 h-5 text-sky-400"></i>Calculadora de mayorías</h3>
         <div class="flex gap-2 text-sm" id="scenarioBtns">
-          <button class="chip btn px-3 py-1.5 rounded-full" data-sc="enc">Media encuestas 29N</button>
+          <button class="chip btn px-3 py-1.5 rounded-full" data-sc="enc" id="scEncBtn">Media encuestas 29N</button>
           <button class="chip btn px-3 py-1.5 rounded-full" data-sc="2023">Resultado 2023</button>
         </div>
       </div>
@@ -1157,38 +1157,46 @@ const CLOSE_29N = new Date("2026-11-29T20:00:00+01:00");
 if(RESULTS29){
   SEATS.res = RESULTS29.seats.map(x=>({id:x.id, label:x.label, s:x.s, c:x.c}));
   const sb = document.getElementById("scenarioBtns");
-  if(sb) sb.insertAdjacentHTML("afterbegin", `<button class="chip btn px-3 py-1.5 rounded-full" data-sc="res">Resultado 29N</button>`);
+  if(sb) sb.insertAdjacentHTML("afterbegin", `<button class="chip btn px-3 py-1.5 rounded-full" data-sc="res">Escrutinio 29N</button>`);
 }
+/* Desde el cierre de los colegios se ocultan las encuestas para no mezclarlas con el escrutinio */
+const NIGHT = !!RESULTS29 || new Date() >= CLOSE_29N;
 function renderResults29(){
   const box = $("#results29"); if(!box) return;
+  if(NIGHT){
+    ["#kpis","#pollsGrid"].forEach(sel=>{ const el=$(sel); if(el) el.classList.add("hidden"); });
+    const b = $("#scEncBtn"); if(b) b.textContent = "Esperado en encuestas";
+    const sb = $("#scenarioBtns");
+    if(sb) ["2023","enc","res"].forEach(k=>{ const x = sb.querySelector(`[data-sc="${k}"]`); if(x) sb.appendChild(x); });
+  }
   if(!RESULTS29){
-    box.innerHTML = new Date() >= CLOSE_29N ? `<div class="card p-4 mb-5 border-amber-500/40"><div class="font-bold flex items-center gap-2 mb-1"><i data-lucide="vote" class="w-5 h-5 text-amber-300"></i>Noche electoral</div><p class="text-sm text-slate-300">Los colegios ya han cerrado. El escrutinio oficial se irá incorporando aquí a lo largo de la noche; hasta entonces, los escaños de esta página son la media de las encuestas previas al 29N. El recuento en directo está en la web oficial del Ministerio del Interior: <a class="src" href="https://29neleccionesgenerales.es/" target="_blank" rel="noopener">29neleccionesgenerales.es ↗</a></p></div>` : "";
+    box.innerHTML = new Date() >= CLOSE_29N ? `<div class="card p-4 mb-5 border-amber-500/40"><div class="font-bold flex items-center gap-2 mb-1"><i data-lucide="vote" class="w-5 h-5 text-amber-300"></i>Noche electoral</div><p class="text-sm text-slate-300">Los colegios ya han cerrado. El escrutinio oficial se irá incorporando aquí a lo largo de la noche; hasta entonces, la calculadora de mayorías muestra los escaños que esperaban las encuestas. El recuento en directo está en la web oficial del Ministerio del Interior: <a class="src" href="https://29neleccionesgenerales.es/" target="_blank" rel="noopener">29neleccionesgenerales.es ↗</a></p></div>` : "";
     return;
   }
   const R = RESULTS29;
   const s23 = id => { if(id==="fa"||id==="podemos") return null; const x = SEATS["2023"].find(y=>y.id===id); return x ? x.s : null; };
   const sEnc = id => { const x = SEATS.enc.find(y=>y.id===id); return x ? x.s : null; };
-  const diff = (a,b) => b===null ? `<span class="text-slate-500">—</span>` : (a-b===0 ? `<span class="text-slate-400">=</span>` : `<span class="${a>b?"text-emerald-300":"text-red-300"}">${a>b?"+":""}${a-b}</span>`);
+  const num = v => v===null ? `<span class="text-slate-500">—</span>` : v;
   const sum = ids => R.seats.filter(x=>ids.includes(x.id)).reduce((a,b)=>a+b.s,0);
   const der = sum(["pp","vox","upn"]), inv = sum(COAL_PRESETS.inv23);
   const rows = R.seats.slice().sort((a,b)=>b.s-a.s || b.v-a.v).map(x=>`<tr class="border-t border-slate-700/70">
       <td class="py-1.5 pr-2"><span class="inline-block w-2.5 h-2.5 rounded-full mr-1.5" style="background:${x.c}"></span>${x.label}</td>
-      <td class="text-right font-bold">${x.s}</td>
-      <td class="text-right">${x.v!=null?x.v.toFixed(1).replace(".",",")+"%":"—"}</td>
-      <td class="text-right">${diff(x.s, s23(x.id))}</td>
-      <td class="text-right">${diff(x.s, sEnc(x.id))}</td></tr>`).join("");
+      <td class="text-right pl-3 text-slate-400">${num(s23(x.id))}</td>
+      <td class="text-right pl-3 text-slate-400">${num(sEnc(x.id))}</td>
+      <td class="text-right pl-3 font-bold text-base">${x.s}</td>
+      <td class="text-right pl-3 text-xs text-slate-400">${x.v!=null?x.v.toFixed(1).replace(".",",")+"%":"—"}</td></tr>`).join("");
   box.innerHTML = `<div class="card p-4 sm:p-5 mb-5 border-amber-500/40 min-w-0">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
       <h3 class="font-bold text-lg flex items-center gap-2"><i data-lucide="vote" class="w-5 h-5 text-amber-300"></i>Resultados del 29N</h3>
       <span class="text-xs px-2 py-1 rounded-full ${R.final?"bg-emerald-500/15 text-emerald-300":"bg-amber-500/15 text-amber-300"}">${R.final?"Escrutinio finalizado":"Provisional"} · ${String(R.escrutado).replace(".",",")}% escrutado · ${R.hora}</span>
     </div>
-    <p class="text-xs text-slate-400 mb-3">Escrutinio oficial del Congreso. <a class="src" href="${R.s}" target="_blank" rel="noopener">↗ Fuente</a> · La calculadora de mayorías de más abajo ya usa estos escaños.</p>
+    <p class="text-xs text-slate-400 mb-3">Escrutinio oficial del Congreso (escaños). <a class="src" href="${R.s}" target="_blank" rel="noopener">↗ Fuente</a> · La calculadora de mayorías de más abajo ya usa estos escaños.</p>
     <div class="grid grid-cols-2 gap-3 mb-3">
       <div class="rounded-lg bg-slate-900/60 border border-slate-700 p-3"><div class="text-xs text-slate-400">PP + Vox + UPN</div><div class="text-2xl font-extrabold ${der>=176?"text-amber-300":""}">${der}</div><div class="text-[11px] text-slate-500">${der>=176?"Mayoría absoluta":"Faltan "+(176-der)+" para 176"}</div></div>
       <div class="rounded-lg bg-slate-900/60 border border-slate-700 p-3"><div class="text-xs text-slate-400">Partidos que invistieron a Sánchez en 2023</div><div class="text-2xl font-extrabold ${inv>=176?"text-amber-300":""}">${inv}</div><div class="text-[11px] text-slate-500">${inv>=176?"Mayoría absoluta":"Faltan "+(176-inv)+" para 176"}</div></div>
     </div>
-    <div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-left text-xs text-slate-400"><th class="py-1 pr-2">Partido</th><th class="text-right">Escaños</th><th class="text-right">Voto</th><th class="text-right">vs 2023</th><th class="text-right">vs encuestas</th></tr></thead><tbody>${rows}</tbody></table></div>
-    <p class="text-[11px] text-slate-500 mt-2">«vs encuestas» compara con la media de sondeos publicada hasta el 23 de noviembre. Frente Amplio y Podemos no tienen comparación con 2023 porque entonces concurrieron juntos en Sumar (31 escaños; hoy suman ${sum(["fa","podemos"])}).</p>
+    <div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-left text-xs text-slate-400"><th class="py-1 pr-2">Partido</th><th class="text-right pl-3">2023</th><th class="text-right pl-3">Encuestas</th><th class="text-right pl-3">Escrutinio</th><th class="text-right pl-3">Voto</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p class="text-[11px] text-slate-500 mt-2">Escaños: resultado de 2023, lo que esperaba la media de encuestas publicadas hasta el 23 de noviembre y el escrutinio de hoy. Frente Amplio y Podemos no tienen dato de 2023 porque entonces concurrieron juntos en Sumar (31 escaños; hoy suman ${sum(["fa","podemos"])}).</p>
   </div>`;
 }
 const COAL_PRESETS = {
