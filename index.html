@@ -502,6 +502,9 @@ const S = {
   d21Prog:"https://mi.democracia21.es/docs/programa/programa-democracia21.pdf",
   d21ProgPres:"https://www.democrata.es/actualidad/programa-democracia21-elecciones-29n/",
   juntsProgPres:"https://www.politicaelectoral.com/es/espana/generales-2026/nacional/junts",
+  sigmaTrack21:"https://www.electografica.com/2026/11/encuesta-sigmados-261121.html",
+  db40Nov22:"https://ep00.epimg.net/infografias/encuestas40db/2026/11-tracking-electoral/informe_tracking_dia10.pdf",
+  gad3Nov22:"https://www.gad3.com/barometro-abc-i-estimacion-de-voto-nacional-noviembre-2026-ii/",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -1085,17 +1088,17 @@ const STANCE = {
    DATOS: ENCUESTAS 29N Y ESCAÑOS
    ============================================================ */
 const POLLS = [
-  {firm:"Sigma Dos", media:"El Mundo", campo:"12–18 nov", pp:[125,131], psoe:[110,116], vox:[59,64], vpp:31.0, vpsoe:27.1, vvox:19.4, s:S.sigmaTrack19, note:"Tracking diario de campaña, entrega publicada el 19 nov (4.491 entrevistas). El PP incluye a UPN."},
+  {firm:"Sigma Dos", media:"El Mundo", campo:"14–20 nov", pp:[126,132], psoe:[112,118], vox:[57,62], vpp:31.5, vpsoe:28.0, vvox:18.3, s:S.sigmaTrack21, note:"Tracking diario de campaña, entrega publicada el 21 nov (4.511 entrevistas). El PP incluye a UPN."},
   {firm:"Imop", media:"El Confidencial", campo:"10–13 nov", pp:128, psoe:109, vox:66, vpp:31.5, vpsoe:26.9, vvox:19.0, s:S.imopNov, note:"Cuarta oleada."},
   {firm:"DYM", media:"20minutos", campo:"4–6 nov", pp:[135,139], psoe:[104,108], vox:[63,66], vpp:33.1, vpsoe:27.3, vvox:18.6, s:S.dymNov},
-  {firm:"40dB", media:"El País / SER", campo:"13–17 nov", pp:131, psoe:122, vox:55, vpp:32.2, vpsoe:30.7, vvox:17.0, s:S.db40Nov18, note:"Sexta entrega de su tracking diario de campaña (2.000 entrevistas). El voto del PP incluye a UPN."},
+  {firm:"40dB", media:"El País / SER", campo:"17–21 nov", pp:131, psoe:125, vox:54, vpp:31.9, vpsoe:31.6, vvox:16.9, s:S.db40Nov22, note:"Décima entrega de su tracking diario de campaña, del 22 nov (2.000 entrevistas online). Da aparte los 2 escaños de UPN-PP: con ellos, PP y Vox suman 187."},
   {firm:"Sondaxe", media:"La Voz de Galicia", campo:"pub. 21 nov", pp:125, psoe:110, vox:70, vpp:29.5, vpsoe:27.9, vvox:19.8, s:S.sondaxeNov21, note:"Tracking de campaña, entrega publicada el 21 nov."},
   {firm:"GESOP", media:"El Periódico", campo:"6–8 oct", pp:[121,125], psoe:[108,112], vox:[68,72], vpp:null, vpsoe:26.1, vvox:18.9, s:S.polls},
   {firm:"Celeste-Tel", media:"Onda Cero", campo:"pub. 6 nov", pp:136, psoe:101, vox:66, vpp:31.4, vpsoe:25.7, vvox:19.2, s:S.celesteNov, note:"Con los dos escaños de UPN, el PP llega a 138."},
   {firm:"SocioMétrica", media:"El Español", campo:"pub. 21 nov", pp:132, psoe:113, vox:65, vpp:31.8, vpsoe:28.5, vvox:18.8, s:S.sociometricaNov21, note:"Con los dos escaños de UPN, el PP llega a 134."},
   {firm:"NC Report", media:"La Razón", campo:"6–12 nov", pp:[135,137], psoe:[102,104], vox:[66,68], vpp:32.1, vpsoe:26.1, vvox:19.0, s:S.ncNov16, note:"Con los dos escaños de UPN, PP y Vox suman de 203 a 207."},
   {firm:"Target Point", media:"El Debate", campo:"12 nov", pp:[125,129], psoe:[110,114], vox:[64,68], vpp:30.6, vpsoe:27.0, vvox:18.7, s:S.targetNov16, note:"1.013 entrevistas online. El PP incluye a UPN."},
-  {firm:"GAD3", media:"ABC", campo:"3–5 nov", pp:136, psoe:103, vox:63, vpp:31.9, vpsoe:25.9, vvox:18.6, s:S.gad3Nov},
+  {firm:"GAD3", media:"ABC", campo:"16–19 nov", pp:131, psoe:110, vox:63, vpp:31.1, vpsoe:28.4, vvox:18.1, s:S.gad3Nov22, note:"1.501 entrevistas telefónicas. El PP incluye a UPN."},
   {firm:"CIS", media:"Estudio preelectoral", campo:"7–30 oct", pp:[98,106], psoe:[134,143], vox:[57,65], vpp:25.5, vpsoe:33.3, vvox:18.4, s:S.cisPre, note:"45.074 entrevistas. Es el único gran sondeo que sitúa al PSOE primero, con casi 8 puntos de ventaja."}
 ];
 const mid = v => v===null ? null : (Array.isArray(v) ? (v[0]+v[1])/2 : v);
