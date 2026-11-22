@@ -88,6 +88,13 @@ prohíbe publicar, difundir o reproducir sondeos electorales. En esos días:
 - `SEATS` y `R23`: reparto y resultados de 2023. No se tocan salvo error demostrado.
 - El test (`QROWS`, `HELP`, `QW`, `OVERRIDES`) solo se toca si un partido cambia su postura
   oficial de forma documentada.
+- `PROG`: posturas del test comprobadas en el programa del 29N de cada partido
+  (`índice de pregunta -> [valor, página del PDF]`), revisadas el 22 nov. Tienen prioridad sobre
+  `QROWS`/`OVERRIDES` y la web enlaza cada una a su página. Solo se añade o cambia una entrada
+  con la cita del programa delante. Si un partido publica una versión nueva del programa, hay
+  que revisar sus páginas.
+- Encuestas durante la veda: por decisión de Jorge (22 nov), las ya publicadas se siguen
+  mostrando del 24 al 29; lo único prohibido es añadir o cambiar encuestas.
 
 ## Procedimiento de una revisión
 

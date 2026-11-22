@@ -292,6 +292,7 @@
       </div>
       <p class="text-slate-400 text-sm max-w-3xl mb-2" id="modeNote"></p>
       <p class="text-slate-400 text-sm max-w-3xl">Responde del –2 al +2 y marca como «clave» las que más te importan (cuentan el doble). Si una pregunta no te queda clara, toca el botón <b class="text-sky-300">?</b> para ver qué significa y qué argumentos hay a favor y en contra. Tu progreso se guarda en este navegador y tus respuestas no salen de él salvo que compartas el enlace.</p>
+      <p class="text-slate-500 text-xs max-w-3xl mt-2">Posturas de los partidos revisadas con sus programas del 29N el 22 de noviembre: cada una enlaza a la página del programa de la que sale. Si un programa no trata un tema, se mantiene la postura deducida de sus votaciones y declaraciones, y se indica.</p>
     </div>
     <div id="quizBox">
       <div class="card p-4 mb-4">
@@ -1036,10 +1037,36 @@ const OVERRIDES = {
   podemos:{37:-2, 39:-1, 32:2},   // Ucrania: en contra; UE: más soberanista; jornada 37,5 h
   fa:{}
 };
+/* Posturas comprobadas en el programa del 29N de cada partido: índice de pregunta -> [valor, página del PDF].
+   Sustituyen a la postura base. Las preguntas que no aparecen aquí no tienen mención en el programa
+   y mantienen la postura deducida de votaciones y declaraciones. Revisado el 22 nov 2026. */
+const PROG_REVIEW = "22 nov 2026";
+const PROG = {
+  psoe:{1:[2,36],3:[2,35],6:[-1,91],10:[0,92],14:[-1,99],15:[2,97],16:[2,77],17:[2,99],18:[-2,77],19:[2,50],21:[1,90],24:[1,100],25:[2,31],26:[2,100],28:[2,28],29:[1,26],31:[-2,41],32:[2,41],33:[2,42],37:[2,88],39:[2,109],45:[-2,66],46:[2,8],49:[2,66]},
+  pp:{0:[2,61],2:[2,60],3:[2,43],4:[2,13],7:[2,16],8:[2,40],10:[2,22],11:[-2,22],12:[2,23],14:[2,18],15:[-2,44],17:[-2,47],20:[2,32],21:[0,29],23:[2,29],24:[2,31],25:[-2,53],26:[2,19],27:[2,54],28:[1,53],35:[2,26],36:[0,74],37:[2,74],38:[2,26],40:[2,67],43:[2,38],44:[2,47],45:[2,71]},
+  vox:{0:[2,7],7:[2,49],10:[2,13],11:[-2,13],12:[2,13],17:[-2,26],20:[2,48],23:[2,49],24:[2,48],25:[-2,19],26:[2,20],27:[2,20],29:[0,20],33:[2,7],38:[2,5],40:[2,35],43:[2,32],45:[2,10],46:[-2,10],49:[-1,29]},
+  fa:{1:[2,8],3:[2,7],11:[2,149],14:[-2,142],15:[2,123],16:[2,28],17:[2,173],19:[2,150],25:[2,12],28:[2,13],29:[2,7],30:[2,7],32:[2,7],36:[2,8],49:[2,8]},
+  podemos:{1:[2,17],11:[2,67],14:[-2,127],15:[2,51],16:[2,51],25:[2,8],26:[-2,9],28:[2,8],29:[2,8],31:[-2,42],32:[2,41],35:[-2,26],36:[2,35],45:[-2,103],49:[2,19]},
+  salf:{0:[2,13],1:[-2,13],3:[2,20],4:[2,3],5:[-2,14],10:[2,4],11:[-2,16],12:[2,4],20:[2,28],21:[2,29],23:[2,26],24:[2,28],26:[2,4],27:[2,6],29:[-2,7],39:[-2,4],40:[2,4],44:[2,4]},
+  junts:{0:[2,68],2:[2,68],3:[2,57],5:[2,5],6:[-2,5],7:[-2,12],14:[-2,14],21:[2,14],24:[1,14],25:[-2,16],26:[2,9],28:[2,9],35:[1,26],37:[1,8],40:[1,53],44:[-2,8]},
+  erc:{3:[1,25],5:[2,11],7:[-2,8],14:[-2,7],15:[2,24],17:[2,7],28:[2,19],29:[2,19],31:[-2,25],32:[2,26],33:[2,13],36:[2,16],44:[-2,9]},
+  bildu:{1:[2,4],9:[2,25],11:[2,20],14:[-2,22],16:[2,19],17:[2,28],19:[2,10],25:[2,5],29:[2,5],32:[2,6],35:[-2,29],36:[2,30]},
+  pnv:{3:[2,31],6:[-2,38],9:[1,39],11:[1,25],15:[1,27],25:[1,8],29:[1,8]},
+  d21:{4:[2,4],11:[-1,57],15:[2,100],16:[2,99],20:[2,9],21:[2,10],22:[2,8],24:[2,7],25:[1,17],26:[1,17],27:[2,18],29:[1,21],33:[2,53]},
+  adel:{1:[2,10],3:[2,13],5:[-1,23],11:[2,28],14:[-2,29],15:[2,40],16:[2,27],19:[2,38],25:[2,4],26:[-2,49],28:[2,49],29:[2,4],30:[2,9],32:[2,57],33:[2,11],35:[-2,109],36:[2,32],37:[-1,109],42:[1,42]}
+};
 PARTIES.forEach(p=>{
   const o = OVERRIDES[p.id] || {};
-  p.vec = QUESTIONS.map((q,i)=> o[i]!==undefined ? o[i] : q.v[COL[p.id]]);
+  const g = PROG[p.id] || {};
+  p.vec = QUESTIONS.map((q,i)=> g[i] ? g[i][0] : (o[i]!==undefined ? o[i] : q.v[COL[p.id]]));
+  p.progN = Object.keys(g).length;
 });
+/* Fuente de una postura: enlace a la página del programa, o aviso de que el programa no lo trata */
+function srcStance(P,i){
+  const g = (PROG[P.id]||{})[i];
+  if(g && P.programa && P.programa.url) return `<a href="${P.programa.url}#page=${g[1]}" target="_blank" rel="noopener" class="text-[11px] text-sky-300 hover:underline whitespace-nowrap">programa, p. ${g[1]}</a>`;
+  return `<span class="text-[11px] text-slate-500 whitespace-nowrap" title="El programa del 29N no trata este punto: postura deducida de sus votaciones y declaraciones">sin mención en el programa</span>`;
+}
 
 const LIKERT = [
   {v:-2, l:"Totalmente en desacuerdo", s:"-2"},
@@ -1563,7 +1590,7 @@ function renderCompare(){
       <div class="card p-4"><h3 class="font-bold mb-3">Perfil por ejes (–2 a +2)</h3><div class="h-80"><canvas id="cmpRadar"></canvas></div></div>
       <div class="card p-4 space-y-4">
         <div><h3 class="font-bold mb-2 flex items-center gap-2"><i data-lucide="swords" class="w-5 h-5 text-red-400"></i>Dónde chocan más</h3>
-          <ul class="space-y-2 text-sm">${diffs.map(x=>`<li class="text-slate-300">${x.q.t}<div class="flex flex-wrap gap-2 mt-1 items-center text-xs"><span class="text-slate-500">${A.short}</span>${chipStance(A.vec[x.q.n-1])}<span class="text-slate-500">${B.short}</span>${chipStance(B.vec[x.q.n-1])}</div></li>`).join("")}</ul></div>
+          <ul class="space-y-2 text-sm">${diffs.map(x=>`<li class="text-slate-300">${x.q.t}<div class="flex flex-wrap gap-2 mt-1 items-center text-xs"><span class="text-slate-500">${A.short}</span>${chipStance(A.vec[x.q.n-1])}${srcStance(A,x.q.n-1)}<span class="text-slate-500">${B.short}</span>${chipStance(B.vec[x.q.n-1])}${srcStance(B,x.q.n-1)}</div></li>`).join("")}</ul></div>
         <div><h3 class="font-bold mb-2 flex items-center gap-2"><i data-lucide="handshake" class="w-5 h-5 text-emerald-400"></i>Dónde coinciden con fuerza</h3>
           ${coin.length?`<ul class="space-y-1.5 text-sm text-slate-300 list-disc list-inside">${coin.map(q=>`<li>${q.t}</li>`).join("")}</ul>`:`<p class="text-sm text-slate-500">No hay afirmaciones en las que ambos tengan la misma posición extrema.</p>`}</div>
       </div>
@@ -1885,7 +1912,12 @@ function showResults(){
       <ul class="space-y-2 mb-5">${P.hemeroteca.concat(P.corrupcion).map(itemRow).join("")}</ul>
       <div class="rounded-lg bg-slate-900/60 border border-slate-700 p-3 mb-5"><h4 class="text-xs font-semibold uppercase tracking-wider text-amber-300 mb-1">¿Para quién tiene lógica votarle?</h4><p class="text-sm text-slate-300">${P.paradoja}</p></div>
       <h4 class="text-sm font-semibold mb-2">Dónde discrepas más con ${P.short}</h4>
-      <ul class="space-y-2 text-sm">${gaps.map(x=>`<li class="text-slate-300">${x.q.t}<div class="flex flex-wrap gap-2 mt-1 items-center text-xs"><span class="text-slate-500">Tú</span>${chipStance(answers[x.i])}<span class="text-slate-500">${P.short}</span>${chipStance(P.vec[x.i])}</div></li>`).join("")||`<li class="text-slate-500">Sin discrepancias relevantes.</li>`}</ul>`;
+      <ul class="space-y-2 text-sm">${gaps.map(x=>`<li class="text-slate-300">${x.q.t}<div class="flex flex-wrap gap-2 mt-1 items-center text-xs"><span class="text-slate-500">Tú</span>${chipStance(answers[x.i])}<span class="text-slate-500">${P.short}</span>${chipStance(P.vec[x.i])}${srcStance(P,x.i)}</div></li>`).join("")||`<li class="text-slate-500">Sin discrepancias relevantes.</li>`}</ul>
+      <details class="mt-5 rounded-lg border border-slate-700 bg-slate-900/40 p-3">
+        <summary class="cursor-pointer text-sm font-semibold text-sky-300">Ver las 50 posturas de ${P.short} y de dónde sale cada una</summary>
+        <p class="text-xs text-slate-500 mt-2 mb-3">${P.progN} de 50 están comprobadas en su programa del 29N (enlace a la página). El resto no aparecen en el programa y se deducen de sus votaciones y declaraciones.</p>
+        <ul class="space-y-2 text-sm">${QUESTIONS.map((q,i)=>`<li class="text-slate-300">${q.n}. ${q.t}<div class="flex flex-wrap gap-2 mt-1 items-center">${chipStance(P.vec[i])}${srcStance(P,i)}</div></li>`).join("")}</ul>
+      </details>`;
   };
   renderMirror(top.p.id);
   $("#mirrorSel").addEventListener("change",e=>renderMirror(e.target.value));
