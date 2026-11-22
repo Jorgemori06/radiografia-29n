@@ -499,6 +499,7 @@ const S = {
   sondaxeNov21:"https://www.democrata.es/encuestas/elecciones-generales/tracking-encuesta-29n-hoy-sondaxe-21-noviembre-2026/",
   d21Prog:"https://mi.democracia21.es/docs/programa/programa-democracia21.pdf",
   d21ProgPres:"https://www.democrata.es/actualidad/programa-democracia21-elecciones-29n/",
+  juntsProgPres:"https://www.politicaelectoral.com/es/espana/generales-2026/nacional/junts",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -681,7 +682,7 @@ const PARTIES = [
 },
 {
   id:"junts", short:"JUNTS", name:"Junts per Catalunya (Carles Puigdemont)", color:"#06b6d4", tags:["nacionalista","derecha"],
-  programa:{url:S.juntsProg29, nota:"Programa del 29N, difundido hacia el 19 nov (PDF en tualcentre.cat; no consta en junts.cat). Medidas pendientes de verificar en el texto."},
+  programa:{url:S.juntsProg29, nota:"«Catalunya al centre», publicado el 18 nov en su web de campaña (PDF, en catalán)."},
   resumen:"Independentistas de centro-derecha. Sus 7 votos hicieron presidente a Sánchez en 2023 y su ruptura en 2025 bloqueó la legislatura. Su candidato, Puigdemont, ya puede volver a España: el Supremo le ha aplicado la amnistía.",
   hemeroteca:[
     hm("De la declaración unilateral de independencia de 2017 al pacto de investidura con el PSOE en 2023, a cambio de la amnistía y otras contrapartidas."),
@@ -695,7 +696,11 @@ const PARTIES = [
   ],
   economia:[
     it("hemeroteca","Financiación y transferencias para Cataluña como condición de sus apoyos en el Congreso."),
-    it("hemeroteca","Votó con PP, Vox y UPN el veto que tumbó la reducción de jornada (sep 2025) y ayudó a tumbar el gravamen a las energéticas (ene 2025).", S.jornada)
+    it("hemeroteca","Votó con PP, Vox y UPN el veto que tumbó la reducción de jornada (sep 2025) y ayudó a tumbar el gravamen a las energéticas (ene 2025).", S.jornada),
+    it("propuesta","Programa: concierto económico, con la Agència Tributària de Catalunya recaudando todos los impuestos; condonar el 100% de la deuda del FLA; deflactar el IRPF y eliminar el impuesto de sucesiones y donaciones.", S.juntsProg29),
+    it("propuesta","Programa: desalojar las ocupaciones delictivas en 48 horas; que la Administración pague al propietario, en dos meses y con fondos del Estado, la deuda de un inquilino vulnerable; prohibir hasta 2028 que bancos, fondos de inversión y gestoras de activos compren viviendas.", S.juntsProg29),
+    it("propuesta","Programa: traspasar a Cataluña la Seguridad Social y las competencias de inmigración; jubilación sin penalización con 40 años cotizados, con carácter retroactivo; los Mossos al control de puertos y aeropuertos (26.800 agentes en 2032); prohibir el burka y el niqab en el espacio público.", S.juntsProg29),
+    it("propuesta","Programa: cualquier referéndum acordado con el Estado debe ofrecer la misma elección que el del 1 de octubre de 2017.", S.juntsProg29)
   ],
   paradoja:"Tiene lógica para el votante catalán independentista de centro-derecha que quiere influir en Madrid. Choca con quien quiere un Gobierno estable o rechaza la amnistía."
 },
@@ -905,7 +910,8 @@ const TIMELINE = [
   {d:"2026-11-19", p:["general"], t:"electoral", x:"La Junta Electoral Central amplía el plazo para depositar el voto por correo en Correos del 25 al 26 de noviembre, hasta las 14:00.", s:S.votoCorreo26},
   {d:"2026-11-19", p:["vox"], t:"archivada", x:"La Junta Electoral Central desestima la denuncia de Vox contra RTVE por los 40 minutos no emitidos de la entrevista a Abascal en «La Revuelta»: no ve pruebas de trato discriminatorio y recuerda que no es un programa informativo. Inadmite también tres recursos de Vox contra RTVE. Cabe recurso ante el Supremo.", s:S.jecRevuelta},
   {d:"2026-11-20", p:["general"], t:"electoral", x:"El Supremo ordena a la Junta Electoral Central y a la Oficina del Censo que ninguna de las 163.355 personas nacionalizadas por la «ley de nietos» con el voto suspendido figure como electora el 29N, tampoco en el censo de residentes en España. Quedan fuera las 901 que han acreditado con certificado consular descender de exiliados y quienes lo hagan antes de la votación. El 18 de noviembre había rechazado el recurso de Vox para extender la suspensión a sus hijos.", s:S.nietos20n},
-  {d:"2026-11-14", p:["d21"], t:"propuesta", x:"Democracia 21 presenta su programa, «La España que merecemos»: vivienda, regeneración institucional, rebajas fiscales y menos burocracia.", s:S.d21ProgPres}
+  {d:"2026-11-14", p:["d21"], t:"propuesta", x:"Democracia 21 presenta su programa, «La España que merecemos»: vivienda, regeneración institucional, rebajas fiscales y menos burocracia.", s:S.d21ProgPres},
+  {d:"2026-11-18", p:["junts"], t:"propuesta", x:"Junts publica su programa, «Catalunya al centre» (unas 90 páginas, en catalán): concierto económico, competencias de inmigración y Seguridad Social, vivienda y rebajas fiscales.", s:S.juntsProgPres}
 ];
 
 /* ============================================================
