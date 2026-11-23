@@ -315,7 +315,7 @@
 
 <footer class="border-t border-slate-700/60 mt-10">
   <div class="max-w-7xl mx-auto px-4 py-6 text-xs text-slate-500 space-y-2">
-    <p><b class="text-slate-400">Datos verificados a 22 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
+    <p><b class="text-slate-400">Datos verificados a 23 de noviembre de 2026.</b> La situación procesal cambia rápido: una sentencia recurrible puede revocarse y un proceso abierto puede archivarse. Usa los enlaces de cada hecho para comprobar su estado antes de citarlo.</p>
     <p>Las posiciones de cada partido en las 50 preguntas son una estimación editorial a partir de programas, votaciones y declaraciones públicas, en escala –2 a +2. Se pueden discutir, y por eso están en el código, editables (arrays <code>QROWS</code>, <code>OVERRIDES</code> y <code>PARTIES</code>). La afinidad es una aproximación matemática, no una recomendación de voto.</p>
   </div>
 </footer>
@@ -327,7 +327,7 @@
    FECHAS CLAVE Y FUENTES
    ============================================================ */
 const ELECTION_DATE = new Date("2026-11-29T09:00:00+01:00");
-const VERIFIED = "22 nov 2026";
+const VERIFIED = "23 nov 2026";
 const SITE_URL = "https://radiografia-29n.vercel.app/";
 const SHARE_TEXT = "Radiografía Electoral 29N: encuestas, fichas de partidos con sentencias y hemeroteca, simulador D'Hondt y un test (rápido de 15 preguntas o completo de 50) para ver con quién coincides.";
 const S = {
@@ -505,6 +505,20 @@ const S = {
   sigmaTrack21:"https://www.electografica.com/2026/11/encuesta-sigmados-261121.html",
   db40Nov22:"https://ep00.epimg.net/infografias/encuestas40db/2026/11-tracking-electoral/informe_tracking_dia10.pdf",
   gad3Nov22:"https://www.gad3.com/barometro-abc-i-estimacion-de-voto-nacional-noviembre-2026-ii/",
+  sigmaNov23:"https://www.democrata.es/en/general-elections-spain/the-pp-and-vox-maintain-a-majority-of-up-to-193-seats-and-the-psoe-rises-to-28-6-according-to-the-final-tracking-by-sigma-dos/",
+  imopNov23:"https://www.democrata.es/encuestas/elecciones-generales/imop-pp-vox-195-escanos-29n/",
+  dymNov22:"https://www.electografica.com/2026/11/encuesta-dym-261122.html",
+  db40Nov23:"https://cronicadeandalucia.com/nacional/sondeo-40db-psoe-pp-187-escan/",
+  sondaxeNov22:"https://www.electografica.com/2026/11/encuesta-sondaxe-261122.html",
+  gesopNov23:"https://www.electografica.com/2026/11/encuesta-gesop-261123.html",
+  celesteNov23:"https://www.electografica.com/2026/11/encuesta-celeste-tel-261123.html",
+  sociometricaNov23:"https://www.elespanol.com/espana/politica/20261123/ultimo-sondeo-feijoo-sanchez-alza-puntos-escanos-favor-pp-mayoria-absoluta-derecha/1003744469260_0.html",
+  ncNov23:"https://www.democrata.es/encuestas/elecciones-generales/nc-report-psoe-pp-vox-bajan-200-escanos/",
+  targetNov23:"https://www.democrata.es/encuestas/elecciones-generales/target-point-psoe-recorta-distancias-pp-derecha-186-194-escanos/",
+  puigdemontSobresee:"https://www.eldiario.es/catalunya/supremo-aplica-amnistia-puigdemont-archiva-causa-proces_1_13676267.html",
+  kitchenCospedal:"https://www.elespanol.com/espana/tribunales/20261123/justicia-desoye-psoe-rechaza-investigar-pp-cospedal-charlas-villarejo-barcenas/1003744468795_0.html",
+  jecBolanos:"https://www.infobae.com/espana/agencias/2026/11/23/jec-expedienta-a-bolanos-y-bustinduy-por-vulnerar-la-neutralidad-politica-desde-la-moncloa/",
+  rtve23nNogueras:"https://www.vozpopuli.com/actualidad/debate-elecciones-2026-hoy-horario-y-donde-ver-a-gabriel-rufian-ester-munoz-miriam-nogueras-y-emilio-delgado-en-rtve.html",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -697,7 +711,7 @@ const PARTIES = [
   corrupcion:[
     it("sentencia","Laura Borràs, ex presidenta del partido, fue condenada en 2023 por fraccionar contratos cuando dirigía la Institució de les Lletres Catalanes."),
     it("proceso","Procede del espacio de Convergència, investigada durante años por el caso del 3% (presuntas comisiones por obra pública)."),
-    it("archivada","Carles Puigdemont estaba procesado por desobediencia y malversación por el 1-O. Tras el aval del Constitucional (oct 2026), el juez Llarena retiró su orden de detención el 6 oct y le aplicó la amnistía el 19 oct, aunque criticó la doctrina del Constitucional.", S.puigdemontAmnistia)
+    it("archivada","Carles Puigdemont estaba procesado por desobediencia y malversación por el 1-O. Tras el aval del Constitucional (oct 2026), el juez Llarena retiró su orden de detención el 6 oct y le aplicó la amnistía el 19 oct, aunque criticó la doctrina del Constitucional. El 20 nov el Supremo acordó el sobreseimiento libre de la causa.", S.puigdemontSobresee)
   ],
   economia:[
     it("hemeroteca","Financiación y transferencias para Cataluña como condición de sus apoyos en el Congreso."),
@@ -916,7 +930,10 @@ const TIMELINE = [
   {d:"2026-11-19", p:["vox"], t:"archivada", x:"La Junta Electoral Central desestima la denuncia de Vox contra RTVE por los 40 minutos no emitidos de la entrevista a Abascal en «La Revuelta»: no ve pruebas de trato discriminatorio y recuerda que no es un programa informativo. Inadmite también tres recursos de Vox contra RTVE. Cabe recurso ante el Supremo.", s:S.jecRevuelta},
   {d:"2026-11-20", p:["general"], t:"electoral", x:"El Supremo ordena a la Junta Electoral Central y a la Oficina del Censo que ninguna de las 163.355 personas nacionalizadas por la «ley de nietos» con el voto suspendido figure como electora el 29N, tampoco en el censo de residentes en España. Quedan fuera las 901 que han acreditado con certificado consular descender de exiliados y quienes lo hagan antes de la votación. El 18 de noviembre había rechazado el recurso de Vox para extender la suspensión a sus hijos.", s:S.nietos20n},
   {d:"2026-11-14", p:["d21"], t:"propuesta", x:"Democracia 21 presenta su programa, «La España que merecemos»: vivienda, regeneración institucional, rebajas fiscales y menos burocracia.", s:S.d21ProgPres},
-  {d:"2026-11-18", p:["junts"], t:"propuesta", x:"Junts publica su programa, «Catalunya al centre» (unas 90 páginas, en catalán): concierto económico, competencias de inmigración y Seguridad Social, vivienda y rebajas fiscales.", s:S.juntsProgPres}
+  {d:"2026-11-18", p:["junts"], t:"propuesta", x:"Junts publica su programa, «Catalunya al centre» (unas 90 páginas, en catalán): concierto económico, competencias de inmigración y Seguridad Social, vivienda y rebajas fiscales.", s:S.juntsProgPres},
+  {d:"2026-11-23", p:["junts"], t:"archivada", x:"Se hace público el auto del Supremo, del 20 de noviembre, que aplica la amnistía a Carles Puigdemont, Antoni Comín y Lluís Puig y acuerda el sobreseimiento libre de la causa por malversación del 1-O. Rechaza la petición de Vox de mantenerla abierta hasta que se pronuncie el Tribunal de Justicia de la UE.", s:S.puigdemontSobresee},
+  {d:"2026-11-23", p:["pp"], t:"archivada", x:"Se conoce que la Audiencia Nacional ha rechazado el recurso del PSOE, acusación popular en el caso Kitchen, que pedía reabrir la investigación sobre María Dolores de Cospedal a partir de los audios de Villarejo. El tribunal considera que la grabación no tiene relevancia penal suficiente para reabrir las actuaciones.", s:S.kitchenCospedal},
+  {d:"2026-11-23", p:["psoe","fa"], t:"proceso", x:"La Junta Electoral Central abre expedientes sancionadores, con multa de 300 a 3.000 euros, a los ministros Félix Bolaños (PSOE) y Pablo Bustinduy (Sumar), por sus declaraciones en ruedas de prensa del Consejo de Ministros durante el proceso electoral, tras denuncias del PP, y ordena retirarlas de los canales oficiales. A la portavoz, Elma Saiz, solo le recuerda su deber de neutralidad. Los ministros alegaron que informaron de forma objetiva de las decisiones del Gobierno. Cabe recurso ante el Supremo.", s:S.jecBolanos}
 ];
 
 /* ============================================================
@@ -1088,16 +1105,16 @@ const STANCE = {
    DATOS: ENCUESTAS 29N Y ESCAÑOS
    ============================================================ */
 const POLLS = [
-  {firm:"Sigma Dos", media:"El Mundo", campo:"14–20 nov", pp:[126,132], psoe:[112,118], vox:[57,62], vpp:31.5, vpsoe:28.0, vvox:18.3, s:S.sigmaTrack21, note:"Tracking diario de campaña, entrega publicada el 21 nov (4.511 entrevistas). El PP incluye a UPN."},
-  {firm:"Imop", media:"El Confidencial", campo:"10–13 nov", pp:128, psoe:109, vox:66, vpp:31.5, vpsoe:26.9, vvox:19.0, s:S.imopNov, note:"Cuarta oleada."},
-  {firm:"DYM", media:"20minutos", campo:"4–6 nov", pp:[135,139], psoe:[104,108], vox:[63,66], vpp:33.1, vpsoe:27.3, vvox:18.6, s:S.dymNov},
-  {firm:"40dB", media:"El País / SER", campo:"17–21 nov", pp:131, psoe:125, vox:54, vpp:31.9, vpsoe:31.6, vvox:16.9, s:S.db40Nov22, note:"Décima entrega de su tracking diario de campaña, del 22 nov (2.000 entrevistas online). Da aparte los 2 escaños de UPN-PP: con ellos, PP y Vox suman 187."},
-  {firm:"Sondaxe", media:"La Voz de Galicia", campo:"pub. 21 nov", pp:125, psoe:110, vox:70, vpp:29.5, vpsoe:27.9, vvox:19.8, s:S.sondaxeNov21, note:"Tracking de campaña, entrega publicada el 21 nov."},
-  {firm:"GESOP", media:"El Periódico", campo:"6–8 oct", pp:[121,125], psoe:[108,112], vox:[68,72], vpp:null, vpsoe:26.1, vvox:18.9, s:S.polls},
-  {firm:"Celeste-Tel", media:"Onda Cero", campo:"pub. 6 nov", pp:136, psoe:101, vox:66, vpp:31.4, vpsoe:25.7, vvox:19.2, s:S.celesteNov, note:"Con los dos escaños de UPN, el PP llega a 138."},
-  {firm:"SocioMétrica", media:"El Español", campo:"pub. 21 nov", pp:132, psoe:113, vox:65, vpp:31.8, vpsoe:28.5, vvox:18.8, s:S.sociometricaNov21, note:"Con los dos escaños de UPN, el PP llega a 134."},
-  {firm:"NC Report", media:"La Razón", campo:"6–12 nov", pp:[135,137], psoe:[102,104], vox:[66,68], vpp:32.1, vpsoe:26.1, vvox:19.0, s:S.ncNov16, note:"Con los dos escaños de UPN, PP y Vox suman de 203 a 207."},
-  {firm:"Target Point", media:"El Debate", campo:"12 nov", pp:[125,129], psoe:[110,114], vox:[64,68], vpp:30.6, vpsoe:27.0, vvox:18.7, s:S.targetNov16, note:"1.013 entrevistas online. El PP incluye a UPN."},
+  {firm:"Sigma Dos", media:"El Mundo", campo:"16–23 nov", pp:[124,130], psoe:[114,120], vox:[58,63], vpp:31.9, vpsoe:28.6, vvox:17.8, s:S.sigmaNov23, note:"Última entrega del tracking diario de campaña, publicada el 23 nov (5.252 entrevistas)."},
+  {firm:"Imop", media:"El Confidencial", campo:"pub. 23 nov", pp:131, psoe:110, vox:64, vpp:31.7, vpsoe:27.4, vvox:18.3, s:S.imopNov23, note:"Quinta oleada. El PP incluye a UPN."},
+  {firm:"DYM", media:"20minutos", campo:"17–19 nov", pp:[132,139], psoe:[107,114], vox:[58,64], vpp:33.0, vpsoe:28.0, vvox:18.0, s:S.dymNov22, note:"1.010 entrevistas online, publicada el 22 nov. El PP incluye a UPN."},
+  {firm:"40dB", media:"El País / SER", campo:"10–21 nov", pp:130, psoe:124, vox:57, vpp:31.8, vpsoe:30.9, vvox:17.3, s:S.db40Nov23, note:"Última entrega, del 23 nov (7.500 entrevistas online). El PP incluye los escaños de UPN; con Vox suman 187."},
+  {firm:"Sondaxe", media:"La Voz de Galicia", campo:"16–20 nov", pp:124, psoe:112, vox:68, vpp:30.0, vpsoe:27.7, vvox:18.8, s:S.sondaxeNov22, note:"Tracking de campaña, entrega publicada el 22 nov (1.000 entrevistas). El PP incluye a UPN."},
+  {firm:"GESOP", media:"El Periódico", campo:"18–21 nov", pp:[131,136], psoe:[110,116], vox:[56,63], vpp:32.9, vpsoe:29.0, vvox:17.5, s:S.gesopNov23, note:"905 entrevistas telefónicas, publicada el 23 nov. El PP incluye a UPN."},
+  {firm:"Celeste-Tel", media:"Onda Cero", campo:"16–20 nov", pp:130, psoe:112, vox:61, vpp:31.8, vpsoe:28.1, vvox:18.9, s:S.celesteNov23, note:"1.100 entrevistas telefónicas, publicada el 23 nov. Con los dos escaños de UPN, el PP llega a 132."},
+  {firm:"SocioMétrica", media:"El Español", campo:"pub. 23 nov", pp:133, psoe:115, vox:61, vpp:32.0, vpsoe:29.0, vvox:18.1, s:S.sociometricaNov23, note:"Último sondeo antes de la veda. Con los dos escaños de UPN, el PP llega a 135."},
+  {firm:"NC Report", media:"La Razón", campo:"16–20 nov", pp:[130,133], psoe:[108,111], vox:[64,66], vpp:31.9, vpsoe:27.2, vvox:19.0, s:S.ncNov23, note:"Publicada el 23 nov. UPN, aparte, obtiene 2 escaños."},
+  {firm:"Target Point", media:"El Debate", campo:"20–21 nov", pp:[127,131], psoe:[114,118], vox:[59,63], vpp:31.5, vpsoe:28.8, vvox:16.1, s:S.targetNov23, note:"Publicada el 23 nov."},
   {firm:"GAD3", media:"ABC", campo:"16–19 nov", pp:131, psoe:110, vox:63, vpp:31.1, vpsoe:28.4, vvox:18.1, s:S.gad3Nov22, note:"1.501 entrevistas telefónicas. El PP incluye a UPN."},
   {firm:"CIS", media:"Estudio preelectoral", campo:"7–30 oct", pp:[98,106], psoe:[134,143], vox:[57,65], vpp:25.5, vpsoe:33.3, vvox:18.4, s:S.cisPre, note:"45.074 entrevistas. Es el único gran sondeo que sitúa al PSOE primero, con casi 8 puntos de ventaja."}
 ];
@@ -1439,7 +1456,7 @@ const KEY_DATES = [
   {d:"2026-11-13", t:"Empieza la campaña", x:"Campaña electoral oficial, hasta el 27 de noviembre.", s:S.zapateroCampana},
   {d:"2026-11-13", t:"Entrevistas de Jordi Wild", x:"Se publican las de Sánchez, Feijóo y Colau. Vox canceló la de Abascal.", s:S.wildSin},
   {d:"2026-11-19", t:"Cara a cara Sánchez–Feijóo", x:"Organizado por la Academia de la Televisión y moderado por su presidenta, María Casado. Cinco bloques: vivienda; economía y fiscalidad; política social y servicios públicos; corrupción y regeneración democrática; migración y política exterior. Por sorteo, abre Feijóo y cierra Sánchez. Señal institucional para las televisiones que quieran emitirlo.", s:S.caraCara19},
-  {d:"2026-11-23", t:"Debate de portavoces", x:"En La 1, Canal 24 horas y Radio 5, moderado por Xabier Fortes. Con Ester Muñoz (PP), Patxi López (PSOE), Pepa Millán (Vox), Emilio Delgado (Frente Amplio), Gabriel Rufián (ERC), Oskar Matute (Bildu) y Maribel Vaquero (PNV). RTVE informó primero de que Junts había declinado; fuentes de Junts dicen que fue un malentendido y que participará Míriam Nogueras.", s:S.rtve23n},
+  {d:"2026-11-23", t:"Debate de portavoces", x:"En La 1, Canal 24 horas y Radio 5, moderado por Xabier Fortes. Con Ester Muñoz (PP), Patxi López (PSOE), Pepa Millán (Vox), Emilio Delgado (Frente Amplio), Gabriel Rufián (ERC), Oskar Matute (Bildu), Maribel Vaquero (PNV) y Míriam Nogueras (Junts), que se sumó tras un malentendido inicial con la invitación.", s:S.rtve23nNogueras},
   {d:"2026-11-23", t:"Último día para publicar encuestas", x:"Desde el 24 de noviembre la ley prohíbe publicar sondeos.", s:S.calendario29n},
   {d:"2026-11-26", t:"Último día del voto por correo", x:"Plazo para depositarlo en Correos, ampliado por la Junta Electoral Central hasta las 14:00.", s:S.votoCorreo26},
   {d:"2026-11-26", t:"Debate entre candidatos", x:"Organizado por la Academia de la Televisión, con los mismos cinco bloques que el cara a cara y señal institucional. Participan Sánchez (PSOE), Feijóo (PP), Abascal (Vox) y Colau (Frente Amplio). La Junta Electoral Central rechazó incluir a Podemos.", s:S.jecPodemos26},
