@@ -107,7 +107,7 @@
     <div id="results29"></div>
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5" id="kpis"></div>
 
-    <div class="card p-4 mb-5 min-w-0">
+    <div class="card p-4 mb-5 min-w-0" id="keyDatesCard">
       <h3 class="font-bold mb-1 flex items-center gap-2"><i data-lucide="calendar-days" class="w-5 h-5 text-sky-400"></i>Fechas clave hasta el 29N</h3>
       <p class="text-xs text-slate-400 mb-3">Desliza para ver todas. Las ya pasadas aparecen atenuadas.</p>
       <div class="overflow-x-auto -mx-1 px-1 pb-1"><div class="flex gap-2" id="keyDates"></div></div>
@@ -524,6 +524,7 @@ const S = {
   nietosReposicion:"https://es.euronews.com/2026/11/26/supremo-confirma-11283-nietos-nacionalizados-residen-espana-29n",
   umeHierro:"https://www.infobae.com/espana/agencias/2026/11/27/defensa-tomara-medidas-para-que-los-militares-de-la-ume-en-el-hierro-puedan-votar-el-29n/",
   debate26Aud:"https://theobjective.com/medios/2026-11-27/debate-cuatro-102-millones-espectadores-cuota/",
+  docs29n:"https://www.articulo14.es/sociedad/se-puede-votar-con-el-dni-caducado-documentos-validos-para-el-29n-20261112.html",
   g2023:"https://en.wikipedia.org/wiki/2023_Spanish_general_election"
 };
 
@@ -1194,7 +1195,7 @@ const NIGHT = !!RESULTS29 || new Date() >= CLOSE_29N;
 function renderResults29(){
   const box = $("#results29"); if(!box) return;
   if(NIGHT){
-    ["#kpis","#pollsGrid"].forEach(sel=>{ const el=$(sel); if(el) el.classList.add("hidden"); });
+    ["#kpis","#pollsGrid","#keyDatesCard"].forEach(sel=>{ const el=$(sel); if(el) el.classList.add("hidden"); });
     const b = $("#scEncBtn"); if(b) b.textContent = "Esperado en encuestas";
     const sb = $("#scenarioBtns");
     if(sb) ["2023","enc","res"].forEach(k=>{ const x = sb.querySelector(`[data-sc="${k}"]`); if(x) sb.appendChild(x); });
@@ -1471,7 +1472,7 @@ const KEY_DATES = [
   {d:"2026-11-26", t:"Último día del voto por correo", x:"Plazo para depositarlo en Correos, ampliado por la Junta Electoral Central hasta las 14:00.", s:S.votoCorreo26},
   {d:"2026-11-26", t:"Debate entre candidatos", x:"Organizado por la Academia de la Televisión, con los mismos cinco bloques que el cara a cara y señal institucional. Participan Sánchez (PSOE), Feijóo (PP), Abascal (Vox) y Colau (Frente Amplio). La Junta Electoral Central rechazó incluir a Podemos.", s:S.jecPodemos26},
   {d:"2026-11-28", t:"Jornada de reflexión", x:"No se puede pedir el voto."},
-  {d:"2026-11-29", t:"Elecciones generales", x:"Colegios abiertos de 9:00 a 20:00.", s:S.moncloa29n}
+  {d:"2026-11-29", t:"Elecciones generales", x:"Colegios abiertos de 9:00 a 20:00. Hay que llevar el original del DNI, el pasaporte o el carné de conducir con foto, o el DNI digital de la app MiDNI.", s:S.docs29n}
 ];
 function renderKeyDates(){
   const box = $("#keyDates"); if(!box) return;
@@ -1482,12 +1483,17 @@ function renderKeyDates(){
     const past = day < today;
     const isNext = !past && !nextFound; if(isNext) nextFound = true;
     const fecha = day.toLocaleDateString("es-ES",{weekday:"short", day:"numeric", month:"short"});
-    return `<div class="shrink-0 w-44 sm:w-48 rounded-xl border p-3 ${isNext?"border-sky-400 bg-sky-500/10":"border-slate-700 bg-slate-900/60"} ${past?"opacity-50":""}">
+    return `<div ${isNext?"data-next":""} class="shrink-0 w-44 sm:w-48 rounded-xl border p-3 ${isNext?"border-sky-400 bg-sky-500/10":"border-slate-700 bg-slate-900/60"} ${past?"opacity-50":""}">
       <div class="text-[11px] uppercase tracking-wide ${isNext?"text-sky-300":"text-slate-400"} mb-1">${fecha}${isNext?" · próximo":""}${past?" · pasado":""}</div>
       <div class="font-semibold text-sm leading-snug mb-1">${k.t}</div>
       <p class="text-xs text-slate-400">${k.x}${k.s?srcLink(k.s):""}</p>
     </div>`;
   }).join("");
+  /* Desplaza la tira hasta la próxima fecha, para no tener que pasar todas las ya celebradas */
+  requestAnimationFrame(()=>{
+    const nx = box.querySelector("[data-next]"), sc = box.parentElement;
+    if(nx && sc) sc.scrollLeft += nx.getBoundingClientRect().left - sc.getBoundingClientRect().left - 4;
+  });
 }
 
 /* Hemiciclo: 350 escaños en filas concéntricas, ordenados de izquierda a derecha */
